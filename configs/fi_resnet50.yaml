@@ -1,0 +1,25 @@
+# Supervised baseline / ListMLE experiments (paper Tables 2-4). Set loss.alpha to 0, 0.2 or 1.0.
+seed: 0
+amp: true
+output_dir: runs/fi_resnet50_a0.0
+data:
+  root: data/FI                 # image root; CSV paths are relative to it
+  splits_dir: data/FI_splits    # produced by `ecc-splits`
+  image_size: 224
+  resize: 256
+  num_workers: 8
+model: {name: resnet50, pretrained: true}
+loss:
+  alpha: 0.0                    # 0 = pure cross-entropy
+  listmle_reduction: sum        # UNVERIFIED: sum | mean (see README)
+  polarity_C: 4
+optim:
+  lr: 0.001
+  momentum: 0.9
+  weight_decay: 1.0e-4          # UNVERIFIED: not stated in the paper
+  batch_size: 64
+  epochs: 80                    # UNVERIFIED: paper says lr decays after epoch 60, total not stated
+  decay_epoch: 60
+  lr_after_decay: 0.0002
+  warmup_epochs: 1
+eval: {select_by: acc}          # val metric used to pick the checkpoint: acc | ecc | emc

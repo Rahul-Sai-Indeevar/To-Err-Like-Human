@@ -1,0 +1,6 @@
+torch>=2.3
+torchvision
+numpy
+pyyaml
+pillow
+pytest

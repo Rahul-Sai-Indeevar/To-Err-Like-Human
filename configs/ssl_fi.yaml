@@ -1,0 +1,29 @@
+# FixMatch + EMC-adaptive threshold (paper Sec. 4.2.1), FI with 80 / 800 / 1600 labels.
+seed: 0
+output_dir: runs/ssl_fi_n800
+data:
+  root: data/FI
+  splits_dir: data/FI_splits
+  image_size: 224
+  resize: 256
+  num_workers: 8
+model: {name: resnet50, pretrained: true}
+loss: {alpha: 0.0, listmle_reduction: sum, polarity_C: 4}   # alpha>0 uses L_c on the labeled batch
+optim:
+  lr: 0.01                      # UNVERIFIED: tune; FixMatch uses 0.03 from scratch
+  momentum: 0.9
+  weight_decay: 5.0e-4
+  batch_size: 32
+  epochs: 50                    # x iters_per_epoch iterations in total (paper's budget unknown)
+ssl:
+  n_labeled: 800                # FI: 80 / 800 / 1600 ; EmoSet: 400 / 4000 / 8000
+  mu: 3                         # unlabeled batch = mu * batch_size (FixMatch uses 7)
+  iters_per_epoch: 512
+  lambda_u: 1.0
+  ema_decay: 0.999
+  tau: 0.95
+  eps: 0.5                      # 0.5 FI, 0.4 EmoSet
+  tau_min: 0.7
+  tau_max: 0.98
+  rule: ratio                   # ratio = EMC-adaptive | fixed = plain FixMatch baseline
+eval: {select_by: acc}
