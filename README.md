@@ -77,8 +77,9 @@ alpha=0.2 -> 67.3 / 77.5 / 54.9; alpha=1.0 -> 65.7 / 76.2 / 57.3. Expect run-to-
 | Item | Where | What I assumed |
 |---|---|---|
 | Circular order of Mikel's wheel | `emotion.py: WHEEL_ORDER` | Derived so that the paper's Appendix-B ranking for *excitement* is reproduced (tested). Other rows are unchecked. |
-| EMC weight | `metrics.py: emc` | 1/(W-1) on misclassified cells (PDF extraction was ambiguous; this is what gives max 1). |
-| Threshold rule, Eq. 5 | `ssl.py: adaptive_threshold` | PDF text is garbled. Implemented tau' = tau * eps / EMC, clipped to [0.7, 0.98]. |
+| EMC weight | `metrics.py: emc` | 1/(W-1) on misclassified cells, divided by (N - Nc) (verified against paper PDF Eq. 4). |
+| Threshold rule, Eq. 5 | `ssl.py: adaptive_threshold` | `tau' = tau * eps / EMC`, eps=0.5 FI / 0.4 EmoSet, clipped [0.7, 0.98] (verified against paper PDF Sec. 4.2.1). |
+| CE -> combined loss switch | `supervised.py` | Section 4.2.2: train with pure CE then switch to Lc. New `loss.switch_epoch` config (0 = combined loss from start, matching Tables 2-4). |
 | ListMLE aggregation | `losses.py` | Sum over list positions (standard ListMLE). `loss.listmle_reduction: mean` is available. |
 | Weight decay, total epochs | configs | Not given in the paper (only: SGD, lr 1e-3 -> 2e-4 after epoch 60, bs 64, warm-up 1 epoch). |
 | FI split | `splits.py` | FI has no official split; 80/5/15 random. |

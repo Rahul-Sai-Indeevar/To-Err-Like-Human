@@ -4,6 +4,8 @@ Each epoch the pseudo-labels from weakly augmented unlabeled images are treated 
 the predictions on strongly augmented views as 'model output'; EMC of that pair
 (computed from a confusion matrix accumulated during the epoch) sets the next epoch's threshold.
 
+Supports resume-from-checkpoint for long runs (e.g. Kaggle 12-hour sessions).
+
 NOT included: S^2-VER (paper Sec. 4.2.2). Use its official code and plug in L_c there.
 """
 from __future__ import annotations
@@ -19,6 +21,7 @@ import torch
 import torch.nn.functional as F
 from torch.utils.data import DataLoader, RandomSampler
 
+from .checkpoint import latest_checkpoint, load_checkpoint, save_checkpoint
 from .common import (append_jsonl, emotion_tensors, get_device, load_classes,
                      predict_probs, set_seed)
 from .config import load_config, parse_args
@@ -33,10 +36,12 @@ from .models import build_model
 
 def adaptive_threshold(tau: float, eps: float, emc: float, lo: float = 0.7, hi: float = 0.98,
                        rule: str = "ratio") -> float:
-    """Threshold update from the epoch's EMC (higher EMC -> lower threshold).
+    """Threshold update from the epoch's EMC (paper Eq. 5).
 
-    ASSUMPTION TO VERIFY: the formula in the PDF text extraction is garbled. 'ratio' implements
-    tau' = tau * eps / EMC (eps = 0.5 FI, 0.4 EmoSet). 'fixed' = plain FixMatch.
+    tau'_t = tau * eps / EMC_t, clipped to [lo, hi]. eps is a dataset constant
+    (0.5 for FI, 0.4 for EmoSet), NOT Euler's number. Low EMC -> threshold moves
+    up toward tau_max (fewer pseudo-labels); high EMC -> threshold moves down
+    toward tau_min (more pseudo-labels). EMC == eps leaves tau unchanged.
     """
     if rule == "fixed":
         return tau
@@ -57,6 +62,12 @@ class EMA:
             e.mul_(self.decay).add_(p.detach(), alpha=1 - self.decay)
         for eb, b in zip(self.model.buffers(), model.buffers()):
             eb.copy_(b)
+
+    def state_dict(self):
+        return {"model": self.model.state_dict(), "decay": self.decay}
+
+    def load_state_dict(self, ckpt, map_location=None):
+        self.model.load_state_dict(ckpt["model"], strict=False)
 
 
 def run(cfg: dict) -> dict:
@@ -99,7 +110,22 @@ def run(cfg: dict) -> dict:
     sched = torch.optim.lr_scheduler.LambdaLR(opt, lambda k: math.cos(7 * math.pi * k / (16 * total)))
 
     tau, best, best_epoch, sel = s["tau"], -1.0, -1, cfg["eval"]["select_by"]
-    for epoch in range(o["epochs"]):
+    start_epoch = 0
+
+    # ---- resume ----
+    resume_from = cfg.get("resume_from")
+    ckpt_path = resume_from or str(latest_checkpoint(out))
+    if ckpt_path and Path(ckpt_path).exists():
+        ckpt = load_checkpoint(ckpt_path, model, opt, sched, map_location=device)
+        ema.load_state_dict(ckpt.get("ema", {}), map_location=device)
+        start_epoch = ckpt["epoch"] + 1
+        tau = ckpt.get("tau", s["tau"])
+        best = ckpt.get("best_metric", -1.0)
+        best_epoch = ckpt.get("best_epoch", -1)
+        print(f"Resumed from {ckpt_path} at epoch {start_epoch} "
+              f"(tau={tau:.3f}, best {sel}={best:.4f})")
+
+    for epoch in range(start_epoch, o["epochs"]):
         model.train()
         S = torch.zeros(N * N, dtype=torch.long, device=device)  # weak-pseudo-label vs strong-pred
         stats = {"loss": 0.0, "mask": 0.0, "pl_acc": 0.0, "pl_n": 0}
@@ -140,6 +166,10 @@ def run(cfg: dict) -> dict:
         if m[sel] > best:
             best, best_epoch = m[sel], epoch
             torch.save(ema.model.state_dict(), out / "best.pt")
+        # Save a resumable checkpoint every epoch.
+        save_checkpoint(out / "checkpoint.pt", model, opt, epoch, best, best_epoch,
+                        extra={"ema": ema.state_dict(), "tau": tau_next},
+                        scheduler=sched)
 
     ema.model.load_state_dict(torch.load(out / "best.pt", map_location=device))
     probs, labels = predict_probs(ema.model, test_dl, device)
@@ -153,7 +183,10 @@ def run(cfg: dict) -> dict:
 
 def main():
     a = parse_args(__doc__).parse_args()
-    run(load_config(a.config, a.set))
+    cfg = load_config(a.config, a.set)
+    if a.resume:
+        cfg["resume_from"] = a.resume
+    run(cfg)
 
 
 if __name__ == "__main__":

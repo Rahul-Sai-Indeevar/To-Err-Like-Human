@@ -13,6 +13,8 @@ loss:
   alpha: 0.0                    # 0 = pure cross-entropy
   listmle_reduction: sum        # UNVERIFIED: sum | mean (see README)
   polarity_C: 4
+  switch_epoch: 0               # Section 4.2.2: epoch to enable ListMLE (0 = from start;
+                                # >0 = pure CE for epochs [0, switch_epoch), then Lc)
 optim:
   lr: 0.001
   momentum: 0.9

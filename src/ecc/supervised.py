@@ -1,4 +1,6 @@
-"""Supervised training with L_c = L_CE + alpha * L_ListMLE (paper Tables 2-4)."""
+"""Supervised training with L_c = L_CE + alpha * L_ListMLE (paper Tables 2-4).
+Supports resume-from-checkpoint for long runs (e.g. Kaggle 12-hour sessions).
+"""
 from __future__ import annotations
 
 import json
@@ -9,6 +11,7 @@ import numpy as np
 import torch
 from torch.utils.data import DataLoader
 
+from .checkpoint import latest_checkpoint, load_checkpoint, save_checkpoint
 from .common import (append_jsonl, emotion_tensors, get_device, load_classes,
                      predict_probs, set_seed)
 from .config import load_config, parse_args
@@ -45,15 +48,29 @@ def run(cfg: dict) -> dict:
 
     model = build_model(cfg["model"]["name"], len(classes), cfg["model"]["pretrained"]).to(device)
     crit = CombinedLoss(rank, cfg["loss"]["alpha"], cfg["loss"]["listmle_reduction"]).to(device)
+    switch_epoch = cfg["loss"].get("switch_epoch", 0)
     opt = torch.optim.SGD(model.parameters(), lr=o["lr"], momentum=o["momentum"],
                           weight_decay=o["weight_decay"])
     use_amp = bool(cfg.get("amp", False)) and device.type == "cuda"
     scaler = torch.amp.GradScaler("cuda", enabled=use_amp)
 
-    best, best_epoch, sel = -1.0, -1, cfg["eval"]["select_by"]
-    for epoch in range(o["epochs"]):
+    # ---- resume ----
+    start_epoch = 0
+    best, best_epoch = -1.0, -1
+    sel = cfg["eval"]["select_by"]
+    resume_from = cfg.get("resume_from")
+    ckpt_path = resume_from or str(latest_checkpoint(out))
+    if ckpt_path and Path(ckpt_path).exists():
+        ckpt = load_checkpoint(ckpt_path, model, opt, map_location=device)
+        start_epoch = ckpt["epoch"] + 1
+        best = ckpt.get("best_metric", -1.0)
+        best_epoch = ckpt.get("best_epoch", -1)
+        print(f"Resumed from {ckpt_path} at epoch {start_epoch} (best {sel}={best:.4f})")
+
+    for epoch in range(start_epoch, o["epochs"]):
         model.train()
         t0, run_loss = time.time(), 0.0
+        crit.alpha = 0.0 if epoch < switch_epoch else cfg["loss"]["alpha"]
         for it, (x, y) in enumerate(train_dl):
             for g in opt.param_groups:
                 g["lr"] = lr_at(epoch, it, len(train_dl), o)
@@ -74,6 +91,8 @@ def run(cfg: dict) -> dict:
         if m[sel] > best:
             best, best_epoch = m[sel], epoch
             torch.save(model.state_dict(), out / "best.pt")
+        # Save a resumable checkpoint every epoch.
+        save_checkpoint(out / "checkpoint.pt", model, opt, epoch, best, best_epoch)
 
     # final test with the best-on-val checkpoint
     model.load_state_dict(torch.load(out / "best.pt", map_location=device))
@@ -90,7 +109,10 @@ def run(cfg: dict) -> dict:
 
 def main():
     a = parse_args(__doc__).parse_args()
-    run(load_config(a.config, a.set))
+    cfg = load_config(a.config, a.set)
+    if a.resume:
+        cfg["resume_from"] = a.resume
+    run(cfg)
 
 
 if __name__ == "__main__":

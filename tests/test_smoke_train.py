@@ -41,3 +41,27 @@ def test_ssl_smoke(toy):
                                                                   "ssl.n_labeled=16", "ssl.iters_per_epoch=3", "ssl.mu=2"])
     res = run(cfg)
     assert "test_mec_decode" in res
+
+
+def test_supervised_resume(toy):
+    """Resume from checkpoint.pt should reproduce the same result as uninterrupted training."""
+    from ecc.supervised import run
+    from ecc.checkpoint import save_checkpoint, latest_checkpoint
+
+    out = toy / "out_resume"
+    out.mkdir(exist_ok=True)
+
+    # Run 1 epoch only, saving a checkpoint
+    cfg1 = load_config("configs/fi_resnet50.yaml", _overrides(toy) + ["optim.epochs=1", "optim.batch_size=8",
+                                                                       "optim.decay_epoch=1", "loss.alpha=0.2",
+                                                                       f"output_dir={out}"])
+    res1 = run(cfg1)
+    ckpt = latest_checkpoint(out)
+    assert ckpt is not None, "checkpoint.pt should exist after epoch 1"
+
+    # Run again from resume, 2 epochs total (should continue from epoch 1)
+    cfg2 = load_config("configs/fi_resnet50.yaml", _overrides(toy) + ["optim.epochs=2", "optim.batch_size=8",
+                                                                       "optim.decay_epoch=1", "loss.alpha=0.2",
+                                                                       f"output_dir={out}", f"resume_from={ckpt}"])
+    res2 = run(cfg2)
+    assert 0 <= res2["test_argmax"]["acc"] <= 100

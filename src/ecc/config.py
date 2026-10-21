@@ -23,4 +23,6 @@ def parse_args(description: str):
     ap.add_argument("--config", required=True)
     ap.add_argument("--set", nargs="*", default=[], metavar="KEY=VAL",
                     help="override config values, e.g. --set loss.alpha=0.2 optim.epochs=5")
+    ap.add_argument("--resume", default=None, metavar="PATH",
+                    help="path to a checkpoint.pt to resume training from")
     return ap
