@@ -37,16 +37,35 @@ pytest -q            # should pass without any dataset or GPU
 You must download the datasets yourself (not included):
 
 * **FI** (You et al., AAAI 2016) — folders per class: Amusement, Anger, Awe, Contentment, Disgust, Excitement, Fear, Sadness.
-* **EmoSet** — https://github.com/JingyuanYY/EmoSet (check its access instructions/licence).
+  Download from the author's OneDrive: https://onedrive.live.com/?id=%2Fpersonal%2Fab6522e29f6ed9a0%2FDocuments%2FCV%2D20200309T191449Z%2D001%2Fdatasets%2FEmotion%5Fdataset&listurl=%2Fpersonal%2Fab6522e29f6ed9a0%2FDocuments&redeem=aHR0cHM6Ly8xZHJ2Lm1zL3UvcyFBcURaYnBfaUltV3JocHBpZm50Z3hSdXdfNm8yV3c%5FZT11MlR2N0k&ga=1
+  FI is not on Kaggle, so download it locally, resize to 256x256 with `scripts/resize_and_split.py`, then upload as a private Kaggle dataset.
+* **EmoSet** — https://www.kaggle.com/datasets/georgeliil/emoset (118K version, used by the paper).
+  Can be added directly on Kaggle as a public dataset.
 
 ```bash
+# FI (local, then upload to Kaggle as a private dataset)
 ecc-splits --root data/FI --out data/FI_splits            # 80/5/15 stratified random split
-ecc-splits --root data/EmoSet/image --out data/EmoSet_splits   # or reproduce EmoSet's official split yourself
+
+# EmoSet (on Kaggle, mount directly)
+# python scripts/resize_and_split.py --root <emoset-root> --out <kaggle-out>  # optional resize
 ```
 
 Class folder names are lower-cased and must be the 8 Mikel emotions. If you have official train/val/test
 lists (EmoSet ships some), write them as `train.csv/val.csv/test.csv` with columns `path,label` plus `classes.txt`
 (sorted class names) instead — `ecc-splits` is only a convenience.
+
+## Running on Kaggle
+
+The plan is to run training on **Kaggle GPU** (free P100/T4, ~30 GPU-hours/week, 12-hour session cap).
+
+See `kaggle/README.md` for the full guide, or use `kaggle/train.ipynb` directly:
+
+1. Add your private FI dataset (resized 256x256) and the public EmoSet-118K dataset to the notebook.
+2. Edit the two dataset slugs at the top of `kaggle/train.ipynb`.
+3. Run the cells top to bottom — supervised Table 4 runs, then SSL (EMC-adaptive vs FixMatch baseline).
+4. Every epoch saves `checkpoint.pt`, so you can resume across the 12-hour session limit.
+5. Download `/kaggle/working/runs/` before the session ends.
+
 
 ## Run
 
