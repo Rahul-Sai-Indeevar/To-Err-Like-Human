@@ -4,7 +4,7 @@ Each epoch the pseudo-labels from weakly augmented unlabeled images are treated 
 the predictions on strongly augmented views as 'model output'; EMC of that pair
 (computed from a confusion matrix accumulated during the epoch) sets the next epoch's threshold.
 
-Supports resume-from-checkpoint for long runs (e.g. Kaggle 12-hour sessions).
+Supports resume-from-checkpoint and persistent checkpoints for Kaggle sessions.
 
 NOT included: S^2-VER (paper Sec. 4.2.2). Use its official code and plug in L_c there.
 """
@@ -28,6 +28,8 @@ from .config import load_config, parse_args
 from .data import (EmotionCSV, TwoViewTransform, build_transforms,
                    class_balanced_indices)
 from .decode import mec_decode
+from .kaggle_utils import (latest_checkpoint_in, persistent_ckpt_dir,
+                           save_to_persistent)
 from .losses import CombinedLoss
 from .metrics import emc as emc_fn
 from .metrics import evaluate_predictions
@@ -78,6 +80,12 @@ def run(cfg: dict) -> dict:
     out.mkdir(parents=True, exist_ok=True)
     (out / "config.json").write_text(json.dumps(cfg, indent=2))
 
+    # Persistent checkpoint dir (mounted Kaggle Dataset) — survives session restarts.
+    persistent = persistent_ckpt_dir(cfg)
+    if persistent is not None:
+        persistent.mkdir(parents=True, exist_ok=True)
+        print(f"Persistent checkpoint dir: {persistent}")
+
     classes = load_classes(d["splits_dir"])
     N = len(classes)
     W, polarity, rank = emotion_tensors(classes, cfg["loss"]["polarity_C"])
@@ -114,7 +122,9 @@ def run(cfg: dict) -> dict:
 
     # ---- resume ----
     resume_from = cfg.get("resume_from")
-    ckpt_path = resume_from or str(latest_checkpoint(out))
+    # Prefer explicit resume_from, then output_dir, then persistent dir.
+    ckpt_path = (resume_from or str(latest_checkpoint(out)) or
+                 str(latest_checkpoint_in(persistent)))
     if ckpt_path and Path(ckpt_path).exists():
         ckpt = load_checkpoint(ckpt_path, model, opt, sched, map_location=device)
         ema.load_state_dict(ckpt.get("ema", {}), map_location=device)
@@ -166,10 +176,13 @@ def run(cfg: dict) -> dict:
         if m[sel] > best:
             best, best_epoch = m[sel], epoch
             torch.save(ema.model.state_dict(), out / "best.pt")
-        # Save a resumable checkpoint every epoch.
+        # Save a resumable checkpoint every epoch — to both output and persistent dirs.
         save_checkpoint(out / "checkpoint.pt", model, opt, epoch, best, best_epoch,
                         extra={"ema": ema.state_dict(), "tau": tau_next},
                         scheduler=sched)
+        save_to_persistent(out / "checkpoint.pt", persistent)
+        if persistent is not None:
+            save_to_persistent(out / "best.pt", persistent)
 
     ema.model.load_state_dict(torch.load(out / "best.pt", map_location=device))
     probs, labels = predict_probs(ema.model, test_dl, device)

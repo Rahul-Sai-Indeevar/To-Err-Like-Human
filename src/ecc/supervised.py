@@ -1,5 +1,5 @@
 """Supervised training with L_c = L_CE + alpha * L_ListMLE (paper Tables 2-4).
-Supports resume-from-checkpoint for long runs (e.g. Kaggle 12-hour sessions).
+Supports resume-from-checkpoint and persistent checkpoints for Kaggle sessions.
 """
 from __future__ import annotations
 
@@ -17,6 +17,8 @@ from .common import (append_jsonl, emotion_tensors, get_device, load_classes,
 from .config import load_config, parse_args
 from .data import EmotionCSV, build_transforms
 from .decode import mec_decode
+from .kaggle_utils import (latest_checkpoint_in, persistent_ckpt_dir,
+                           save_to_persistent)
 from .losses import CombinedLoss
 from .metrics import confusion_matrix, evaluate_predictions
 from .models import build_model
@@ -35,6 +37,12 @@ def run(cfg: dict) -> dict:
     out = Path(cfg["output_dir"])
     out.mkdir(parents=True, exist_ok=True)
     (out / "config.json").write_text(json.dumps(cfg, indent=2))
+
+    # Persistent checkpoint dir (mounted Kaggle Dataset) — survives session restarts.
+    persistent = persistent_ckpt_dir(cfg)
+    if persistent is not None:
+        persistent.mkdir(parents=True, exist_ok=True)
+        print(f"Persistent checkpoint dir: {persistent}")
 
     classes = load_classes(d["splits_dir"])
     W, polarity, rank = emotion_tensors(classes, cfg["loss"]["polarity_C"])
@@ -59,7 +67,10 @@ def run(cfg: dict) -> dict:
     best, best_epoch = -1.0, -1
     sel = cfg["eval"]["select_by"]
     resume_from = cfg.get("resume_from")
-    ckpt_path = resume_from or str(latest_checkpoint(out))
+
+    # Prefer explicit resume_from, then output_dir, then persistent dir.
+    ckpt_path = (resume_from or str(latest_checkpoint(out)) or
+                 str(latest_checkpoint_in(persistent)))
     if ckpt_path and Path(ckpt_path).exists():
         ckpt = load_checkpoint(ckpt_path, model, opt, map_location=device)
         start_epoch = ckpt["epoch"] + 1
@@ -91,8 +102,11 @@ def run(cfg: dict) -> dict:
         if m[sel] > best:
             best, best_epoch = m[sel], epoch
             torch.save(model.state_dict(), out / "best.pt")
-        # Save a resumable checkpoint every epoch.
+        # Save a resumable checkpoint every epoch — to both output and persistent dirs.
         save_checkpoint(out / "checkpoint.pt", model, opt, epoch, best, best_epoch)
+        save_to_persistent(out / "checkpoint.pt", persistent)
+        if persistent is not None:
+            save_to_persistent(out / "best.pt", persistent)
 
     # final test with the best-on-val checkpoint
     model.load_state_dict(torch.load(out / "best.pt", map_location=device))
