@@ -82,7 +82,7 @@ def make_splits(fi_root: Path, splits_out: Path, classes: list[str], val: float 
         cls_dir = fi_root / "FI" / cls
         for f in sorted(cls_dir.rglob("*")):
             if f.suffix.lower() in EXT_LOW:
-                rows.append((str(f.relative_to(fi_root / "FI")), cls))
+                rows.append((str(f.relative_to(fi_root / "FI")).replace("\\", "/"), cls))
 
     rng = random.Random(seed)
 

@@ -45,7 +45,7 @@ class EmotionCSV(Dataset):
         self.transform = transform
         c2i = {c: i for i, c in enumerate(classes)}
         with open(csv_path) as f:
-            self.items = [(r["path"], c2i[r["label"]]) for r in csv.DictReader(f)]
+            self.items = [(r["path"].replace("\\", "/"), c2i[r["label"]]) for r in csv.DictReader(f)]
         if indices is not None:
             self.items = [self.items[i] for i in indices]
 
