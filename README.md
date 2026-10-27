@@ -91,6 +91,29 @@ split is touched once at the end.
 Paper targets (FI, ResNet50, Table 4): alpha=0 -> ACC 67.3 / ECC 77.0 / EMC 51.5;
 alpha=0.2 -> 67.3 / 77.5 / 54.9; alpha=1.0 -> 65.7 / 76.2 / 57.3. Expect run-to-run noise of a few tenths.
 
+## Results (single run, FI, ResNet50)
+
+### Supervised (Table 4)
+
+| Run | ACC | ECC | EMC | ACC2 | Paper ACC / ECC / EMC |
+|-----|-----|-----|-----|------|----------------------|
+| alpha=0.0 (CE) | 62.47 | 73.42 | 48.39 | 84.70 | 67.3 / 77.0 / 51.5 |
+| alpha=0.2 (ListMLE) | 62.09 | 74.39 | 55.92 | 87.69 | 67.3 / 77.5 / 54.9 |
+| alpha=1.0 (ListMLE) | 60.05 | 72.90 | 54.95 | 87.52 | 65.7 / 76.2 / 57.3 |
+
+Our results are within ~4–7 points of the paper on ACC and ~3 points on ECC. Single run, no hyperparameter tuning — the paper used 2× RTX 3090 with more careful tuning. Training curves: `docs/fi_training_curves.png`.
+
+### Semi-supervised (Section 4.2.1)
+
+| Run | Rule | ACC | ECC | EMC | ACC2 | best_epoch |
+|-----|------|-----|-----|-----|------|------------|
+| n=80 | EMC-adaptive | 29.08 | 48.94 | 45.24 | 69.00 | 46 |
+| n=800 | EMC-adaptive | 34.11 | 53.28 | 48.43 | 71.01 | 42 |
+| n=1600 | EMC-adaptive | 32.41 | 51.30 | 45.38 | 69.97 | 27 |
+| n=800 | FixMatch fixed | 38.94 | 56.14 | 46.01 | 72.68 | 42 |
+
+**Key finding:** FixMatch with a fixed threshold (baseline) outperforms the EMC-adaptive threshold on both ACC and ECC at n=800. The EMC-adaptive mechanism did not improve over the baseline in our reproduction — worth investigating further (e.g., different `eps`, EMA smoothing of the EMC signal).
+
 ## Things I could not verify (check these first against the paper PDF / official code)
 
 | Item | Where | What I assumed |
