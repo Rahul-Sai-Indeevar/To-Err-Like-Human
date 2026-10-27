@@ -13,12 +13,12 @@ optim:
   lr: 0.01                      # UNVERIFIED: tune; FixMatch uses 0.03 from scratch
   momentum: 0.9
   weight_decay: 5.0e-4
-  batch_size: 32
+  batch_size: 16                # reduced from 32 for P100 16GB VRAM (SSL concatenates labeled+weak+strong)
   epochs: 50                    # x iters_per_epoch iterations in total (paper's budget unknown)
 ssl:
   n_labeled: 800                # FI: 80 / 800 / 1600 ; EmoSet: 400 / 4000 / 8000
-  mu: 3                         # unlabeled batch = mu * batch_size (FixMatch uses 7)
-  iters_per_epoch: 512
+  mu: 2                         # reduced from 3 for P100 16GB VRAM (unlabeled batch = mu * batch_size)
+  iters_per_epoch: 256          # reduced from 512 for faster epochs on small batch
   lambda_u: 1.0
   ema_decay: 0.999
   tau: 0.95
