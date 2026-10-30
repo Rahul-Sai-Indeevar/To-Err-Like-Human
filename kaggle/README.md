@@ -44,10 +44,14 @@ recycles. To keep checkpoints alive across sessions, create a persistent Kaggle 
 
 ### Step 0b.1: Create the empty Dataset on Kaggle
 
-1. Go to [Kaggle Datasets](https://www.kaggle.com/datasets) → **New Dataset** → **Private**
-2. Name it something like `ecc-checkpoints`
-3. **Do not upload any files** — leave it empty
-4. Note your dataset slug: `your-username/ecc-checkpoints`
+Kaggle requires at least one file to create a dataset, so you need a placeholder:
+
+1. Create a tiny placeholder file on your computer (e.g. `placeholder.txt` with any content)
+2. Go to [Kaggle Datasets](https://www.kaggle.com/datasets) → **New Dataset** → **Private**
+3. Upload the placeholder file
+4. Name it something like `ecc-checkpoints`
+5. Click **Create Dataset**
+6. Note your dataset slug: `your-username/ecc-checkpoints`
 
 ### Step 0b.2: Mount it in your notebook
 
@@ -68,20 +72,23 @@ recycles. To keep checkpoints alive across sessions, create a persistent Kaggle 
 - In the next session, mount the same Dataset and set `PERSISTENT_DIR` to the same path
 - Training auto-detects `checkpoint.pt` in `PERSISTENT_DIR` and resumes from the last epoch
 
-### Step 0b.4: Save a new Dataset version before session ends
+### Step 0b.4: Auto-save checkpoint versions (optional, recommended)
 
-**Important:** Before your session ends, save a new version of the checkpoint Dataset:
+The notebook includes an auto-save cell that saves a new Kaggle Dataset version after each run. To use it:
 
-1. In the notebook, add a cell at the end:
-   ```python
-   # Save checkpoint Dataset version
-   !kaggle datasets version -p /kaggle/input/your-username/ecc-checkpoints -m "Checkpoint after epoch X"
-   ```
-   Or do it via the Kaggle website: Dataset → **Save new version**
-2. Next session, mount the **latest version** of that Dataset
+1. Get your Kaggle API key from https://www.kaggle.com/settings/account
+2. Add two secrets in **Kaggle Settings → Secrets**:
+   - **Name:** `KAGGLE_USERNAME`, **Value:** your Kaggle username
+   - **Name:** `KAGGLE_KEY`, **Value:** your Kaggle API key
+3. Run the auto-save cell at the end of the notebook — it saves a new version of your checkpoint Dataset automatically
 
-This is **essential for EmoSet** (82K+ images, likely >12 hours per full run). FI should fit
-within one session.
+**Without these secrets:** You must save manually via the Kaggle website (Dataset → Save new version) before each session ends.
+
+### Step 0b.5: How resume works across sessions
+
+1. Session 1: Train for 6 hours → `checkpoint.pt` saved to `PERSISTENT_DIR` → auto-save new Dataset version
+2. Session dies at 12-hour cap → `/kaggle/working` wiped, but Dataset persists
+3. Session 2: Mount same Dataset, set same `PERSISTENT_DIR` → training resumes from last saved epoch
 
 ## Step 1: GitHub token for cloning (Kaggle Settings → Secrets)
 
