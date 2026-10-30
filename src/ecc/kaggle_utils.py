@@ -45,11 +45,21 @@ def persistent_ckpt_dir(cfg: dict) -> Optional[Path]:
 
 
 def save_to_persistent(ckpt_path: Path, persistent_dir: Optional[Path]) -> None:
-    """Copy ``ckpt_path`` into ``persistent_dir`` if configured."""
+    """Copy ``ckpt_path`` into ``persistent_dir`` if configured.
+
+    Kaggle input mounts are read-only, so this silently skips if the
+    directory is not writable. Checkpoints are still saved to the
+    run's output_dir (which is writable). Use the notebook's auto-save
+    cell to upload checkpoints to a Kaggle Dataset via the API.
+    """
     if persistent_dir is None:
         return
-    persistent_dir.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(ckpt_path, persistent_dir / ckpt_path.name)
+    try:
+        persistent_dir.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(ckpt_path, persistent_dir / ckpt_path.name)
+    except OSError:
+        # Read-only filesystem (e.g. Kaggle input dataset mount) — skip silently.
+        pass
 
 
 def latest_checkpoint_in(path: Optional[str | Path]) -> Optional[Path]:
