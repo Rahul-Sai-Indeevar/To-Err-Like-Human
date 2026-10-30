@@ -40,16 +40,45 @@ Upload `kaggle_fi/` as a **private** Kaggle dataset (e.g. `your-username/fi-data
 ## Step 0b: Create a persistent checkpoint Dataset (recommended for EmoSet)
 
 Kaggle free sessions are capped at ~12 hours and `/kaggle/working` is wiped when the container
-recycles. To keep checkpoints alive across sessions:
+recycles. To keep checkpoints alive across sessions, create a persistent Kaggle Dataset:
 
-1. Create a new **private empty** Kaggle Dataset (e.g. `your-username/ecc-checkpoints`).
-2. Add it to your notebook as a dataset input.
-3. In the notebook config, set `persistent_dir=/kaggle/input/your-checkpoint-dataset`.
-4. Every epoch, `checkpoint.pt` and `best.pt` are copied there.
-5. Before the session ends, save a new Dataset version from the notebook outputs (or via the
-   Kaggle UI/API).
-6. Next session, mount the latest version of that dataset — training resumes from the saved
-   checkpoint.
+### Step 0b.1: Create the empty Dataset on Kaggle
+
+1. Go to [Kaggle Datasets](https://www.kaggle.com/datasets) → **New Dataset** → **Private**
+2. Name it something like `ecc-checkpoints`
+3. **Do not upload any files** — leave it empty
+4. Note your dataset slug: `your-username/ecc-checkpoints`
+
+### Step 0b.2: Mount it in your notebook
+
+1. Open your EmoSet notebook on Kaggle
+2. In the sidebar, click **Add data** → select your private `ecc-checkpoints` dataset
+3. Kaggle will mount it at `/kaggle/input/your-username/ecc-checkpoints/` (or similar)
+4. In the notebook config cell, set:
+   ```python
+   PERSISTENT_DIR = "/kaggle/input/your-username/ecc-checkpoints"
+   ```
+   Replace `your-username/ecc-checkpoints` with your actual dataset path.
+
+### Step 0b.3: How it works
+
+- Every epoch, the training script copies `checkpoint.pt` and `best.pt` to `PERSISTENT_DIR`
+- When the 12-hour session limit kills the container, `/kaggle/working` is wiped — but your
+  checkpoint Dataset persists
+- In the next session, mount the same Dataset and set `PERSISTENT_DIR` to the same path
+- Training auto-detects `checkpoint.pt` in `PERSISTENT_DIR` and resumes from the last epoch
+
+### Step 0b.4: Save a new Dataset version before session ends
+
+**Important:** Before your session ends, save a new version of the checkpoint Dataset:
+
+1. In the notebook, add a cell at the end:
+   ```python
+   # Save checkpoint Dataset version
+   !kaggle datasets version -p /kaggle/input/your-username/ecc-checkpoints -m "Checkpoint after epoch X"
+   ```
+   Or do it via the Kaggle website: Dataset → **Save new version**
+2. Next session, mount the **latest version** of that Dataset
 
 This is **essential for EmoSet** (82K+ images, likely >12 hours per full run). FI should fit
 within one session.
@@ -86,12 +115,16 @@ There are two separate notebooks — one per dataset — so results stay in sepa
 
 ## Step 3: Run
 
-Run cells top to bottom:
+Run cells top to bottom (or use **Save and run all (commit)**):
+
 1. Installs torch/torchvision + clones repo with GitHub token
 2. Symlinks datasets into `data/`
 3. Runs smoke tests (`pytest -q`)
 4. Runs supervised training (alpha = 0 / 0.2 / 1.0)
 5. Runs semi-supervised training (EMC-adaptive vs FixMatch baseline)
+6. Creates `emoset_results.zip` for one-click download
+
+**Tip:** Use **Save and run all (commit)** to execute everything without manually running each cell. The notebook will auto-resume from checkpoints if a previous session was interrupted.
 
 ## Step 4: Resume after session timeout
 
