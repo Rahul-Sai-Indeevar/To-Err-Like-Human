@@ -64,13 +64,18 @@ Kaggle requires at least one file to create a dataset, so you need a placeholder
    ```
    Replace `your-username/ecc-checkpoints` with your actual dataset path.
 
-### Step 0b.3: How it works
+### Step 0b.3: How persistent checkpoints work across sessions
 
-- Every epoch, the training script copies `checkpoint.pt` and `best.pt` to `PERSISTENT_DIR`
-- When the 12-hour session limit kills the container, `/kaggle/working` is wiped — but your
-  checkpoint Dataset persists
-- In the next session, mount the same Dataset and set `PERSISTENT_DIR` to the same path
-- Training auto-detects `checkpoint.pt` in `PERSISTENT_DIR` and resumes from the last epoch
+The notebook stores two things in `PERSISTENT_DIR` to survive session restarts:
+
+1. **`checkpoint.pt` and `best.pt`** — saved every epoch during training
+2. **`EmoSet_splits/`** — train/val/test CSVs (generated once, then copied from PERSISTENT_DIR on subsequent sessions)
+
+**Splits timing:**
+- **First session:** ~1–3 minutes to scan all ~82K EmoSet images and generate splits
+- **Subsequent sessions:** <10 seconds — splits are copied from PERSISTENT_DIR (no image scan)
+
+So you only pay the splits generation cost once. After that, `PERSISTENT_DIR` holds both checkpoints and splits, and training resumes from where it left off.
 
 ### Step 0b.4: Auto-save checkpoint versions (optional, recommended)
 
@@ -80,7 +85,8 @@ The notebook includes an auto-save cell that saves a new Kaggle Dataset version 
 2. Add two secrets in **Kaggle Settings → Secrets**:
    - **Name:** `KAGGLE_USERNAME`, **Value:** your Kaggle username
    - **Name:** `KAGGLE_KEY`, **Value:** your Kaggle API key
-3. Run the auto-save cell at the end of the notebook — it saves a new version of your checkpoint Dataset automatically
+3. **Restart the session** after adding secrets — environment variables are only loaded at session start
+4. Run the auto-save cell at the end of the notebook — it saves a new version of your checkpoint Dataset automatically
 
 **Without these secrets:** You must save manually via the Kaggle website (Dataset → Save new version) before each session ends.
 
