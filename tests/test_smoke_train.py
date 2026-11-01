@@ -35,6 +35,14 @@ def test_supervised_smoke(toy):
     assert 0 <= res["test_argmax"]["acc"] <= 100
 
 
+def test_graph_supervised_smoke(toy):
+    from ecc.supervised import run
+    cfg = load_config("configs/fi_resnet50.yaml", _overrides(toy) + ["optim.epochs=1",
+        "optim.batch_size=8", "loss.kind=graph", "loss.alpha=1.0", "loss.gamma=1.0", "loss.beta=0.01"])
+    res = run(cfg)
+    assert 0 <= res["test_argmax"]["ecc"] <= 100
+
+
 def test_ssl_smoke(toy):
     from ecc.ssl import run
     cfg = load_config("configs/ssl_fi.yaml", _overrides(toy) + ["optim.epochs=2", "optim.batch_size=8",

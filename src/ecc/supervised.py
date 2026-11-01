@@ -19,7 +19,7 @@ from .data import EmotionCSV, build_transforms
 from .decode import mec_decode
 from .kaggle_utils import (latest_checkpoint_in, persistent_ckpt_dir,
                            save_to_persistent)
-from .losses import CombinedLoss
+from .graph import build_loss
 from .metrics import confusion_matrix, evaluate_predictions
 from .models import build_model
 
@@ -55,7 +55,7 @@ def run(cfg: dict) -> dict:
                                  loader(mk("test", False), False))
 
     model = build_model(cfg["model"]["name"], len(classes), cfg["model"]["pretrained"]).to(device)
-    crit = CombinedLoss(rank, cfg["loss"]["alpha"], cfg["loss"]["listmle_reduction"]).to(device)
+    crit = build_loss(cfg["loss"], W, rank).to(device)
     switch_epoch = cfg["loss"].get("switch_epoch", 0)
     opt = torch.optim.SGD(model.parameters(), lr=o["lr"], momentum=o["momentum"],
                           weight_decay=o["weight_decay"])

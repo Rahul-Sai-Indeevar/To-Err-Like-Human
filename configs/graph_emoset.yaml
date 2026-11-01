@@ -1,0 +1,29 @@
+# Full-backbone GSP extension; defaults in original configs are unchanged.
+seed: 0
+amp: false
+output_dir: runs/graph_emoset
+data:
+  root: data/emoset_graph
+  splits_dir: data/emoset_graph
+  image_size: 160
+  resize: 192
+  num_workers: 0
+model: {name: resnet18, pretrained: true}
+loss:
+  kind: graph
+  alpha: 1.0
+  gamma: 1.0
+  beta: 0.01
+  topology: complete
+  polarity_C: 4
+  switch_epoch: 0
+optim:
+  lr: 0.001
+  momentum: 0.9
+  weight_decay: 0.0001
+  batch_size: 32
+  epochs: 6
+  decay_epoch: 4
+  lr_after_decay: 0.0002
+  warmup_epochs: 1
+eval: {select_by: ecc}

@@ -1,5 +1,12 @@
 # ecc-ver
 
+## Graph signal processing extension
+
+Idea 1 is implemented on branch `experiment/graph-spectral-emotion` with an
+opt-in graph spectral loss, graph error-energy analysis, matched baselines and
+real EmoSet experiments. See [protocol and reproduction](docs/GRAPH_EXPERIMENT.md).
+Generated local findings are in `outputs/graph_experiment/REPORT.md`.
+
 Independent re-implementation of **"To Err Like Human: Affective Bias-Inspired Measures for Visual
 Emotion Recognition Evaluation"** (NeurIPS 2024) — ECC / EMC metrics, the ListMLE-based training
 loss, and an EMC-adaptive threshold for FixMatch — plus a place to run your own improvements.
