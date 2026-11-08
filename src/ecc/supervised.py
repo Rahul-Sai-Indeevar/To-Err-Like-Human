@@ -38,11 +38,17 @@ def run(cfg: dict) -> dict:
     out.mkdir(parents=True, exist_ok=True)
     (out / "config.json").write_text(json.dumps(cfg, indent=2))
 
-    # Persistent checkpoint dir (mounted Kaggle Dataset) — survives session restarts.
+    # Persistent checkpoint dir (writable directory) — survives session restarts.
+    # NOTE: Kaggle input mounts (/kaggle/input/) are read-only. Use a writable path
+    # like /kaggle/working/checkpoints/ or leave empty to disable persistence.
     persistent = persistent_ckpt_dir(cfg)
     if persistent is not None:
-        persistent.mkdir(parents=True, exist_ok=True)
-        print(f"Persistent checkpoint dir: {persistent}")
+        try:
+            persistent.mkdir(parents=True, exist_ok=True)
+            print(f"Persistent checkpoint dir: {persistent}")
+        except OSError:
+            print(f"Persistent checkpoint dir not writable: {persistent} (ignoring)")
+            persistent = None
 
     classes = load_classes(d["splits_dir"])
     W, polarity, rank = emotion_tensors(classes, cfg["loss"]["polarity_C"])
