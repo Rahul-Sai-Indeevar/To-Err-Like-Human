@@ -1,0 +1,18 @@
+[
+  {
+    "path": "data/train-00000-of-00018.parquet",
+    "matches_remote_lfs_sha256": true
+  },
+  {
+    "path": "data/train-00001-of-00018.parquet",
+    "matches_remote_lfs_sha256": true
+  },
+  {
+    "path": "data/val-00000-of-00002.parquet",
+    "matches_remote_lfs_sha256": true
+  },
+  {
+    "path": "data/test-00000-of-00004.parquet",
+    "matches_remote_lfs_sha256": true
+  }
+]

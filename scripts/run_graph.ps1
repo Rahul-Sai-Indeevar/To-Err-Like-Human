@@ -3,12 +3,13 @@ $ErrorActionPreference = 'Stop'
 $repo = Split-Path $PSScriptRoot -Parent
 Set-Location -LiteralPath $repo
 $env:PYTHONPATH = "$repo/src"
-if (Test-Path -LiteralPath "$repo/work/cuda_runtime/torch") {
+if (($Stage -ne 'probe') -and ($Stage -ne 'test') -and (Test-Path -LiteralPath "$repo/work/cuda_runtime/torch")) {
     $env:PYTHONPATH = "$repo/work/cuda_runtime;$repo/src"
 }
 $env:TORCH_HOME = "$repo/data/torch_cache"
 $env:OMP_NUM_THREADS = '6'
 $env:MKL_NUM_THREADS = '6'
+$env:MPLCONFIGDIR = "$repo/work/matplotlib"
 $env:TEMP = "$repo/work/tmp"
 $env:TMP = "$repo/work/tmp"
 New-Item -ItemType Directory -Force -Path "$repo/work/tmp" | Out-Null

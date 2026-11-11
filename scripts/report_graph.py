@@ -8,7 +8,7 @@ import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from ecc.emotion import build_cost_matrix, polarity_vector
+from ecc.emotion import build_cost_matrix, polarity_vector, WHEEL_ORDER
 from ecc.graph import graph_basis, spectral_weights
 from ecc.metrics import evaluate_predictions
 
@@ -36,6 +36,27 @@ axes[2].set_title("Fiedler vector (sign is arbitrary)")
 fig.tight_layout()
 fig.savefig(BASE / "graph_theory.png")
 plt.close(fig)
+F = np.exp(2j * np.pi * np.outer(np.arange(8), np.arange(8)) / 8) / np.sqrt(8)
+_, L1, _, _ = graph_basis(build_cost_matrix(WHEEL_ORDER, C=1))
+_, L4, _, U4 = graph_basis(build_cost_matrix(WHEEL_ORDER, C=4))
+B1 = F.conj().T @ L1 @ F
+B4 = F.conj().T @ L4 @ F
+dft_off_diagonal = float(np.linalg.norm(B4 - np.diag(np.diag(B4))))
+fig, axes = plt.subplots(1, 3, figsize=(13, 4))
+for ax, matrix, title in zip(
+    axes,
+    [B1, B4, U4.T @ L4 @ U4],
+    [
+        "C=1: DFT diagonalizes L",
+        "C=4: DFT leaves mode coupling",
+        "C=4: GFT diagonalizes L",
+    ],
+):
+    ax.imshow(np.abs(matrix), cmap="magma")
+    ax.set(title=title, xlabel="Mode", ylabel="Mode")
+fig.tight_layout()
+fig.savefig(BASE / "dft_vs_gft.png")
+plt.close(fig)
 fig, ax = plt.subplots(figsize=(8, 4))
 for tau in [0, 0.25, 1, 3]:
     ax.plot(v, np.exp(-tau * v), "o-", label=f"t={tau}")
@@ -47,6 +68,18 @@ ax.set(
 ax.legend()
 fig.tight_layout()
 fig.savefig(BASE / "heat_filter.png")
+plt.close(fig)
+fig, ax = plt.subplots(figsize=(8, 4))
+for beta in [0.01, 0.1, 1.0]:
+    ax.plot(v, 1 / (1 + beta * v**2), "o-", label=f"beta={beta}")
+ax.set(
+    xlabel="Graph frequency (lambda)",
+    ylabel="Reference target-filter gain",
+    title="Quadratic objective reference: 1 / (1 + beta lambda^2)",
+)
+ax.legend()
+fig.tight_layout()
+fig.savefig(BASE / "quadratic_filter.png")
 plt.close(fig)
 theory = {
     "classes": classes,
@@ -101,11 +134,20 @@ lines += [
     "",
     "The Dirichlet identity is p^T L p = 1/2 sum_ij A_ij (p_i-p_j)^2 = sum_k lambda_k p_hat_k^2. Thus high graph frequency means rapid variation across strongly connected emotion vertices. No physiological time or physical hertz is involved.",
     "",
+    f"Classical DFT connection: in circular wheel order, setting C=1 makes A and L circulant. The ordinary eight-point complex DFT then diagonalizes L (off-diagonal norm {np.linalg.norm(B1 - np.diag(np.diag(B1))):.3e}). At C=4 the polarity boundary breaks that rotational invariance: DFT-domain off-diagonal coupling has Frobenius norm {dft_off_diagonal:.6f}. The graph eigenbasis restores diagonalization. Thus this is an explicit generalization of classical Fourier-mode analysis to a nonuniform label graph, not merely use of an unrelated eigendecomposition.",
+    "",
+    "![Classical DFT versus graph Fourier diagonalization](dft_vs_gft.png)",
+    "",
     f"Computed eigenvalues: {np.round(v, 6).tolist()}. The Fiedler vector separates polarity: {theory['fiedler_sign_separates_polarity']}; absolute correlation with the polarity vector: {theory['fiedler_polarity_abs_correlation']:.6f}. This follows from the chosen label geometry and is not a learned discovery about human brains. Eigenvector signs are arbitrary.",
     "",
     "Implemented objective: CE + alpha [sum_(k>0) lambda_k^(-gamma) |u_k^T(p-y)|^2 + beta p^T L p]. Default alpha=1, gamma=1, beta=0.01. The spectral residual term weights LOW-frequency errors more heavily. For gamma=1 it equals (p-y)^T L^+ (p-y), using the Laplacian pseudoinverse. It is an inverse-order graph norm, not the usual positive-order Sobolev/Dirichlet penalty. It is not itself a low-pass filter applied to p. A true heat filter has response exp(-t lambda); its response is plotted separately. At gamma=0 the spectral residual term equals the Brier error because the residual DC component vanishes.",
     "",
-    "Both p and one-hot y sum to one, so their residual has zero DC. Excluding the zero eigenvalue is mathematically necessary. The Dirichlet penalty alone favors a constant (uniform) probability vector; CE is required to preserve class discrimination. Smaller energy is not automatically higher accuracy. The supplied text's claims that ListMLE is computationally heavy, that EMC is an SNR, or that weighted confusion scoring is a physical matched filter are not established by these experiments.",
+    "Both p and one-hot y sum to one, so their residual has zero DC. Excluding the zero eigenvalue is mathematically necessary. The Dirichlet penalty alone favors a constant (uniform) probability vector; the fidelity and CE terms oppose this collapse. Smaller energy is not automatically higher accuracy. The supplied text's claims that ListMLE is computationally heavy, that EMC is an SNR, or that weighted confusion scoring is a physical matched filter are not established by these experiments.",
+    "",
+    "A stronger theoretical prediction follows by isolating the quadratic auxiliary objective and temporarily ignoring CE and probability nonnegativity. For each non-DC mode, minimizing lambda^(-gamma)(p_hat-y_hat)^2 + beta lambda p_hat^2 gives p_hat = y_hat / (1 + beta lambda^(gamma+1)). Keep DC fixed to preserve unit mass. Thus the unconstrained quadratic reference solution is a graph low-pass response. This is not an exact solution of softmax-constrained CE training; the reference kernel is not guaranteed to map every distribution to nonnegative probabilities.",
+    f"With gamma=1 and beta=0.01, the reference gain is {1 / (1 + 0.01 * v[1] ** 2):.6f} on the first non-DC mode and {1 / (1 + 0.01 * v[-1] ** 2):.6f} on the highest mode. Therefore the proposed beta supplies only mild smoothing on this graph. A small difference from the beta=0 ablation is theoretically plausible, rather than evidence that the transform is broken.",
+    "",
+    "![Quadratic auxiliary-objective filter response](quadratic_filter.png)",
     "",
     "GSEE is defined here as mean inverse-eigenvalue-weighted probability residual energy. It is a descriptive experimental quantity, not a validated replacement for ECC/EMC. Per-mode mean squared residuals are graph error energy, not an estimated stationary PSD. Repeated eigenvalues must be interpreted using total eigenspace energy rather than individual basis vectors.",
     "",
@@ -264,12 +306,16 @@ for stage in ["probe", "finetune"]:
                 pairs.append(100 * (1 / W[y, pg] - 1 / W[y, pc]))
         if pairs:
             d = np.mean(pairs, axis=0)
+            strata = [np.flatnonzero(y == c) for c in np.unique(y)]
             for _ in range(2000):
-                diffs.append(float(d[rng.integers(0, len(d), len(d))].mean()))
+                indices = np.concatenate(
+                    [rng.choice(group, len(group), replace=True) for group in strata]
+                )
+                diffs.append(float(d[indices].mean()))
             low, high = np.quantile(diffs, [0.025, 0.975])
             delta = float(d.mean())
             lines += [
-                f"Graph minus CE ECC: {delta:.3f} percentage points. Paired image-bootstrap 95% interval: [{low:.3f}, {high:.3f}]. The same resampled image indices are shared across seeds. This interval is conditional on these trained models and this shard subset; it does not estimate generalization across all possible training seeds or populations.",
+                f"Graph minus CE ECC: {delta:.3f} percentage points. Class-stratified paired image-bootstrap 95% interval: [{low:.3f}, {high:.3f}]. The same resampled image indices are shared across seeds and class counts remain fixed. This interval is conditional on these trained models and this shard subset; it does not estimate generalization across all possible training seeds or populations.",
                 "",
             ]
             if low > 0:

@@ -146,3 +146,20 @@ For S²-VER use https://github.com/exped1230/S2-VER and port `adaptive_threshold
 5. Sweep the polarity constant `loss.polarity_C` and the wheel definition.
 
 Always report mean ± std over >= 3 seeds before claiming an improvement.
+
+### Completed medium-data GSP experiment
+
+The completed study used 7,200 balanced real EmoSet images, 21 frozen-feature
+runs and 9 full-backbone runs. All 24 tests passed; all 30 saved runs were
+verified and checkpoint replay matched saved predictions exactly.
+
+Full fine-tuning mean over 3 seeds: CE ACC 58.90 / ECC 71.48 / EMC 51.30;
+ListMLE 57.52 / 70.97 / 53.77; graph loss 60.02 / 72.32 / 51.80.
+Graph-minus-CE ECC was +0.842 percentage points, with a class-stratified paired
+image-bootstrap 95% interval [0.157, 1.501], conditional on these trained models
+and the selected subset. Frozen-feature ECC differences were inconclusive.
+These are six-epoch pilot results, not a full NeurIPS benchmark reproduction.
+
+See [the complete theory and findings](docs/graph_results/REPORT.md),
+[verification](docs/graph_results/verification.json), and
+[reproduction instructions](docs/GRAPH_EXPERIMENT.md).

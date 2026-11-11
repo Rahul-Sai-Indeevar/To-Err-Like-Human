@@ -34,6 +34,20 @@ def test_transform_energy_and_dirichlet_identity():
     assert np.allclose(np.sum(x * x), np.sum((U.T @ x) ** 2))
     assert np.allclose(x @ L @ x, 0.5 * np.sum(A * (x[:, None] - x[None, :]) ** 2))
     assert np.allclose(x @ L @ x, np.sum(v * (U.T @ x) ** 2))
+    # The affine-mass quadratic optimum has rational low-pass response.
+    beta = 0.01
+    y = np.eye(8)[0]
+    K = U @ np.diag(spectral_weights(v)) @ U.T
+    p = U @ ((U.T @ y) / (1 + beta * v**2))
+    assert np.allclose(p.sum(), 1)
+    assert np.linalg.norm(K @ (p - y) + beta * L @ p) < 1e-12
+    # Ordinary DFT is recovered for the rotationally invariant C=1 wheel.
+    F = np.exp(2j * np.pi * np.outer(np.arange(8), np.arange(8)) / 8) / np.sqrt(8)
+    _, ring_L, _, _ = graph_basis(build_cost_matrix(WHEEL_ORDER, C=1))
+    ring_spectrum = F.conj().T @ ring_L @ F
+    assert np.linalg.norm(ring_spectrum - np.diag(np.diag(ring_spectrum))) < 1e-12
+    broken = F.conj().T @ L @ F
+    assert np.linalg.norm(broken - np.diag(np.diag(broken))) > 0.01
 
 
 def test_permutation_invariance_and_gradients():

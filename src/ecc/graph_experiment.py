@@ -239,6 +239,7 @@ def run(args):
             previous["args"]["epochs"] != args.epochs
             or previous["manifest"] != manifest
             or previous["device"] != str(device)
+            or previous["torch"] != torch.__version__
         ):
             raise ValueError(
                 "Existing stage uses a different protocol; use a fresh output directory"
@@ -256,6 +257,19 @@ def run(args):
             "image_size": 160,
             "resize": 192,
             "pretrained": "ResNet18_Weights.IMAGENET1K_V1",
+            "optimizer": {
+                "name": "AdamW",
+                "lr": 0.003 if args.stage == "probe" else 0.0001,
+                "weight_decay": 1e-4,
+                "batch_size": 256 if args.stage == "probe" else args.batch_size,
+                "gradient_clip_norm": 5.0,
+            },
+            "train_augmentation": "none (fixed features)"
+            if args.stage == "probe"
+            else "random crop 160 of resized 192; horizontal flip p=0.5",
+            "checkpoint_model": "Linear(512,8)"
+            if args.stage == "probe"
+            else "Sequential(Uint8Normalize(), ResNet18(num_classes=8))",
         },
     )
     results = []
