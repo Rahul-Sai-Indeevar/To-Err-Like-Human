@@ -1,0 +1,26 @@
+{
+  "ce_seed0": {
+    "max_probability_difference": 0.001950979232788086,
+    "argmax_agreement": 0.9997742026531188
+  },
+  "ce_seed1": {
+    "max_probability_difference": 0.002224534749984741,
+    "argmax_agreement": 0.9997742026531188
+  },
+  "ce_seed2": {
+    "max_probability_difference": 0.0022072196006774902,
+    "argmax_agreement": 0.9997177533163986
+  },
+  "graph_a0p3_seed0": {
+    "max_probability_difference": 0.0023314356803894043,
+    "argmax_agreement": 0.9997177533163986
+  },
+  "graph_a0p3_seed1": {
+    "max_probability_difference": 0.0019511282444000244,
+    "argmax_agreement": 0.9997742026531188
+  },
+  "graph_a0p3_seed2": {
+    "max_probability_difference": 0.0019497871398925781,
+    "argmax_agreement": 0.9996048546429579
+  }
+}

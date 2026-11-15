@@ -1,0 +1,36 @@
+{
+  "verified_original_runs": 15,
+  "verified_epochs_each": 8,
+  "verified_frequency_evaluations": 96,
+  "test_images_per_evaluation": 17715,
+  "image_model_predictions": 1700640,
+  "metric_recomputation": "ACC/ECC/EMC/ACC2/GSEE recomputed from each of 96 saved probability arrays",
+  "actual_sampling": "all original test rows, in source order",
+  "protocol_description_note": "The executed runner's generic sample text said balanced subset; per_class=0 and selected row IDs verify that the actual evaluation used the entire test split.",
+  "checkpoint_replay": {
+    "ce_seed0": {
+      "max_probability_difference": 0.001950979232788086,
+      "argmax_agreement": 0.9997742026531188
+    },
+    "ce_seed1": {
+      "max_probability_difference": 0.002224534749984741,
+      "argmax_agreement": 0.9997742026531188
+    },
+    "ce_seed2": {
+      "max_probability_difference": 0.0022072196006774902,
+      "argmax_agreement": 0.9997177533163986
+    },
+    "graph_a0p3_seed0": {
+      "max_probability_difference": 0.0023314356803894043,
+      "argmax_agreement": 0.9997177533163986
+    },
+    "graph_a0p3_seed1": {
+      "max_probability_difference": 0.0019511282444000244,
+      "argmax_agreement": 0.9997742026531188
+    },
+    "graph_a0p3_seed2": {
+      "max_probability_difference": 0.0019497871398925781,
+      "argmax_agreement": 0.9996048546429579
+    }
+  }
+}

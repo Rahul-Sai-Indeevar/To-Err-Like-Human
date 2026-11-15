@@ -163,3 +163,23 @@ These are six-epoch pilot results, not a full NeurIPS benchmark reproduction.
 See [the complete theory and findings](docs/graph_results/REPORT.md),
 [verification](docs/graph_results/verification.json), and
 [reproduction instructions](docs/GRAPH_EXPERIMENT.md).
+
+### Full EmoSet Kaggle recovery and spatial-frequency study
+
+All 15 Kaggle runs completed eight epochs; the reported interruption was an
+export-status bug (`st_size()` rather than the integer property `st_size`).
+The repaired notebook is `kaggle/sp_full_alpha_sweep_fixed.ipynb`.
+
+The full-data validation-selected graph coefficient is alpha=0.3. Its original
+Kaggle test ACC/ECC are 71.252/80.491 versus CE 70.893/80.223 (three seeds).
+A subsequent frozen-checkpoint study evaluated 16 image-frequency/phase
+conditions on all 17,715 test images for six models: 96 evaluations, 1,700,640
+image-model predictions. Graph regularization did not confer uniform spatial
+robustness: at low-pass cutoff 0.05 cycles/pixel its ECC was 3.147 points below
+CE. These are exploratory analyses on an already-inspected test split.
+
+See [the complete recovery and findings](docs/full_spatial_frequency/REPORT.md),
+[verification](docs/full_spatial_frequency/verification.json), and
+`kaggle/sp_fft_followup.ipynb` for a Kaggle reproduction. The local report is
+`outputs/full_spatial_frequency/REPORT.html`; run commands are included there.
+All 29 tests pass. Original Downloads archives and notebooks are preserved.
