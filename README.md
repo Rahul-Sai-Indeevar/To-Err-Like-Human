@@ -20,6 +20,7 @@ src/ecc/
 configs/         fi_resnet50.yaml, emoset_resnet50.yaml, ssl_fi.yaml
 scripts/         run_table4.sh, run_ssl_sweep.sh
 tests/           metrics, losses, threshold, CPU end-to-end smoke tests
+docs/plots/      Generated plots
 ```
 
 ## Setup
@@ -51,9 +52,13 @@ Class folder names are lower-cased and must be the 8 Mikel emotions. If you have
 python -m ecc.supervised --config configs/fi_resnet50.yaml --set loss.alpha=0.0 output_dir=runs/fi_r50_a0
 python -m ecc.supervised --config configs/fi_resnet50.yaml --set loss.alpha=0.2 output_dir=runs/fi_r50_a0.2
 python -m ecc.supervised --config configs/fi_resnet50.yaml --set loss.alpha=1.0 output_dir=runs/fi_r50_a1.0
-bash scripts/run_table4.sh                       # all backbones x alphas
 
-# Step 2 - semi-supervised (paper 4.2.1): FixMatch baseline vs EMC threshold
+# Step 2 - supervised, EmoSet, ResNet50
+python -m ecc.supervised --config configs/emoset_resnet50.yaml --set loss.alpha=0.0 output_dir=runs/emoset_r50_a0
+python -m ecc.supervised --config configs/emoset_resnet50.yaml --set loss.alpha=0.2 output_dir=runs/emoset_r50_a0.2
+python -m ecc.supervised --config configs/emoset_resnet50.yaml --set loss.alpha=1.0 output_dir=runs/emoset_r50_a1.0
+
+# Step 3 - semi-supervised (paper 4.2.1): FixMatch baseline vs EMC threshold
 python -m ecc.ssl --config configs/ssl_fi.yaml --set ssl.rule=fixed
 python -m ecc.ssl --config configs/ssl_fi.yaml --set ssl.rule=ratio
 bash scripts/run_ssl_sweep.sh
@@ -75,9 +80,9 @@ All experiments run on EmoSet-118K and FI datasets with ResNet50 backbone. Error
 | FI | CE | 0.0 | 62.47 | 73.42 | 48.39 | 84.70 | 67.3 / 77.0 / 51.5 |
 | FI | ListMLE | 0.2 | 62.09 | 74.39 | 55.92 | 87.69 | 67.3 / 77.5 / 54.9 |
 | FI | ListMLE | 1.0 | 60.05 | 72.90 | 54.95 | 87.52 | 65.7 / 76.2 / 57.3 |
-| EmoSet | CE | 0.0 | 75.01 | 83.61 | 59.97 | 87.69 | — |
-| EmoSet | ListMLE | 0.2 | 75.01 | 83.62 | 59.97 | 87.69 | — |
-| EmoSet | ListMLE | 1.0 | 73.87 | 82.92 | 60.69 | 93.67 | — |
+| EmoSet | CE | 0.0 | 75.01 | 83.61 | 59.97 | 87.69 | 76.3 / 84.0 / 58.5 |
+| EmoSet | ListMLE | 0.2 | 75.01 | 83.62 | 59.97 | 87.69 | 75.5 / 84.1 / 60.1 |
+| EmoSet | ListMLE | 1.0 | 73.87 | 82.92 | 60.69 | 93.67 | 74.5 / 83.3 / 61.3 |
 
 ### Semi-Supervised (Section 4.2.1) — EmoSet
 
@@ -88,7 +93,15 @@ All experiments run on EmoSet-118K and FI datasets with ResNet50 backbone. Error
 | 4000 | fixed (FixMatch baseline) | 27.66 | 47.99 | 46.09 | 69.00 | 47 |
 | 8000 | fixed | 39.54 | 56.87 | 46.01 | 72.68 | 49 |
 
-### Things I could not verify (check these first against the paper PDF / official code)
+### Training Curves
+
+![Supervised metrics comparison](docs/plots/supervised_metrics.png)
+
+![Paper vs Our results - ACC](docs/plots/paper_vs_ours_acc.png)
+
+![SSL results comparison](docs/plots/ssl_results.png)
+
+## Things I could not verify (check these first against the paper PDF / official code)
 
 | Item | Where | What I assumed |
 |---|---|---|
