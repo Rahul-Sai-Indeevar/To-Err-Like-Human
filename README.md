@@ -1,8 +1,6 @@
 # ecc-ver
 
-Independent re-implementation of **"To Err Like Human: Affective Bias-Inspired Measures for Visual
-Emotion Recognition Evaluation"** (NeurIPS 2024) — ECC / EMC metrics, the ListMLE-based training
-loss, and an EMC-adaptive threshold for FixMatch — plus a place to run your own improvements.
+Independent re-implementation of **"To Err Like Human: Affective Bias-Inspired Measures for Visual Emotion Recognition Evaluation"** (NeurIPS 2024) — ECC / EMC metrics, the ListMLE-based training loss, and an EMC-adaptive threshold for FixMatch — plus a place to run your own improvements.
 
 Official code (partial, used only for cross-checking): https://github.com/ZhaoChenxi-nku/ECC
 
@@ -37,35 +35,14 @@ pytest -q            # should pass without any dataset or GPU
 You must download the datasets yourself (not included):
 
 * **FI** (You et al., AAAI 2016) — folders per class: Amusement, Anger, Awe, Contentment, Disgust, Excitement, Fear, Sadness.
-  Download from the author's OneDrive: https://onedrive.live.com/?id=%2Fpersonal%2Fab6522e29f6ed9a0%2FDocuments%2FCV%2D20200309T191449Z%2D001%2Fdatasets%2FEmotion%5Fdataset&listurl=%2Fpersonal%2Fab6522e29f6ed9a0%2FDocuments&redeem=aHR0cHM6Ly8xZHJ2Lm1zL3UvcyFBcURaYnBfaUltV3JocHBpZm50Z3hSdXdfNm8yV3c%5FZT11MlR2N0k&ga=1
-  FI is not on Kaggle, so download it locally, resize to 256x256 with `scripts/resize_and_split.py`, then upload as a private Kaggle dataset.
-* **EmoSet** — https://www.kaggle.com/datasets/georgeliil/emoset (118K version, used by the paper).
-  Can be added directly on Kaggle as a public dataset.
+* **EmoSet** — https://github.com/JingyuanYY/EmoSet (check its access instructions/licence).
 
 ```bash
-# FI (local, then upload to Kaggle as a private dataset)
 ecc-splits --root data/FI --out data/FI_splits            # 80/5/15 stratified random split
-
-# EmoSet (on Kaggle, mount directly)
-# python scripts/resize_and_split.py --root <emoset-root> --out <kaggle-out>  # optional resize
+ecc-splits --root data/EmoSet/image --out data/EmoSet_splits   # or reproduce EmoSet's official split yourself
 ```
 
-Class folder names are lower-cased and must be the 8 Mikel emotions. If you have official train/val/test
-lists (EmoSet ships some), write them as `train.csv/val.csv/test.csv` with columns `path,label` plus `classes.txt`
-(sorted class names) instead — `ecc-splits` is only a convenience.
-
-## Running on Kaggle
-
-The plan is to run training on **Kaggle GPU** (free P100/T4, ~30 GPU-hours/week, 12-hour session cap).
-
-See `kaggle/README.md` for the full guide, or use `kaggle/train.ipynb` directly:
-
-1. Add your private FI dataset (resized 256x256) and the public EmoSet-118K dataset to the notebook.
-2. Edit the two dataset slugs at the top of `kaggle/train.ipynb`.
-3. Run the cells top to bottom — supervised Table 4 runs, then SSL (EMC-adaptive vs FixMatch baseline).
-4. Every epoch saves `checkpoint.pt`, so you can resume across the 12-hour session limit.
-5. Download `/kaggle/working/runs/` before the session ends.
-
+Class folder names are lower-cased and must be the 8 Mikel emotions. If you have official train/val/test lists (EmoSet ships some), write them as `train.csv/val.csv/test.csv` with columns `path,label` plus `classes.txt` (sorted class names) instead — `ecc-splits` is only a convenience.
 
 ## Run
 
@@ -73,6 +50,7 @@ See `kaggle/README.md` for the full guide, or use `kaggle/train.ipynb` directly:
 # Step 1 - supervised, FI, ResNet50, pure CE then ListMLE (paper Table 4)
 python -m ecc.supervised --config configs/fi_resnet50.yaml --set loss.alpha=0.0 output_dir=runs/fi_r50_a0
 python -m ecc.supervised --config configs/fi_resnet50.yaml --set loss.alpha=0.2 output_dir=runs/fi_r50_a0.2
+python -m ecc.supervised --config configs/fi_resnet50.yaml --set loss.alpha=1.0 output_dir=runs/fi_r50_a1.0
 bash scripts/run_table4.sh                       # all backbones x alphas
 
 # Step 2 - semi-supervised (paper 4.2.1): FixMatch baseline vs EMC threshold
@@ -84,37 +62,33 @@ bash scripts/run_ssl_sweep.sh
 python -m ecc.evaluate --config configs/fi_resnet50.yaml --ckpt runs/fi_r50_a0.2/best.pt
 ```
 
-Each run writes `config.json`, `history.jsonl`, `best.pt`, `results.json` (test metrics with argmax and
-with the MEC-decoding extension) under `output_dir`. Checkpoint selection uses the **val** split; the test
-split is touched once at the end.
+Each run writes `config.json`, `history.jsonl`, `best.pt`, `results.json` (test metrics with argmax and with the MEC-decoding extension) under `output_dir`. Checkpoint selection uses the **val** split; the test split is touched once at the end.
 
-Paper targets (FI, ResNet50, Table 4): alpha=0 -> ACC 67.3 / ECC 77.0 / EMC 51.5;
-alpha=0.2 -> 67.3 / 77.5 / 54.9; alpha=1.0 -> 65.7 / 76.2 / 57.3. Expect run-to-run noise of a few tenths.
+## Results
 
-## Results (single run, FI, ResNet50)
+All experiments run on EmoSet-118K and FI datasets with ResNet50 backbone. Error bars not reported (single run).
 
-### Supervised (Table 4)
+### Supervised (Paper Table 4)
 
-| Run | ACC | ECC | EMC | ACC2 | Paper ACC / ECC / EMC |
-|-----|-----|-----|-----|------|----------------------|
-| alpha=0.0 (CE) | 62.47 | 73.42 | 48.39 | 84.70 | 67.3 / 77.0 / 51.5 |
-| alpha=0.2 (ListMLE) | 62.09 | 74.39 | 55.92 | 87.69 | 67.3 / 77.5 / 54.9 |
-| alpha=1.0 (ListMLE) | 60.05 | 72.90 | 54.95 | 87.52 | 65.7 / 76.2 / 57.3 |
+| Dataset | Loss | Alpha | ACC | ECC | EMC | ACC2 | Paper ACC / ECC / EMC |
+|---------|------|-------|-----|-----|-----|------|----------------------|
+| FI | CE | 0.0 | 62.47 | 73.42 | 48.39 | 84.70 | 67.3 / 77.0 / 51.5 |
+| FI | ListMLE | 0.2 | 62.09 | 74.39 | 55.92 | 87.69 | 67.3 / 77.5 / 54.9 |
+| FI | ListMLE | 1.0 | 60.05 | 72.90 | 54.95 | 87.52 | 65.7 / 76.2 / 57.3 |
+| EmoSet | CE | 0.0 | 75.01 | 83.61 | 59.97 | 87.69 | — |
+| EmoSet | ListMLE | 0.2 | 75.01 | 83.62 | 59.97 | 87.69 | — |
+| EmoSet | ListMLE | 1.0 | 73.87 | 82.92 | 60.69 | 93.67 | — |
 
-Our results are within ~4–7 points of the paper on ACC and ~3 points on ECC. Single run, no hyperparameter tuning — the paper used 2× RTX 3090 with more careful tuning. Training curves: `docs/fi_training_curves.png`.
+### Semi-Supervised (Section 4.2.1) — EmoSet
 
-### Semi-supervised (Section 4.2.1)
+| Label Num | Rule | ACC | ECC | EMC | ACC2 | Best Epoch |
+|-----------|------|-----|-----|-----|------|------------|
+| 4000 | ratio (EMC-adaptive) | 45.77 | 61.63 | 48.35 | 77.66 | 49 |
+| 8000 | ratio (EMC-adaptive) | 44.87 | 60.70 | 47.26 | 75.89 | 44 |
+| 4000 | fixed (FixMatch baseline) | 27.66 | 47.99 | 46.09 | 69.00 | 47 |
+| 8000 | fixed | 39.54 | 56.87 | 46.01 | 72.68 | 49 |
 
-| Run | Rule | ACC | ECC | EMC | ACC2 | best_epoch |
-|-----|------|-----|-----|-----|------|------------|
-| n=80 | EMC-adaptive | 29.08 | 48.94 | 45.24 | 69.00 | 46 |
-| n=800 | EMC-adaptive | 34.11 | 53.28 | 48.43 | 71.01 | 42 |
-| n=1600 | EMC-adaptive | 32.41 | 51.30 | 45.38 | 69.97 | 27 |
-| n=800 | FixMatch fixed | 38.94 | 56.14 | 46.01 | 72.68 | 42 |
-
-**Key finding:** FixMatch with a fixed threshold (baseline) outperforms the EMC-adaptive threshold on both ACC and ECC at n=800. The EMC-adaptive mechanism did not improve over the baseline in our reproduction — worth investigating further (e.g., different `eps`, EMA smoothing of the EMC signal).
-
-## Things I could not verify (check these first against the paper PDF / official code)
+### Things I could not verify (check these first against the paper PDF / official code)
 
 | Item | Where | What I assumed |
 |---|---|---|
