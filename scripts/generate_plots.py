@@ -5,46 +5,32 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 
-BASE = Path("../emoset_results")
-FI_BASE = Path("../fi_results")
+BASE_EMOSET = Path("../emoset_results")
+BASE_FI = Path("../fi_results")
+BASE_FI_SSL = Path("../fi_ssl_results")
 
 results = {}
 
-# Collect results from EmoSet results directory
-for d in sorted(BASE.iterdir()):
-    if not d.is_dir():
-        continue
-    results_file = d / "results.json"
-    if results_file.exists():
-        with open(results_file) as f:
-            data = json.load(f)
-        test = data.get("test_argmax", {})
-        key = d.name.replace("_results", "")
-        results[key] = {
-            "acc": test.get("acc"),
-            "ecc": test.get("ecc"),
-            "emc": test.get("emc"),
-            "acc2": test.get("acc2"),
-            "best_epoch": data.get("best_epoch"),
-        }
-
-# Collect results from FI results directory
-for d in sorted(FI_BASE.iterdir()):
-    if not d.is_dir():
-        continue
-    results_file = d / "results.json"
-    if results_file.exists():
-        with open(results_file) as f:
-            data = json.load(f)
-        test = data.get("test_argmax", {})
-        key = d.name.replace("_results", "")
-        results[key] = {
-            "acc": test.get("acc"),
-            "ecc": test.get("ecc"),
-            "emc": test.get("emc"),
-            "acc2": test.get("acc2"),
-            "best_epoch": data.get("best_epoch"),
-        }
+# Collect results from all directories
+all_roots = [BASE_EMOSET, BASE_FI, BASE_FI_SSL]
+for base in all_roots:
+    for d in sorted(base.iterdir()):
+        if not d.is_dir():
+            continue
+        results_file = d / "results.json"
+        if results_file.exists():
+            with open(results_file) as f:
+                data = json.load(f)
+            test = data.get("test_argmax", {})
+            # Normalize key name: remove "_results" suffix if present
+            key = d.name.replace("_results", "")
+            results[key] = {
+                "acc": test.get("acc"),
+                "ecc": test.get("ecc"),
+                "emc": test.get("emc"),
+                "acc2": test.get("acc2"),
+                "best_epoch": data.get("best_epoch"),
+            }
 
 print("=== Results Summary ===")
 print(f"{'Run':<35} {'ACC':>8} {'ECC':>8} {'EMC':>8} {'ACC2':>8}")
