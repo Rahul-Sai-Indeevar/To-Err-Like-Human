@@ -12,8 +12,7 @@ BASE_FI_SSL = Path("../fi_ssl_results")
 results = {}
 
 # Collect results from all directories
-all_roots = [BASE_EMOSET, BASE_FI, BASE_FI_SSL]
-for base in all_roots:
+for base in [BASE_EMOSET, BASE_FI, BASE_FI_SSL]:
     for d in sorted(base.iterdir()):
         if not d.is_dir():
             continue
@@ -29,18 +28,18 @@ for base in all_roots:
                 "ecc": test.get("ecc"),
                 "emc": test.get("emc"),
                 "acc2": test.get("acc2"),
-                "best_epoch": data.get("best_epoch"),
             }
 
 print("=== Results Summary ===")
 print(f"{'Run':<35} {'ACC':>8} {'ECC':>8} {'EMC':>8} {'ACC2':>8}")
 for name, r in sorted(results.items()):
-    print(f"{name:<35} {r['acc']:.2f}   {r['ecc']:.2f}   {r['emc']:.2f}   {r['acc2']:.2f}")
+    if r['acc'] is not None:
+        print(f"{name:<35} {r['acc']:.2f}   {r['ecc']:.2f}   {r['emc']:.2f}   {r['acc2']:.2f}")
 
 OUT = Path("docs/plots")
 OUT.mkdir(parents=True, exist_ok=True)
 
-# Plot 1: Supervised results - ACC comparison across datasets and alphas
+# Plot 1: Supervised results - ACC/ECC/EMC across datasets and alphas
 fig, axes = plt.subplots(1, 3, figsize=(15, 4))
 
 alphas = [0.0, 0.2, 1.0]
@@ -60,7 +59,7 @@ for i, metric in enumerate(metrics):
         fi_val = results.get(fi_key, {}).get(metric, 0)
         fi_vals.append(fi_val)
 
-        # EmoSet runs - try both naming conventions
+        # EmoSet runs
         emoset_key = f"emoset_r50_a{int(a*10):03d}"
         emoset_key_alt = f"emoset_r50_a{int(a*10):03d}_results"
         emoset_val = results.get(emoset_key, {}).get(metric, 0)
@@ -145,6 +144,41 @@ for i, metric in enumerate(ssl_metrics):
 
 plt.tight_layout()
 plt.savefig(OUT / "ssl_results.png", dpi=150, bbox_inches="tight")
+plt.close()
+
+# Plot 4: SSL results for FI
+fig, axes = plt.subplots(1, 3, figsize=(15, 4))
+
+label_nums_fi = [80, 800]
+rules_fi = ["ratio", "fixed"]
+
+for i, metric in enumerate(ssl_metrics):
+    ax = axes[i]
+    x = np.arange(len(label_nums_fi))
+    width = 0.35
+
+    ratio_vals = []
+    fixed_vals = []
+    for ln in label_nums_fi:
+        ratio_key = f"fi_ssl_{ln}_ratio"
+        fixed_key = f"fi_ssl_{ln}_fixed"
+        ratio_vals.append(results.get(ratio_key, {}).get(metric, 0))
+        fixed_vals.append(results.get(fixed_key, {}).get(metric, 0))
+
+    ax.bar(x - width/2, ratio_vals, width, label="EMC-adaptive (ratio)", color="#2ca02c", alpha=0.8)
+    ax.bar(x + width/2, fixed_vals, width, label="FixMatch (fixed)", color="#d62728", alpha=0.8)
+
+    ax.set_xlabel("Labeled Samples")
+    ax.set_ylabel(metric_names_ssl[i])
+    ax.set_title(f"{metric_names_ssl[i]} FI SSL by Label Num & Rule")
+    ax.set_xticks(x)
+    ax.set_xticklabels([str(ln) for ln in label_nums_fi])
+    ax.legend()
+    ax.grid(axis="y", alpha=0.3)
+    ax.set_ylim(0, 100)
+
+plt.tight_layout()
+plt.savefig(OUT / "ssl_fi_results.png", dpi=150, bbox_inches="tight")
 plt.close()
 
 print("All plots saved to docs/plots/")
