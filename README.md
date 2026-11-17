@@ -83,8 +83,8 @@ python -m ecc.supervised --config configs/fi_resnet50.yaml --set loss.alpha=0.2 
 bash scripts/run_table4.sh                       # all backbones x alphas
 
 # Step 2 - semi-supervised (paper 4.2.1): FixMatch baseline vs EMC threshold
-python -m ecc.ssl --config configs/ssl_fi.yaml --set ssl.rule=fixed
-python -m ecc.ssl --config configs/ssl_fi.yaml --set ssl.rule=ratio
+python -m ecc.ssl --config configs/ssl_fi.yaml --set ssl.rule=fixed output_dir=runs/ssl_fi_n800_fixed
+python -m ecc.ssl --config configs/ssl_fi.yaml --set ssl.rule=ratio output_dir=runs/ssl_fi_n800_ratio
 bash scripts/run_ssl_sweep.sh
 
 # Evaluate any checkpoint
@@ -125,7 +125,7 @@ Our results are within ~4–7 points of the paper on ACC and ~3 points on ECC. S
 
 | Item | Where | What I assumed |
 |---|---|---|
-| Circular order of Mikel's wheel | `emotion.py: WHEEL_ORDER` | Derived so that the paper's Appendix-B ranking for *excitement* is reproduced (tested). Other rows are unchecked. |
+| Circular order of Mikel's wheel | `emotion.py: WHEEL_ORDER` | All eight rows are regression-tested against the official train.py matrix at commit 1c51f45cd1b17c12a009596109bb31c2f07bb84a. |
 | EMC weight | `metrics.py: emc` | 1/(W-1) on misclassified cells, divided by (N - Nc) (verified against paper PDF Eq. 4). |
 | Threshold rule, Eq. 5 | `ssl.py: adaptive_threshold` | `tau' = tau * eps / EMC`, eps=0.5 FI / 0.4 EmoSet, clipped [0.7, 0.98] (verified against paper PDF Sec. 4.2.1). |
 | CE -> combined loss switch | `supervised.py` | Section 4.2.2: train with pure CE then switch to Lc. New `loss.switch_epoch` config (0 = combined loss from start, matching Tables 2-4). |
@@ -183,3 +183,7 @@ See [the complete recovery and findings](docs/full_spatial_frequency/REPORT.md),
 `kaggle/sp_fft_followup.ipynb` for a Kaggle reproduction. The local report is
 `outputs/full_spatial_frequency/REPORT.html`; run commands are included there.
 All 29 tests pass. Original Downloads archives and notebooks are preserved.
+
+### Baseline continuation safeguards
+
+Checkpoint continuation now rejects incompatible experiment configurations before replacing outputs, restores the selected external run's best model, and records unverified legacy provenance. RNG and AMP scaler restoration remain absent, so exact uninterrupted continuation is not promised. See [the baseline audit and fixes](docs/seed_evidence/BASELINE_AUDIT.md).

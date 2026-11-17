@@ -21,14 +21,14 @@ import torch
 import torch.nn.functional as F
 from torch.utils.data import DataLoader, RandomSampler
 
-from .checkpoint import latest_checkpoint, load_checkpoint, save_checkpoint
+from .checkpoint import load_checkpoint, prepare_run_config, save_checkpoint
 from .common import (append_jsonl, emotion_tensors, get_device, load_classes,
                      predict_probs, set_seed)
 from .config import load_config, parse_args
 from .data import (EmotionCSV, TwoViewTransform, build_transforms,
                    class_balanced_indices)
 from .decode import mec_decode
-from .kaggle_utils import (latest_checkpoint_in, persistent_ckpt_dir,
+from .kaggle_utils import (persistent_ckpt_dir,
                            save_to_persistent)
 from .graph import build_loss
 from .metrics import emc as emc_fn
@@ -78,13 +78,13 @@ def run(cfg: dict) -> dict:
     d, o, s = cfg["data"], cfg["optim"], cfg["ssl"]
     out = Path(cfg["output_dir"])
     out.mkdir(parents=True, exist_ok=True)
-    (out / "config.json").write_text(json.dumps(cfg, indent=2))
 
     # Persistent checkpoint dir (mounted Kaggle Dataset) — survives session restarts.
     persistent = persistent_ckpt_dir(cfg)
     if persistent is not None:
         persistent.mkdir(parents=True, exist_ok=True)
         print(f"Persistent checkpoint dir: {persistent}")
+    ckpt_path, resume_provenance = prepare_run_config(cfg, out, persistent)
 
     classes = load_classes(d["splits_dir"])
     N = len(classes)
@@ -121,11 +121,7 @@ def run(cfg: dict) -> dict:
     start_epoch = 0
 
     # ---- resume ----
-    resume_from = cfg.get("resume_from")
-    # Prefer explicit resume_from, then output_dir, then persistent dir.
-    ckpt_path = (resume_from or str(latest_checkpoint(out)) or
-                 str(latest_checkpoint_in(persistent)))
-    if ckpt_path and Path(ckpt_path).exists():
+    if ckpt_path is not None:
         ckpt = load_checkpoint(ckpt_path, model, opt, sched, map_location=device)
         ema.load_state_dict(ckpt.get("ema", {}), map_location=device)
         start_epoch = ckpt["epoch"] + 1
@@ -178,12 +174,15 @@ def run(cfg: dict) -> dict:
             torch.save(ema.model.state_dict(), out / "best.pt")
         # Save a resumable checkpoint every epoch — to both output and persistent dirs.
         save_checkpoint(out / "checkpoint.pt", model, opt, epoch, best, best_epoch,
-                        extra={"ema": ema.state_dict(), "tau": tau_next},
-                        scheduler=sched)
+                         extra={"ema": ema.state_dict(), "tau": tau_next,
+                                "resume_provenance": resume_provenance},
+                         scheduler=sched, run_config=cfg)
         save_to_persistent(out / "checkpoint.pt", persistent)
         if persistent is not None:
             save_to_persistent(out / "best.pt", persistent)
 
+    if not (out / "best.pt").is_file():
+        raise FileNotFoundError("No validation-best model is available; keep matching best.pt beside the resume checkpoint or extend the epoch budget to select a new best model")
     ema.model.load_state_dict(torch.load(out / "best.pt", map_location=device))
     probs, labels = predict_probs(ema.model, test_dl, device)
     res = {"best_epoch": best_epoch, "rule": s["rule"], "n_labeled": s["n_labeled"],
