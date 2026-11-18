@@ -44,10 +44,12 @@ Before any FI model outcomes, the preparation audit found **1,356 raw members of
 
 All 144 runs and 288 saved validation/test prediction arrays passed report verification: labels and order, finite normalized probabilities, recomputed decision/energy metrics, checkpoint selection, executed source snapshots, manifest/CSV hashes and matching paired initialization records. Augmentation-plan hashes were independently reconstructed. These checks verify the saved experiment artifacts; they do not independently repeat every model's training.
 
-A separate **full-data replication with six fresh CE/graph seed pairs** is underway using 94,475 training, 5,904 validation and 17,715 test images, with alpha=.3 locked. Its outcomes must be completed and checked before judging whether the earlier full-data +.268 ECC-point result repeats. The historical three T4 seed pairs and the new local runs have different runtime/determinism details and will remain separate in primary inference. The present smaller-dataset results cannot settle that full-data question or justify calling the historical gain “just noise.”
+The separate **full-data replication with six fresh CE/graph seed pairs is complete** on 94,475 training, 5,904 validation and 17,715 test images. With alpha=.3 locked, graph-minus-CE ECC was **-0.136 points**, crossed seed/image 95% [-0.437, +0.131], with only 2/6 positive pairs. CE/graph mean ECC was 80.462/80.325. The historical +.268-point gain did not reliably repeat. This does not prove zero effect or isolate random seeds as the sole cause, because the old T4 environment/sampling implementation differ. See [the completed full-data conclusion](../full_seed_replication/CONCLUSION.md).
 
 For presentation, the defensible contribution is: **derive an SP objective, derive controls that isolate its proposed mechanism, run matched experiments, and distinguish mathematical validity from demonstrated recognition improvement.** That connection remains meaningful even when the measured benefit is uncertain. Further model choices require validation and a genuinely new holdout; the inspected test sets should not become tuning targets.
 
 Evidence: completed-study `summary.json`, `verification.json`, `dataset_provenance.json`, per-class/modal diagnostic tables, and the accompanying report figures.
 
 An independent NumPy/Pillow audit additionally verified every one of the 15,153 prepared inputs against its exact training-cache row; see [input verification](input_verification.json). No GPU or training-runner import was used by that audit.
+
+For the signal-processing explanation, see [the theory-to-experiment handout](THEORY_TO_EXPERIMENT.md), which maps each mathematical claim to its derived control, measured outcome and limitation.

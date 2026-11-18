@@ -1,6 +1,6 @@
 # ecc-ver
 
-Latest completed evidence: **144 full-backbone runs, three datasets, twelve fresh seed pairs per comparison**. The graph extension does not establish a consistent ECC or emotion-geometry advantage in this study. See [findings](docs/seed_evidence/FINDINGS.md) and [the complete report](docs/seed_evidence/REPORT.md). The separately approved six-pair full-data replication is underway under a [locked plan](docs/full_seed_replication/STUDY_PLAN.md).
+Latest evidence: **156 new full-backbone runs** across three datasets and the separate full-data replication. The earlier +0.268 ECC-point gain did not reliably repeat: six fresh full-data pairs gave graph-minus-CE **-0.136 points**, crossed seed/image 95% [-0.437, +0.131]. See [the full-data conclusion](docs/full_seed_replication/CONCLUSION.md), [three-dataset findings](docs/seed_evidence/FINDINGS.md), and [the SP theory-to-experiment handout](docs/seed_evidence/THEORY_TO_EXPERIMENT.md).
 
 ## Graph signal processing extension
 
@@ -195,3 +195,5 @@ Checkpoint continuation now rejects incompatible experiment configurations befor
 Run `scripts/run_seed_evidence.ps1` for the sequential three-dataset study and `scripts/run_seed_evidence.ps1 -Report` for its report. Prepare FI/ArtPhoto with `scripts/prepare_seed_datasets.py`; the report records pinned archives and custom split counts. `scripts/verify_seed_inputs.py --out outputs/seed_evidence/input_verification.json` independently checks every prepared image against the training cache. Use a fresh output directory when changing a protocol.
 
 The full-data follow-up uses `scripts/run_full_seed_evidence.ps1 -Stage train` and `-Stage report`, six fresh seeds 3–8, and the complete original Kaggle split. Its cache is streamed from disk in batches. All test sets remain evaluation targets, with validation selecting checkpoints. Model weights and raw photographs remain local and excluded from Git.
+
+The final code suite passes 78 tests. All twelve full-data checkpoints replay validation/test predictions bit-for-bit on the recorded local GPU/runtime. Use `scripts/run_full_seed_evidence.ps1 -Stage replay` before `-Stage report` for this audit. The local deliverable package is `outputs/sp_seed_evidence_bundle.zip`; it contains code, predictions, histories and input manifests, with raw photographs/checkpoints/caches excluded.

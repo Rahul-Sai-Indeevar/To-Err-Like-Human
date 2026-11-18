@@ -1,0 +1,327 @@
+{
+  "manifest_path": "C:\\Users\\thota\\Documents\\Acad Projects\\SP\\To-Err-Like-Human\\data\\kaggle_full_8epoch\\data\\emoset_full\\manifest.json",
+  "manifest_sha256": "9012a2ea76fc40e5b31560fc9624338f19248c74e3b5267ca94033aeca753a11",
+  "protocol_data_manifest_sha256": "9012a2ea76fc40e5b31560fc9624338f19248c74e3b5267ca94033aeca753a11",
+  "manifest_hash_verified": true,
+  "manifest_verbatim": {
+    "source_repository": "udeman/EmoSet-118K",
+    "revision": "cd2344cbf316bd77331ee63a79ce6999f0bf7572",
+    "image_size": [
+      192,
+      192
+    ],
+    "source_shards": 24,
+    "source_inventory": {
+      "data/train-00000-of-00018.parquet": {
+        "sha256": "090a4bcd42c1a2feba914c5662da0cf06bd2b6a3e1a57bbbb963106d7731cdb7",
+        "size": 508611497
+      },
+      "data/train-00001-of-00018.parquet": {
+        "sha256": "090a2ad2f16ffee48ae449b4a2e477daf0e096a6ffdacd83d78a6f38aa1a8a37",
+        "size": 503546768
+      },
+      "data/train-00002-of-00018.parquet": {
+        "sha256": "263354c830dff902315ac0a1d51f8f3d90813b4ac5a6fee5e2d3721b08008ec7",
+        "size": 489448805
+      },
+      "data/train-00003-of-00018.parquet": {
+        "sha256": "b11839db6580e58b5d4a4677532da581b0507ddd4466ced0e6f427b37b651a83",
+        "size": 506918375
+      },
+      "data/train-00004-of-00018.parquet": {
+        "sha256": "d9f472b86f35e56fedf6cdb4f37f1d5d2434a0605a185e6600f78283d29ccc99",
+        "size": 495188083
+      },
+      "data/train-00005-of-00018.parquet": {
+        "sha256": "d0993c1dbda889c58f82d0c5b5c241237eb3e65cf7c82abb3e8c57185ad229be",
+        "size": 500893246
+      },
+      "data/train-00006-of-00018.parquet": {
+        "sha256": "34156e6319818821e4cb2677d25f720dbaa6a6e8d584035481f710daf6695d94",
+        "size": 510172188
+      },
+      "data/train-00007-of-00018.parquet": {
+        "sha256": "623991d9990ad2de4504bf46352f0e29f87ad5a6ee0d09dcc2889b169cb86211",
+        "size": 496688567
+      },
+      "data/train-00008-of-00018.parquet": {
+        "sha256": "7ec73a84c5c258c7d6b11e65ff9b49f20828382effd54569d2cfb8e751b7f656",
+        "size": 511858564
+      },
+      "data/train-00009-of-00018.parquet": {
+        "sha256": "b18244b07c6a6c942f9cd629278fe966030c87eab60d23d3b6581de59d7bbf6f",
+        "size": 502008369
+      },
+      "data/train-00010-of-00018.parquet": {
+        "sha256": "a65503d851b9672c9d380a932003f2db50c719abc6a1731acdde339a7ad3fcb9",
+        "size": 507481653
+      },
+      "data/train-00011-of-00018.parquet": {
+        "sha256": "6b2c909602b869d78348effe32037c4e4fe41019cbff455dfb58d0da0762f420",
+        "size": 500406329
+      },
+      "data/train-00012-of-00018.parquet": {
+        "sha256": "6116d4d504469e7125323fc9c58dcb8ce894d395406aeabec664baef37e567aa",
+        "size": 503555741
+      },
+      "data/train-00013-of-00018.parquet": {
+        "sha256": "f3e2a0ec51861e3d5bd2ddb74c779d2fe1b89a105136efbbc73862727ab3cccf",
+        "size": 490963236
+      },
+      "data/train-00014-of-00018.parquet": {
+        "sha256": "2312e2f8348622f984e55397ca41ee78f60bb9687d895507f95ac703d07fc432",
+        "size": 501608196
+      },
+      "data/train-00015-of-00018.parquet": {
+        "sha256": "4c8812ebceeb09cf40d15a9c7968a9cd40f6c1a1139f19a7fa128587bedfee96",
+        "size": 503591098
+      },
+      "data/train-00016-of-00018.parquet": {
+        "sha256": "a651f255615da011eba06b49c41f19c598400c438bc8aa234f52a3731cd3eeb1",
+        "size": 506671704
+      },
+      "data/train-00017-of-00018.parquet": {
+        "sha256": "ecfe46e48f02b8d30d4445c88870450343fc6bb64d0f856c26433d6fa936a99d",
+        "size": 493897506
+      },
+      "data/val-00000-of-00002.parquet": {
+        "sha256": "cdd16d7cc23a9c08adc46f94e465982bced2d4082f229cc5c4d279ab3eb2a95e",
+        "size": 281745071
+      },
+      "data/val-00001-of-00002.parquet": {
+        "sha256": "706ad5e77d5181bf5b1239fc209873ef8786effd736c8b5ed2651dde3f296bc9",
+        "size": 283271428
+      },
+      "data/test-00000-of-00004.parquet": {
+        "sha256": "fe84c3ffe78431afbdefff771db4bcdecd2fa04c82bd8b28c11a560a07b59f12",
+        "size": 421773311
+      },
+      "data/test-00001-of-00004.parquet": {
+        "sha256": "9a79f383cb90be997a990f760af534282d9132b2df1b64849492e24013a236d7",
+        "size": 429848691
+      },
+      "data/test-00002-of-00004.parquet": {
+        "sha256": "6050ca0f7735bb16c2b8d21ebecfe45336928db528ab0af84b505b5d720d1603",
+        "size": 420085971
+      },
+      "data/test-00003-of-00004.parquet": {
+        "sha256": "7cd6d95af547fa18d8be38d509858959606bce7b37260dc777e88e412ca28d21",
+        "size": 421560609
+      }
+    },
+    "processing": "all shards; preserve source splits; reject corrupt and exact encoded-byte duplicates; JPEG resized 192x192",
+    "train": {
+      "images": 94475,
+      "per_class": {
+        "amusement": 15680,
+        "excitement": 15833,
+        "anger": 8434,
+        "fear": 10786,
+        "sadness": 10218,
+        "contentment": 13035,
+        "awe": 12022,
+        "disgust": 8467
+      }
+    },
+    "val": {
+      "images": 5904,
+      "per_class": {
+        "amusement": 994,
+        "awe": 755,
+        "fear": 693,
+        "disgust": 538,
+        "contentment": 816,
+        "excitement": 977,
+        "sadness": 613,
+        "anger": 518
+      }
+    },
+    "test": {
+      "images": 17715,
+      "per_class": {
+        "awe": 2260,
+        "contentment": 2484,
+        "excitement": 3014,
+        "anger": 1708,
+        "sadness": 1845,
+        "amusement": 2770,
+        "fear": 1973,
+        "disgust": 1661
+      }
+    }
+  },
+  "summary": {
+    "raw_rows": null,
+    "raw_scope": "raw source row count not recorded in preparation manifest",
+    "usable_before_caps": 118094,
+    "mirror": "udeman/EmoSet-118K",
+    "pinned_revision": "cd2344cbf316bd77331ee63a79ce6999f0bf7572",
+    "source_url": "https://huggingface.co/datasets/udeman/EmoSet-118K/tree/cd2344cbf316bd77331ee63a79ce6999f0bf7572",
+    "archive": null,
+    "archive_sha256": null,
+    "shards": [
+      {
+        "path": "data/train-00000-of-00018.parquet",
+        "sha256": "090a4bcd42c1a2feba914c5662da0cf06bd2b6a3e1a57bbbb963106d7731cdb7",
+        "size": 508611497
+      },
+      {
+        "path": "data/train-00001-of-00018.parquet",
+        "sha256": "090a2ad2f16ffee48ae449b4a2e477daf0e096a6ffdacd83d78a6f38aa1a8a37",
+        "size": 503546768
+      },
+      {
+        "path": "data/train-00002-of-00018.parquet",
+        "sha256": "263354c830dff902315ac0a1d51f8f3d90813b4ac5a6fee5e2d3721b08008ec7",
+        "size": 489448805
+      },
+      {
+        "path": "data/train-00003-of-00018.parquet",
+        "sha256": "b11839db6580e58b5d4a4677532da581b0507ddd4466ced0e6f427b37b651a83",
+        "size": 506918375
+      },
+      {
+        "path": "data/train-00004-of-00018.parquet",
+        "sha256": "d9f472b86f35e56fedf6cdb4f37f1d5d2434a0605a185e6600f78283d29ccc99",
+        "size": 495188083
+      },
+      {
+        "path": "data/train-00005-of-00018.parquet",
+        "sha256": "d0993c1dbda889c58f82d0c5b5c241237eb3e65cf7c82abb3e8c57185ad229be",
+        "size": 500893246
+      },
+      {
+        "path": "data/train-00006-of-00018.parquet",
+        "sha256": "34156e6319818821e4cb2677d25f720dbaa6a6e8d584035481f710daf6695d94",
+        "size": 510172188
+      },
+      {
+        "path": "data/train-00007-of-00018.parquet",
+        "sha256": "623991d9990ad2de4504bf46352f0e29f87ad5a6ee0d09dcc2889b169cb86211",
+        "size": 496688567
+      },
+      {
+        "path": "data/train-00008-of-00018.parquet",
+        "sha256": "7ec73a84c5c258c7d6b11e65ff9b49f20828382effd54569d2cfb8e751b7f656",
+        "size": 511858564
+      },
+      {
+        "path": "data/train-00009-of-00018.parquet",
+        "sha256": "b18244b07c6a6c942f9cd629278fe966030c87eab60d23d3b6581de59d7bbf6f",
+        "size": 502008369
+      },
+      {
+        "path": "data/train-00010-of-00018.parquet",
+        "sha256": "a65503d851b9672c9d380a932003f2db50c719abc6a1731acdde339a7ad3fcb9",
+        "size": 507481653
+      },
+      {
+        "path": "data/train-00011-of-00018.parquet",
+        "sha256": "6b2c909602b869d78348effe32037c4e4fe41019cbff455dfb58d0da0762f420",
+        "size": 500406329
+      },
+      {
+        "path": "data/train-00012-of-00018.parquet",
+        "sha256": "6116d4d504469e7125323fc9c58dcb8ce894d395406aeabec664baef37e567aa",
+        "size": 503555741
+      },
+      {
+        "path": "data/train-00013-of-00018.parquet",
+        "sha256": "f3e2a0ec51861e3d5bd2ddb74c779d2fe1b89a105136efbbc73862727ab3cccf",
+        "size": 490963236
+      },
+      {
+        "path": "data/train-00014-of-00018.parquet",
+        "sha256": "2312e2f8348622f984e55397ca41ee78f60bb9687d895507f95ac703d07fc432",
+        "size": 501608196
+      },
+      {
+        "path": "data/train-00015-of-00018.parquet",
+        "sha256": "4c8812ebceeb09cf40d15a9c7968a9cd40f6c1a1139f19a7fa128587bedfee96",
+        "size": 503591098
+      },
+      {
+        "path": "data/train-00016-of-00018.parquet",
+        "sha256": "a651f255615da011eba06b49c41f19c598400c438bc8aa234f52a3731cd3eeb1",
+        "size": 506671704
+      },
+      {
+        "path": "data/train-00017-of-00018.parquet",
+        "sha256": "ecfe46e48f02b8d30d4445c88870450343fc6bb64d0f856c26433d6fa936a99d",
+        "size": 493897506
+      },
+      {
+        "path": "data/val-00000-of-00002.parquet",
+        "sha256": "cdd16d7cc23a9c08adc46f94e465982bced2d4082f229cc5c4d279ab3eb2a95e",
+        "size": 281745071
+      },
+      {
+        "path": "data/val-00001-of-00002.parquet",
+        "sha256": "706ad5e77d5181bf5b1239fc209873ef8786effd736c8b5ed2651dde3f296bc9",
+        "size": 283271428
+      },
+      {
+        "path": "data/test-00000-of-00004.parquet",
+        "sha256": "fe84c3ffe78431afbdefff771db4bcdecd2fa04c82bd8b28c11a560a07b59f12",
+        "size": 421773311
+      },
+      {
+        "path": "data/test-00001-of-00004.parquet",
+        "sha256": "9a79f383cb90be997a990f760af534282d9132b2df1b64849492e24013a236d7",
+        "size": 429848691
+      },
+      {
+        "path": "data/test-00002-of-00004.parquet",
+        "sha256": "6050ca0f7735bb16c2b8d21ebecfe45336928db528ab0af84b505b5d720d1603",
+        "size": 420085971
+      },
+      {
+        "path": "data/test-00003-of-00004.parquet",
+        "sha256": "7cd6d95af547fa18d8be38d509858959606bce7b37260dc777e88e412ca28d21",
+        "size": 421560609
+      }
+    ],
+    "prepared_image_transform": "all shards; preserve source splits; reject corrupt and exact encoded-byte duplicates; JPEG resized 192x192",
+    "preparation_description_source": "preparation manifest",
+    "classifier_input_pipeline": "PIL EXIF transpose RGB; Resize192x192; random crop160/flip0.5 train; center160 val/test",
+    "split_rule": "Preserve full mirror source splits after encoded-byte deduplication",
+    "exclusion_limits": "Corrupt images and exact encoded-byte duplicates rejected; re-encoded, pixel-identical and near duplicates remain possible",
+    "actual_split_counts": {
+      "train": 94475,
+      "val": 5904,
+      "test": 17715
+    },
+    "actual_class_counts": {
+      "train": [
+        15680,
+        8434,
+        12022,
+        13035,
+        8467,
+        15833,
+        10786,
+        10218
+      ],
+      "val": [
+        994,
+        518,
+        755,
+        816,
+        538,
+        977,
+        693,
+        613
+      ],
+      "test": [
+        2770,
+        1708,
+        2260,
+        2484,
+        1661,
+        3014,
+        1973,
+        1845
+      ]
+    }
+  }
+}
