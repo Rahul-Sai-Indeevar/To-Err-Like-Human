@@ -1,0 +1,129 @@
+{
+  "dataset": "artphoto",
+  "args": {
+    "data_root": "data\\seed_audit\\artphoto",
+    "epochs": 12,
+    "seeds": [
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22
+    ],
+    "methods": [
+      "rgb",
+      "low",
+      "detail",
+      "wavelet_fusion",
+      "rgb_dual",
+      "low_dual"
+    ],
+    "batch_size": 64,
+    "levels": 2
+  },
+  "classes": [
+    "amusement",
+    "anger",
+    "awe",
+    "contentment",
+    "disgust",
+    "excitement",
+    "fear",
+    "sadness"
+  ],
+  "datasets": {
+    "train": {
+      "n": 468,
+      "csv_sha256": "1515ab25917c07b484f2be53b642257efe1f710fa0520986120afbeeda097fa9",
+      "cache_key": "e5bdd007676a56586ddf473e945dfd272361cb72c879e653416cac8d325088d8",
+      "class_counts": [
+        60,
+        46,
+        60,
+        42,
+        42,
+        58,
+        61,
+        99
+      ]
+    },
+    "val": {
+      "n": 155,
+      "csv_sha256": "96fc7baf1aa5db50d1c15b1707c00564458e118ffe0d5e40dd7b02608be6a16e",
+      "cache_key": "a1eba2698b732d14e1dcc5948c7fbd9ea530a6dec3df0e7734ecd300065ca9d7",
+      "class_counts": [
+        20,
+        15,
+        20,
+        14,
+        14,
+        19,
+        20,
+        33
+      ]
+    },
+    "test": {
+      "n": 160,
+      "csv_sha256": "fc7cd431bcdd105f426e5b4988a865cc2b587ec65796e42fc1e1d0a6078534c7",
+      "cache_key": "259b5c57bb6eb491bdb01b5c0087d761dd1cb11b412aaaa0b87814c331fc7f69",
+      "class_counts": [
+        21,
+        16,
+        20,
+        14,
+        14,
+        20,
+        21,
+        34
+      ]
+    }
+  },
+  "cache_sha256": {
+    "train": "2aa16384463a7e01ce76996244f6484e7e7f301db6aa81cf57916957c5dde289",
+    "val": "167fb266dccd7e921b5bbfd7568c91594525a5e0c4944ff1ab307b5944993d0e",
+    "test": "346cb46c51bf593c6c9e8a77e7b2598db4c178991ee3d559d528678278f941b5"
+  },
+  "sources": {
+    "scripts/run_wavelet_study.py": "fbef734af585167ce9161c0690f70c109fbb4ce3582e840084e910e979ac9ca9",
+    "scripts/run_seed_evidence.py": "64e3f86a8dc5490e22952073cf90a8b5226de23f1961e169241c711110120054",
+    "src/ecc/wavelets.py": "f2f8f460ce41c6052e12d756031d88cbab788884e1a237e5e1123f34cd5e491b",
+    "src/ecc/emotion.py": "4cbc38de0cd9a493773f44db7fbc0a43e8fd7f9b00f315143d1d99515b12cee7",
+    "src/ecc/metrics.py": "888bf1a600856813c919f6a3000e3616863c775b2eef0e708ed615fff7af9464",
+    "src/ecc/graph.py": "1212dfbc2872c35d219510dcbe47a85627a5780560f844e1d316e1e31301fe65"
+  },
+  "data_manifest_sha256": "ac96cc8acfa4f4578ec945d2c4833a34592adbc62b78a4f100ec8447bec9e2f1",
+  "config_sha256": "da254432b438827153e82f24020c65b86c099021dd1a6dc08c56cc9aae913623",
+  "study_plan_path": "docs\\wavelet_study\\STUDY_PLAN.md",
+  "study_plan_sha256": "62e52e643c3875a12dd049c3169db348fdb572d7c1af25d076cc62396b0e7d3c",
+  "benchmark": false,
+  "torch": "2.14.1+cu130",
+  "torchvision": "0.29.1+cu130",
+  "numpy": "2.5.4",
+  "python": "3.14.0",
+  "gpu_name": "NVIDIA GeForce RTX 5050 Laptop GPU",
+  "loss": "eight-class cross entropy only, identical for all methods",
+  "optimizer": {
+    "name": "AdamW",
+    "lr": 0.0001,
+    "weight_decay": 0.0001,
+    "clip_norm": 5.0
+  },
+  "selection": "highest clean validation ECC; earliest tied epoch; test only after all models train",
+  "preprocessing": "matched Resize192, crop160 and flip; ImageNet normalize then J=2 Haar; no clipping or per-image rescaling",
+  "initialization": "shared ImageNet1K ResNet18 state and seeded head per seed; dual independent tower storage; W/2 +/- delta classifier blocks, delta~N(0,.01^2), seed900000+seed",
+  "test_conditions": {
+    "clean": "center crop",
+    "shift_x1": "circular horizontal roll by one pixel AFTER crop",
+    "shift_x4": "circular horizontal roll by four pixels AFTER crop",
+    "awgn_003": "unclipped independent N(0,.03^2) raw RGB noise, shared CPU RNG612034 reset for each model/condition; fixed batch order"
+  },
+  "fusion_interventions": [
+    "remove_detail",
+    "remove_low"
+  ],
+  "deterministic_algorithms": true,
+  "protocol_hash": "9a5ea3bcddb3479acc9cf1648ba6341c691c479dc24327605244d8293cddde90"
+}

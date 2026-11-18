@@ -1,5 +1,15 @@
 # ecc-ver
 
+Latest wavelet evidence: **144 additional models**, six matched variants and eight
+paired seeds on three prepared datasets. Fusion minus equally sized RGB+RGB ECC
+was **-3.023 FI / -4.151 EmoSet / -0.968 ArtPhoto** points. FI and EmoSet lost in
+all eight seed pairs; ArtPhoto was inconclusive. The projection reduced the fixed
+white-noise sensitivity while giving lower clean and noisy absolute recognition.
+See [wavelet findings](docs/wavelet_study/FINDINGS.md),
+[full report](docs/wavelet_study/REPORT.html),
+[noise and shift diagnostics](docs/wavelet_study/DIAGNOSTICS.html), and
+[SP derivations and viva](docs/wavelet_study/THEORY_AND_VIVA.md).
+
 Latest evidence: **156 new full-backbone runs** across three datasets and the separate full-data replication. The earlier +0.268 ECC-point gain did not reliably repeat: six fresh full-data pairs gave graph-minus-CE **-0.136 points**, crossed seed/image 95% [-0.437, +0.131]. See [the full-data conclusion](docs/full_seed_replication/CONCLUSION.md), [three-dataset findings](docs/seed_evidence/FINDINGS.md), and [the SP theory-to-experiment handout](docs/seed_evidence/THEORY_TO_EXPERIMENT.md).
 
 ## Graph signal processing extension
@@ -197,3 +207,36 @@ Run `scripts/run_seed_evidence.ps1` for the sequential three-dataset study and `
 The full-data follow-up uses `scripts/run_full_seed_evidence.ps1 -Stage train` and `-Stage report`, six fresh seeds 3–8, and the complete original Kaggle split. Its cache is streamed from disk in batches. All test sets remain evaluation targets, with validation selecting checkpoints. Model weights and raw photographs remain local and excluded from Git.
 
 The final code suite passes 78 tests. All twelve full-data checkpoints replay validation/test predictions bit-for-bit on the recorded local GPU/runtime. Use `scripts/run_full_seed_evidence.ps1 -Stage replay` before `-Stage report` for this audit. The local deliverable package is `outputs/sp_seed_evidence_bundle.zip`; it contains code, predictions, histories and input manifests, with raw photographs/checkpoints/caches excluded.
+
+### Wavelet multiresolution experiment
+
+The opt-in wavelet study separates normalized photographs into the two-level
+Haar approximation and complementary signed details. Six models distinguish
+representation from capacity: RGB, approximation, details, approximation+details,
+RGB+RGB, and approximation+approximation. The three dual models have exactly
+matched trainable parameter counts and paired asymmetric head initialization.
+
+Run `scripts/run_wavelet_study.ps1 -Stage all` to train the fixed 144-model study
+sequentially on one GPU, audit its input images, evaluate frozen models, reload
+checkpoints, and produce `outputs/wavelet_study/REPORT.html`. The fixed settings
+are in `configs/wavelet_study.yaml`; the theory and comparison plan are in
+[the study plan](docs/wavelet_study/STUDY_PLAN.md). A separate validation-only
+timing run is available with `-Stage benchmark`. Regenerate clean-result tables
+with `-Stage report`. Changing recorded code, data, or settings requires a fresh
+output folder. A killed partial model restarts from its initial state; finished
+models are verified and skipped. No bitwise mid-training continuation is claimed.
+
+The primary comparison is fusion against equally sized RGB+RGB, separately on
+FI, the prepared EmoSet subset, and ArtPhoto. This is a locked exploratory study
+on previously inspected splits, not a canonical full benchmark reproduction.
+Haar reconstruction, Parseval energy, noise projection and shift sensitivity
+provide direct signal-processing tests even if recognition does not improve.
+
+The complete wavelet findings are in `docs/wavelet_study/FINDINGS.md`, including
+negative matched-capacity effects and the noise/detail tradeoff. Run
+`scripts/run_wavelet_study.ps1 -Stage diagnostics` to independently audit every
+saved condition array and regenerate `DIAGNOSTICS.html`. The `all` stage also
+runs this supplement and creates the synthetic theory figures. After recording
+code and published documentation, build the reproducible evidence ZIP with
+`python scripts/package_wavelet_study.py`; every included file is SHA-verified.
+Raw dataset photographs, caches and model checkpoints stay outside the ZIP.
