@@ -1,0 +1,10 @@
+# Fixed before training; do not tune this study against its test results.
+datasets:
+  fi: data/seed_audit/fi
+  emoset: data/emoset_graph
+  artphoto: data/seed_audit/artphoto
+methods: [rgb, low, detail, wavelet_fusion, rgb_dual, low_dual]
+seeds: [15, 16, 17, 18, 19, 20, 21, 22]
+epochs: 12
+batch_size: 64
+levels: 2
