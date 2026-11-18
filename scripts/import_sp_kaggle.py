@@ -7,6 +7,7 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument("archive")
     p.add_argument("--dest", default="data/kaggle_full_8epoch")
+    p.add_argument("--include-training-images", action="store_true", help="Also recover all train/validation photographs for fresh full-data training")
     a = p.parse_args()
     dest = pathlib.Path(a.dest).resolve()
     dest.mkdir(parents=True, exist_ok=True)
@@ -19,7 +20,7 @@ def main():
                 raise ValueError("Unsafe archive path")
             name = item.filename
             keep = name.startswith("data/emoset_full/") and (
-                "/images/test/" in name or "/images/" not in name
+                a.include_training_images or "/images/test/" in name or "/images/" not in name
             )
             if name.startswith("emoset_graph_alpha_sweep_2gpu/"):
                 keep = not name.endswith(".pt") or (
@@ -45,7 +46,7 @@ def main():
     print(
         "Imported",
         count,
-        "artifacts; full training images and optimizer checkpoints remain in source ZIP.",
+        "artifacts; optimizer checkpoints remain in the source ZIP. Training images were included:" , a.include_training_images,
     )
 
 

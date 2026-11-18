@@ -1,0 +1,91 @@
+{
+  "datasets": {
+    "emoset": {
+      "splits": {
+        "train": {
+          "n": 4800,
+          "csv_sha256": "ea7d5bf0fd111abc8334867036df52fc528ce8b295a7d4e8ce420c440c354921",
+          "unique_original_pixel_hashes": true,
+          "source_images_exist": true,
+          "paths_within_root": true
+        },
+        "val": {
+          "n": 800,
+          "csv_sha256": "850416f5a83c43de8e2098fbf5f287845690c138d0bc972578a585ce0835ea3a",
+          "unique_original_pixel_hashes": true,
+          "source_images_exist": true,
+          "paths_within_root": true
+        },
+        "test": {
+          "n": 1600,
+          "csv_sha256": "cca4960a2da10c673632a974f0cc6de8b8f76fda9a86a9129bb06235eddc6085",
+          "unique_original_pixel_hashes": true,
+          "source_images_exist": true,
+          "paths_within_root": true
+        }
+      },
+      "split_overlap_count": 0,
+      "placeholder_present": false
+    },
+    "fi": {
+      "splits": {
+        "train": {
+          "n": 4777,
+          "csv_sha256": "54109dc4759c2419b3fd2adfe5a62fdb69dc16dc855198cde7523be98aaef118",
+          "unique_original_pixel_hashes": true,
+          "source_images_exist": true,
+          "paths_within_root": true
+        },
+        "val": {
+          "n": 800,
+          "csv_sha256": "a9a6d375f7ab933d2d8d5bd36d44879ab6f911f496de8e094f482eb761a66e26",
+          "unique_original_pixel_hashes": true,
+          "source_images_exist": true,
+          "paths_within_root": true
+        },
+        "test": {
+          "n": 1593,
+          "csv_sha256": "365c7d1b5c4d42315bdb6b8b8c1b99a0ba7a41f8fe1ddbc4de653c6e16a309ab",
+          "unique_original_pixel_hashes": true,
+          "source_images_exist": true,
+          "paths_within_root": true
+        }
+      },
+      "split_overlap_count": 0,
+      "placeholder_present": false
+    },
+    "artphoto": {
+      "splits": {
+        "train": {
+          "n": 468,
+          "csv_sha256": "1515ab25917c07b484f2be53b642257efe1f710fa0520986120afbeeda097fa9",
+          "unique_original_pixel_hashes": true,
+          "source_images_exist": true,
+          "paths_within_root": true
+        },
+        "val": {
+          "n": 155,
+          "csv_sha256": "96fc7baf1aa5db50d1c15b1707c00564458e118ffe0d5e40dd7b02608be6a16e",
+          "unique_original_pixel_hashes": true,
+          "source_images_exist": true,
+          "paths_within_root": true
+        },
+        "test": {
+          "n": 160,
+          "csv_sha256": "fc7cd431bcdd105f426e5b4988a865cc2b587ec65796e42fc1e1d0a6078534c7",
+          "unique_original_pixel_hashes": true,
+          "source_images_exist": true,
+          "paths_within_root": true
+        }
+      },
+      "split_overlap_count": 0,
+      "placeholder_present": false
+    }
+  },
+  "cross_dataset_selected_original_pixel_hash_overlap": {
+    "emoset__fi": 0,
+    "emoset__artphoto": 0,
+    "fi__artphoto": 0
+  },
+  "scope": "Exact original decoded-pixel hashes stored in manifests; no perceptual near-duplicate or full EmoSet pixel-content audit."
+}

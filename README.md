@@ -1,5 +1,7 @@
 # ecc-ver
 
+Latest completed evidence: **144 full-backbone runs, three datasets, twelve fresh seed pairs per comparison**. The graph extension does not establish a consistent ECC or emotion-geometry advantage in this study. See [findings](docs/seed_evidence/FINDINGS.md) and [the complete report](docs/seed_evidence/REPORT.md). The separately approved six-pair full-data replication is underway under a [locked plan](docs/full_seed_replication/STUDY_PLAN.md).
+
 ## Graph signal processing extension
 
 Idea 1 is implemented on branch `experiment/graph-spectral-emotion` with an
@@ -187,3 +189,9 @@ All 29 tests pass. Original Downloads archives and notebooks are preserved.
 ### Baseline continuation safeguards
 
 Checkpoint continuation now rejects incompatible experiment configurations before replacing outputs, restores the selected external run's best model, and records unverified legacy provenance. RNG and AMP scaler restoration remain absent, so exact uninterrupted continuation is not promised. See [the baseline audit and fixes](docs/seed_evidence/BASELINE_AUDIT.md).
+
+### Fresh-seed evidence and reproduction
+
+Run `scripts/run_seed_evidence.ps1` for the sequential three-dataset study and `scripts/run_seed_evidence.ps1 -Report` for its report. Prepare FI/ArtPhoto with `scripts/prepare_seed_datasets.py`; the report records pinned archives and custom split counts. `scripts/verify_seed_inputs.py --out outputs/seed_evidence/input_verification.json` independently checks every prepared image against the training cache. Use a fresh output directory when changing a protocol.
+
+The full-data follow-up uses `scripts/run_full_seed_evidence.ps1 -Stage train` and `-Stage report`, six fresh seeds 3–8, and the complete original Kaggle split. Its cache is streamed from disk in batches. All test sets remain evaluation targets, with validation selecting checkpoints. Model weights and raw photographs remain local and excluded from Git.

@@ -16,8 +16,8 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest"]
-experiments = ["matplotlib>=3.7", "pyarrow>=14", "markdown>=3.5"]
+dev = ["pytest", "scipy>=1.10", "matplotlib>=3.7"]
+experiments = ["matplotlib>=3.7", "pyarrow>=14", "markdown>=3.5", "scipy>=1.10"]
 
 [project.scripts]
 ecc-splits = "ecc.splits:main"

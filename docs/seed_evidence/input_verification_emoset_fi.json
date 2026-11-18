@@ -1,0 +1,230 @@
+{
+  "audit": "CPU full source-image/CSV/cache alignment",
+  "python": "3.14.0",
+  "numpy": "2.5.4",
+  "pillow": "13.0.0",
+  "implementation": "Independent NumPy/Pillow; EXIF-transposed RGB, PIL bilinear192, CHWuint8 exact equality; no runner import or GPU",
+  "datasets": {
+    "emoset": {
+      "protocol_path": "C:\\Users\\thota\\Documents\\Acad Projects\\SP\\To-Err-Like-Human\\outputs\\seed_evidence\\emoset\\protocol.json",
+      "protocol_file_sha256": "86bdc00d101738429fa5b5796ae4d876b7d83779728441123af750709549d793",
+      "protocol_hash": "f37ac30c3f16abb57bec65e3dfd0ab3e5ef024fb942640bfb29948da780f33d9",
+      "data_root": "C:\\Users\\thota\\Documents\\Acad Projects\\SP\\To-Err-Like-Human\\data\\emoset_graph",
+      "classes": [
+        "amusement",
+        "anger",
+        "awe",
+        "contentment",
+        "disgust",
+        "excitement",
+        "fear",
+        "sadness"
+      ],
+      "splits": {
+        "train": {
+          "rows_verified": 4800,
+          "class_counts": [
+            600,
+            600,
+            600,
+            600,
+            600,
+            600,
+            600,
+            600
+          ],
+          "csv_sha256": "ea7d5bf0fd111abc8334867036df52fc528ce8b295a7d4e8ce420c440c354921",
+          "cache_key": "bef9a510db65a0cdeba012011862511b2956db419de980beb250d63de3255d02",
+          "cache_path": "C:\\Users\\thota\\Documents\\Acad Projects\\SP\\To-Err-Like-Human\\data\\emoset_graph\\train_seed_evidence_bef9a510db65a0cd.npy",
+          "cache_npy_sha256": "7ffb2e1baa98e55a417f6b74da53f1edb95ff9c7a21b1d5d38f8e9ee1c62d94b",
+          "cache_npy_bytes": 530841728,
+          "ordered_source_image_records_sha256": "b0aee9b2eeb8c8cb9805ffef3eba7d40aacb587cccb557e79866f8fef834ddb7",
+          "ordered_chw_uint8_rows_sha256": "a294365cd0cbe2be52f1978792087d76803a7a188ec3f69f8266168e732327c8",
+          "exact_source_vs_cache_matches": 4800,
+          "declared_resized_pixel_hashes_verified": 0,
+          "declared_prepared_encoded_hashes_verified": 0,
+          "shape": [
+            4800,
+            3,
+            192,
+            192
+          ],
+          "dtype": "uint8"
+        },
+        "val": {
+          "rows_verified": 800,
+          "class_counts": [
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100
+          ],
+          "csv_sha256": "850416f5a83c43de8e2098fbf5f287845690c138d0bc972578a585ce0835ea3a",
+          "cache_key": "f746343f2284b7eb9f9b4dbf34f0024ba0cb1b05a7dda18778c76700b8898031",
+          "cache_path": "C:\\Users\\thota\\Documents\\Acad Projects\\SP\\To-Err-Like-Human\\data\\emoset_graph\\val_seed_evidence_f746343f2284b7eb.npy",
+          "cache_npy_sha256": "3714b60fbbeb42c32c14ac42b3983c71914e986ec9ba0c6e0b58a5919f09fa5c",
+          "cache_npy_bytes": 88473728,
+          "ordered_source_image_records_sha256": "dfc07c26fd09c03b73fd03a056aedb1263c232728f9b9095c718c69496abc6ed",
+          "ordered_chw_uint8_rows_sha256": "4242c9a0e9e8df8679a153a4ec2a1fbc378ba7c74f9421af23cb61571d03aa11",
+          "exact_source_vs_cache_matches": 800,
+          "declared_resized_pixel_hashes_verified": 0,
+          "declared_prepared_encoded_hashes_verified": 0,
+          "shape": [
+            800,
+            3,
+            192,
+            192
+          ],
+          "dtype": "uint8"
+        },
+        "test": {
+          "rows_verified": 1600,
+          "class_counts": [
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200
+          ],
+          "csv_sha256": "cca4960a2da10c673632a974f0cc6de8b8f76fda9a86a9129bb06235eddc6085",
+          "cache_key": "0f1fa6b915321e914f470ef7e14aead97ce7fde13cc50099d165b77a67edaa8a",
+          "cache_path": "C:\\Users\\thota\\Documents\\Acad Projects\\SP\\To-Err-Like-Human\\data\\emoset_graph\\test_seed_evidence_0f1fa6b915321e91.npy",
+          "cache_npy_sha256": "cb69ec5c8a6860aec0f07d6be8e7b18d7bed9713c1254191db8084ed770d77c4",
+          "cache_npy_bytes": 176947328,
+          "ordered_source_image_records_sha256": "2e8d523decfc12ddbdb7ce27c52de9e1176b5724da4e013b531295f84b2ec517",
+          "ordered_chw_uint8_rows_sha256": "15569093a78a4ea6726d19e4293f7b3c0a237ddbe208a5b0aecc240deabda050",
+          "exact_source_vs_cache_matches": 1600,
+          "declared_resized_pixel_hashes_verified": 0,
+          "declared_prepared_encoded_hashes_verified": 0,
+          "shape": [
+            1600,
+            3,
+            192,
+            192
+          ],
+          "dtype": "uint8"
+        }
+      },
+      "seconds": 57.241400999999314,
+      "status": "all checked rows match exactly"
+    },
+    "fi": {
+      "protocol_path": "C:\\Users\\thota\\Documents\\Acad Projects\\SP\\To-Err-Like-Human\\outputs\\seed_evidence\\fi\\protocol.json",
+      "protocol_file_sha256": "18bdda922f415463d169ea12ca756d2651b455c05f1551272fe3153059355edc",
+      "protocol_hash": "ad7a3aa1d1c3a9aa6121a65c701d311534ae4f5cf86fbd93d1830f436828203f",
+      "data_root": "C:\\Users\\thota\\Documents\\Acad Projects\\SP\\To-Err-Like-Human\\data\\seed_audit\\fi",
+      "classes": [
+        "amusement",
+        "anger",
+        "awe",
+        "contentment",
+        "disgust",
+        "excitement",
+        "fear",
+        "sadness"
+      ],
+      "splits": {
+        "train": {
+          "rows_verified": 4777,
+          "class_counts": [
+            600,
+            600,
+            600,
+            600,
+            600,
+            600,
+            577,
+            600
+          ],
+          "csv_sha256": "54109dc4759c2419b3fd2adfe5a62fdb69dc16dc855198cde7523be98aaef118",
+          "cache_key": "33c081b08f92a325f1ccf3f7fa1ba192cecfec58498a17afe7c41ae921e85846",
+          "cache_path": "C:\\Users\\thota\\Documents\\Acad Projects\\SP\\To-Err-Like-Human\\data\\seed_audit\\fi\\train_seed_evidence_33c081b08f92a325.npy",
+          "cache_npy_sha256": "3ef72e7ce23cfd4f3608deb9ed6da2bdb312e6fbb05d79e53cec3dc03ada9655",
+          "cache_npy_bytes": 528298112,
+          "ordered_source_image_records_sha256": "49c36c3527032899d904e68e4e69c3312629599ee48a6140b3ef7e9da51b65b7",
+          "ordered_chw_uint8_rows_sha256": "3def05fe3465fc93aa21d77ec9e22f89b8610a4e440b260d3b047dd73dc6d6be",
+          "exact_source_vs_cache_matches": 4777,
+          "declared_resized_pixel_hashes_verified": 4777,
+          "declared_prepared_encoded_hashes_verified": 0,
+          "shape": [
+            4777,
+            3,
+            192,
+            192
+          ],
+          "dtype": "uint8"
+        },
+        "val": {
+          "rows_verified": 800,
+          "class_counts": [
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100
+          ],
+          "csv_sha256": "a9a6d375f7ab933d2d8d5bd36d44879ab6f911f496de8e094f482eb761a66e26",
+          "cache_key": "0ef698c5413c0b1d3cbab81baad495628ed9e582f4324582e44397183c072ef1",
+          "cache_path": "C:\\Users\\thota\\Documents\\Acad Projects\\SP\\To-Err-Like-Human\\data\\seed_audit\\fi\\val_seed_evidence_0ef698c5413c0b1d.npy",
+          "cache_npy_sha256": "f4114b7b14eb9fb8357d44f144a0e124c4c66aefba4aac117db41c61cc5df77e",
+          "cache_npy_bytes": 88473728,
+          "ordered_source_image_records_sha256": "adf21837ed42f79ea287144c13a55f51c921c06d48998152b0fe439ea6d5c52b",
+          "ordered_chw_uint8_rows_sha256": "95d0bbadd7d6690d2ccf0e6e36ebfedf232ab75631dd699578b634f3aadf0a6b",
+          "exact_source_vs_cache_matches": 800,
+          "declared_resized_pixel_hashes_verified": 800,
+          "declared_prepared_encoded_hashes_verified": 0,
+          "shape": [
+            800,
+            3,
+            192,
+            192
+          ],
+          "dtype": "uint8"
+        },
+        "test": {
+          "rows_verified": 1593,
+          "class_counts": [
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            193,
+            200
+          ],
+          "csv_sha256": "365c7d1b5c4d42315bdb6b8b8c1b99a0ba7a41f8fe1ddbc4de653c6e16a309ab",
+          "cache_key": "64827f2d1c336371ccf1de845d5843bc3b824baf580efb94790c8e46bd69e271",
+          "cache_path": "C:\\Users\\thota\\Documents\\Acad Projects\\SP\\To-Err-Like-Human\\data\\seed_audit\\fi\\test_seed_evidence_64827f2d1c336371.npy",
+          "cache_npy_sha256": "2bbc5a1fa2825852d9d74afeb3e7ecb66b49b52c5c5dc5055ef2bae5ca12c6c9",
+          "cache_npy_bytes": 176173184,
+          "ordered_source_image_records_sha256": "7b4a5e16743d3ab77a935026deaad185a1bd899d2669a7b45bc19e415885b887",
+          "ordered_chw_uint8_rows_sha256": "9d3775c0c6f865d3d7000af4912658e3cd2f1a31df5b9d012050179a8e1def4e",
+          "exact_source_vs_cache_matches": 1593,
+          "declared_resized_pixel_hashes_verified": 1593,
+          "declared_prepared_encoded_hashes_verified": 0,
+          "shape": [
+            1593,
+            3,
+            192,
+            192
+          ],
+          "dtype": "uint8"
+        }
+      },
+      "seconds": 61.29055570000037,
+      "status": "all checked rows match exactly"
+    }
+  },
+  "total_rows_verified": 14370
+}
