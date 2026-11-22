@@ -1,0 +1,120 @@
+{
+  "args": {
+    "data_root": "data\\kaggle_full_8epoch\\data\\emoset_full",
+    "out": "outputs\\full_seed_replication",
+    "epochs": 8,
+    "seeds": [
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "methods": [
+      "ce",
+      "graph"
+    ],
+    "batch_size": 64,
+    "device": "auto",
+    "no_amp": false,
+    "cache_only": false,
+    "skip_test": false,
+    "lock_file": "work\\single_gpu.lock"
+  },
+  "classes": [
+    "amusement",
+    "anger",
+    "awe",
+    "contentment",
+    "disgust",
+    "excitement",
+    "fear",
+    "sadness"
+  ],
+  "datasets": {
+    "train": {
+      "n": 94475,
+      "csv_sha256": "ccf254465e6f0613da0bfe8fccc737d81ad27090d9fba184d980f756a4ee09ba",
+      "cache_key": "74eb155bb77db92050108071a9817bc2e24916f4e1f09d69e8d57fcd3e00ae2e",
+      "cache_sha256": "b6a535c86f13af0f384e0ad2742a284dbcd7117aa3cd11c3e14f37ed4e30f7e1",
+      "cache_bytes": 10448179328,
+      "class_counts": [
+        15680,
+        8434,
+        12022,
+        13035,
+        8467,
+        15833,
+        10786,
+        10218
+      ]
+    },
+    "val": {
+      "n": 5904,
+      "csv_sha256": "1badf6f0b2962ecf090524358e472d962148a8fef91ca00f5443cdda4262b845",
+      "cache_key": "dea8c63c6264bd0935060e428c28b2db31cb2a71309063fff7e79baa2ee6828b",
+      "cache_sha256": "806f9c2acc75f628e2fc49551e22612e618800c6029b25f3c75fd9d33863e20b",
+      "cache_bytes": 652935296,
+      "class_counts": [
+        994,
+        518,
+        755,
+        816,
+        538,
+        977,
+        693,
+        613
+      ]
+    },
+    "test": {
+      "n": 17715,
+      "csv_sha256": "d6c5a5b2c802d22943679df21eed57ececbad108e589d754597d8fa2791f3a9e",
+      "cache_key": "88d79d67f4911966cdb327b76c3dd05e56b4b7c7226c73f60eb498de02215d8f",
+      "cache_sha256": "e734ed44fc59dde52eb52074486122c21f23a3d4e2f317b7a3aeaf1d585b0856",
+      "cache_bytes": 1959137408,
+      "class_counts": [
+        2770,
+        1708,
+        2260,
+        2484,
+        1661,
+        3014,
+        1973,
+        1845
+      ]
+    }
+  },
+  "sources": {
+    "runner": "97ad3cf3d072e055b3f478c6454d69e79486a799a4b5e238383ed5cd67973866",
+    "ecc.graph": "1212dfbc2872c35d219510dcbe47a85627a5780560f844e1d316e1e31301fe65",
+    "ecc.metrics": "888bf1a600856813c919f6a3000e3616863c775b2eef0e708ed615fff7af9464",
+    "ecc.emotion": "4cbc38de0cd9a493773f44db7fbc0a43e8fd7f9b00f315143d1d99515b12cee7"
+  },
+  "data_manifest_sha256": "9012a2ea76fc40e5b31560fc9624338f19248c74e3b5267ca94033aeca753a11",
+  "torch": "2.14.1+cu130",
+  "torchvision": "0.29.1+cu130",
+  "numpy": "2.5.4",
+  "python": "3.14.0",
+  "device": "cuda",
+  "gpu_name": "NVIDIA GeForce RTX 5050 Laptop GPU",
+  "loss": {
+    "alpha": 0.3,
+    "gamma": 1,
+    "beta": 0.01
+  },
+  "optimizer": {
+    "name": "AdamW",
+    "lr": 0.0001,
+    "weight_decay": 0.0001,
+    "clip_norm": 5
+  },
+  "selection": "highest validation ECC (earliest tied epoch); fixed maximum epochs; final test once",
+  "transforms": "PIL EXIF transpose RGB; Resize192x192; random crop160/flip0.5 train; center160 val/test",
+  "initialization": "ImageNet1K ResNet18 common pretrained backbone initialization plus seeded linear head; all parameters trained; identical state per paired methods",
+  "memory_access": "disk-backed uint8 memmap; batch-sized contiguous CPU copy then transfer to GPU; no whole-split image copy or preload",
+  "step_diagnostics": "overflow/skipped-step count inferred from standard single-optimizer GradScaler scale decreases; logging only",
+  "seed_scope": "new initialization/augmentation seeds, same fixed dataset split; not independent data populations",
+  "deterministic_algorithms": true,
+  "protocol_hash": "9b23c25a5cae457f7095b7ef8bda5714a2d7a2492e85dd30ce7d674948c1799f"
+}

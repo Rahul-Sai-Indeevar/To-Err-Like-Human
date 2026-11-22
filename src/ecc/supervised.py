@@ -11,15 +11,15 @@ import numpy as np
 import torch
 from torch.utils.data import DataLoader
 
-from .checkpoint import latest_checkpoint, load_checkpoint, save_checkpoint
+from .checkpoint import load_checkpoint, prepare_run_config, save_checkpoint
 from .common import (append_jsonl, emotion_tensors, get_device, load_classes,
                      predict_probs, set_seed)
 from .config import load_config, parse_args
 from .data import EmotionCSV, build_transforms
 from .decode import mec_decode
-from .kaggle_utils import (latest_checkpoint_in, persistent_ckpt_dir,
+from .kaggle_utils import (persistent_ckpt_dir,
                            save_to_persistent)
-from .losses import CombinedLoss
+from .graph import build_loss
 from .metrics import confusion_matrix, evaluate_predictions
 from .models import build_model
 
@@ -30,13 +30,18 @@ def lr_at(epoch: int, it: int, iters: int, o: dict) -> float:
     return o["lr_after_decay"] if epoch >= o["decay_epoch"] else o["lr"]
 
 
+def scheduled_loss_alpha(loss_config, epoch):
+    if loss_config.get("kind") == "ce" or epoch < loss_config.get("switch_epoch", 0):
+        return 0.0
+    return loss_config["alpha"]
+
+
 def run(cfg: dict) -> dict:
     set_seed(cfg["seed"])
     device = get_device()
     d, o = cfg["data"], cfg["optim"]
     out = Path(cfg["output_dir"])
     out.mkdir(parents=True, exist_ok=True)
-    (out / "config.json").write_text(json.dumps(cfg, indent=2))
 
     # Persistent checkpoint dir (writable directory) — survives session restarts.
     # NOTE: Kaggle input mounts (/kaggle/input/) are read-only. Use a writable path
@@ -49,6 +54,7 @@ def run(cfg: dict) -> dict:
         except OSError:
             print(f"Persistent checkpoint dir not writable: {persistent} (ignoring)")
             persistent = None
+    ckpt_path, resume_provenance = prepare_run_config(cfg, out, persistent)
 
     classes = load_classes(d["splits_dir"])
     W, polarity, rank = emotion_tensors(classes, cfg["loss"]["polarity_C"])
@@ -61,8 +67,7 @@ def run(cfg: dict) -> dict:
                                  loader(mk("test", False), False))
 
     model = build_model(cfg["model"]["name"], len(classes), cfg["model"]["pretrained"]).to(device)
-    crit = CombinedLoss(rank, cfg["loss"]["alpha"], cfg["loss"]["listmle_reduction"]).to(device)
-    switch_epoch = cfg["loss"].get("switch_epoch", 0)
+    crit = build_loss(cfg["loss"], W, rank).to(device)
     opt = torch.optim.SGD(model.parameters(), lr=o["lr"], momentum=o["momentum"],
                           weight_decay=o["weight_decay"])
     use_amp = bool(cfg.get("amp", False)) and device.type == "cuda"
@@ -72,12 +77,7 @@ def run(cfg: dict) -> dict:
     start_epoch = 0
     best, best_epoch = -1.0, -1
     sel = cfg["eval"]["select_by"]
-    resume_from = cfg.get("resume_from")
-
-    # Prefer explicit resume_from, then output_dir, then persistent dir.
-    ckpt_path = (resume_from or str(latest_checkpoint(out)) or
-                 str(latest_checkpoint_in(persistent)))
-    if ckpt_path and Path(ckpt_path).exists():
+    if ckpt_path is not None:
         ckpt = load_checkpoint(ckpt_path, model, opt, map_location=device)
         start_epoch = ckpt["epoch"] + 1
         best = ckpt.get("best_metric", -1.0)
@@ -87,7 +87,7 @@ def run(cfg: dict) -> dict:
     for epoch in range(start_epoch, o["epochs"]):
         model.train()
         t0, run_loss = time.time(), 0.0
-        crit.alpha = 0.0 if epoch < switch_epoch else cfg["loss"]["alpha"]
+        crit.alpha = scheduled_loss_alpha(cfg["loss"], epoch)
         for it, (x, y) in enumerate(train_dl):
             for g in opt.param_groups:
                 g["lr"] = lr_at(epoch, it, len(train_dl), o)
@@ -109,12 +109,15 @@ def run(cfg: dict) -> dict:
             best, best_epoch = m[sel], epoch
             torch.save(model.state_dict(), out / "best.pt")
         # Save a resumable checkpoint every epoch — to both output and persistent dirs.
-        save_checkpoint(out / "checkpoint.pt", model, opt, epoch, best, best_epoch)
+        save_checkpoint(out / "checkpoint.pt", model, opt, epoch, best, best_epoch,
+                        extra={"resume_provenance": resume_provenance}, run_config=cfg)
         save_to_persistent(out / "checkpoint.pt", persistent)
         if persistent is not None:
             save_to_persistent(out / "best.pt", persistent)
 
     # final test with the best-on-val checkpoint
+    if not (out / "best.pt").is_file():
+        raise FileNotFoundError("No validation-best model is available; keep matching best.pt beside the resume checkpoint or extend the epoch budget to select a new best model")
     model.load_state_dict(torch.load(out / "best.pt", map_location=device))
     probs, labels = predict_probs(model, test_dl, device, use_amp)
     res = {"best_epoch": best_epoch, "select_by": sel,

@@ -16,13 +16,15 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest"]
+dev = ["pytest", "scipy>=1.10", "matplotlib>=3.7"]
+experiments = ["matplotlib>=3.7", "pyarrow>=14", "markdown>=3.5", "scipy>=1.10"]
 
 [project.scripts]
 ecc-splits = "ecc.splits:main"
 ecc-train = "ecc.supervised:main"
 ecc-ssl = "ecc.ssl:main"
 ecc-eval = "ecc.evaluate:main"
+ecc-graph = "ecc.graph_experiment:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

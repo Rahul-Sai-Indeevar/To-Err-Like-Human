@@ -7,6 +7,23 @@ from __future__ import annotations
 import numpy as np
 
 
+def graph_error_metrics(probabilities, labels, W, gamma=1.0):
+    """Descriptive graph-error energy, not a calibrated PSD or validated metric.
+
+    GSEE is explicitly defined as the mean inverse-frequency-weighted squared
+    probability residual. Its DC term is excluded. Lower is better.
+    """
+    from .graph import graph_basis, spectral_weights
+    p=np.asarray(probabilities,dtype=np.float64)
+    y=np.eye(len(W))[np.asarray(labels)]
+    _,L,values,U=graph_basis(W)
+    energy=np.mean(((p-y)@U)**2,axis=0)
+    return {'gsee':float(energy@spectral_weights(values,gamma)),
+            'brier':float(np.mean(np.sum((p-y)**2,axis=1))),
+            'dirichlet':float(np.mean(np.sum((p@L)*p,axis=1))),
+            'error_energy':energy.tolist()}
+
+
 def confusion_matrix(y_true, y_pred, n_classes: int) -> np.ndarray:
     S = np.zeros((n_classes, n_classes), dtype=np.int64)
     np.add.at(S, (np.asarray(y_true), np.asarray(y_pred)), 1)

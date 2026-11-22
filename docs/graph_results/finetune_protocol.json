@@ -1,0 +1,103 @@
+{
+  "args": {
+    "stage": "finetune",
+    "epochs": 6,
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "batch_size": 32
+  },
+  "device": "cuda",
+  "torch": "2.14.1+cu130",
+  "python": "3.14.0",
+  "classes": [
+    "amusement",
+    "anger",
+    "awe",
+    "contentment",
+    "disgust",
+    "excitement",
+    "fear",
+    "sadness"
+  ],
+  "manifest": {
+    "train": {
+      "available_rows": 10498,
+      "selected": 4800,
+      "per_class": {
+        "awe": 600,
+        "disgust": 600,
+        "excitement": 600,
+        "anger": 600,
+        "contentment": 600,
+        "fear": 600,
+        "sadness": 600,
+        "amusement": 600
+      },
+      "excluded": {}
+    },
+    "val": {
+      "available_rows": 2953,
+      "selected": 800,
+      "per_class": {
+        "contentment": 100,
+        "disgust": 100,
+        "sadness": 100,
+        "excitement": 100,
+        "awe": 100,
+        "fear": 100,
+        "amusement": 100,
+        "anger": 100
+      },
+      "excluded": {}
+    },
+    "test": {
+      "available_rows": 4429,
+      "selected": 1600,
+      "per_class": {
+        "sadness": 200,
+        "excitement": 200,
+        "disgust": 200,
+        "contentment": 200,
+        "amusement": 200,
+        "awe": 200,
+        "anger": 200,
+        "fear": 200
+      },
+      "excluded": {}
+    },
+    "source": {
+      "repository": "udeman/EmoSet-118K",
+      "revision": "cd2344cbf316bd77331ee63a79ce6999f0bf7572",
+      "files": [
+        {
+          "path": "data/train-00000-of-00018.parquet",
+          "bytes": 508611497,
+          "sha256": "090a4bcd42c1a2feba914c5662da0cf06bd2b6a3e1a57bbbb963106d7731cdb7"
+        },
+        {
+          "path": "data/train-00001-of-00018.parquet",
+          "bytes": 503546768,
+          "sha256": "090a2ad2f16ffee48ae449b4a2e477daf0e096a6ffdacd83d78a6f38aa1a8a37"
+        },
+        {
+          "path": "data/val-00000-of-00002.parquet",
+          "bytes": 281745071,
+          "sha256": "cdd16d7cc23a9c08adc46f94e465982bced2d4082f229cc5c4d279ab3eb2a95e"
+        },
+        {
+          "path": "data/test-00000-of-00004.parquet",
+          "bytes": 421773311,
+          "sha256": "fe84c3ffe78431afbdefff771db4bcdecd2fa04c82bd8b28c11a560a07b59f12"
+        }
+      ]
+    },
+    "sampling_seed": 2026
+  },
+  "selection": "maximum validation ECC; fixed candidates; test evaluated only after checkpoint selection",
+  "image_size": 160,
+  "resize": 192,
+  "pretrained": "ResNet18_Weights.IMAGENET1K_V1"
+}

@@ -1,0 +1,2877 @@
+{
+  "protocol": {
+    "seed": 20261121,
+    "per_class_cap": 24,
+    "sampling_rule": "Test manifest, uniformly without replacement within each class; all if fewer",
+    "image": "EXIF-corrected RGB, bilinear resize 192\u00d7192, center crop 160\u00d7160, float64 in [0,1]",
+    "boundary": "Circular for explicit shifts and phase average; no wrap in real image gradients",
+    "noise": "Zero-mean Gaussian white noise, sigma 0.03, matched across transforms, no clipping",
+    "shift_columns": 1,
+    "source": "ecc.wavelets (haar_analysis2d, haar_synthesis2d, wavelet_components)",
+    "python_version": "3.14.0",
+    "torch_version": "2.15.0+cpu",
+    "private_source_note": "Prepared research test images stay local; no photographs are redistributed."
+  },
+  "tone_sweep": {
+    "grid_size": 64,
+    "rows_per_sweep": 33,
+    "sweeps": {
+      "columns_only": [
+        {
+          "frequency": 0.0,
+          "fx": 0.0,
+          "fy": 0.0,
+          "predicted": {
+            "ll": 1.0,
+            "lh": 0.0,
+            "hl": 0.0,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 1.0,
+            "lh": 0.0,
+            "hl": 0.0,
+            "hh": 0.0
+          },
+          "predicted_ll2_energy_fraction": 1.0,
+          "measured_ll2_energy_fraction": 1.0,
+          "measured_phase_avg_amplitude_gain": 1.0
+        },
+        {
+          "frequency": 0.015625,
+          "fx": 0.015625,
+          "fy": 0.0,
+          "predicted": {
+            "ll": 0.9975923633360985,
+            "lh": 0.002407636663901557,
+            "hl": 0.0,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.9975923633360984,
+            "lh": 0.0024076366639015573,
+            "hl": 5.394108477053313e-34,
+            "hh": 0.0
+          },
+          "predicted_ll2_energy_fraction": 0.9880081345694075,
+          "measured_ll2_energy_fraction": 0.9880081345694074,
+          "measured_phase_avg_amplitude_gain": 0.9880081345694073
+        },
+        {
+          "frequency": 0.03125,
+          "fx": 0.03125,
+          "fy": 0.0,
+          "predicted": {
+            "ll": 0.9903926402016153,
+            "lh": 0.009607359798384776,
+            "hl": 0.0,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.9903926402016152,
+            "lh": 0.009607359798384778,
+            "hl": 4.167832770275503e-34,
+            "hh": 0.0
+          },
+          "predicted_ll2_energy_fraction": 0.9526980648168513,
+          "measured_ll2_energy_fraction": 0.952698064816851,
+          "measured_phase_avg_amplitude_gain": 0.9526980648168512
+        },
+        {
+          "frequency": 0.046875,
+          "fx": 0.046875,
+          "fy": 0.0,
+          "predicted": {
+            "ll": 0.9784701678661045,
+            "lh": 0.021529832133895567,
+            "hl": 0.0,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.9784701678661045,
+            "lh": 0.021529832133895584,
+            "hl": 5.9771536750611675e-34,
+            "hh": 9.027796614315168e-36
+          },
+          "predicted_ll2_energy_fraction": 0.8960191894956703,
+          "measured_ll2_energy_fraction": 0.8960191894956702,
+          "measured_phase_avg_amplitude_gain": 0.89601918949567
+        },
+        {
+          "frequency": 0.0625,
+          "fx": 0.0625,
+          "fy": 0.0,
+          "predicted": {
+            "ll": 0.9619397662556434,
+            "lh": 0.03806023374435662,
+            "hl": 0.0,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.9619397662556437,
+            "lh": 0.03806023374435664,
+            "hl": 4.27315706410918e-34,
+            "hh": 0.0
+          },
+          "predicted_ll2_energy_fraction": 0.8210669490340057,
+          "measured_ll2_energy_fraction": 0.8210669490340057,
+          "measured_phase_avg_amplitude_gain": 0.8210669490340057
+        },
+        {
+          "frequency": 0.078125,
+          "fx": 0.078125,
+          "fy": 0.0,
+          "predicted": {
+            "ll": 0.9409606321741775,
+            "lh": 0.059039367825822475,
+            "hl": 0.0,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.9409606321741775,
+            "lh": 0.0590393678258225,
+            "hl": 5.029235030558075e-34,
+            "hh": 1.2413220344683356e-35
+          },
+          "predicted_ll2_energy_fraction": 0.7318651749267288,
+          "measured_ll2_energy_fraction": 0.7318651749267286,
+          "measured_phase_avg_amplitude_gain": 0.7318651749267288
+        },
+        {
+          "frequency": 0.09375,
+          "fx": 0.09375,
+          "fy": 0.0,
+          "predicted": {
+            "ll": 0.9157348061512726,
+            "lh": 0.08426519384872735,
+            "hl": 0.0,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.9157348061512726,
+            "lh": 0.08426519384872744,
+            "hl": 4.769685877896514e-34,
+            "hh": 4.2129717533470784e-35
+          },
+          "predicted_ll2_energy_fraction": 0.6330856724527109,
+          "measured_ll2_energy_fraction": 0.633085672452711,
+          "measured_phase_avg_amplitude_gain": 0.633085672452711
+        },
+        {
+          "frequency": 0.109375,
+          "fx": 0.109375,
+          "fy": 0.0,
+          "predicted": {
+            "ll": 0.8865052266813686,
+            "lh": 0.11349477331863152,
+            "hl": 0.0,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.8865052266813684,
+            "lh": 0.11349477331863163,
+            "hl": 7.0943435060826696e-34,
+            "hh": 7.147005652999508e-35
+          },
+          "predicted_ll2_energy_fraction": 0.5297269084118087,
+          "measured_ll2_energy_fraction": 0.5297269084118089,
+          "measured_phase_avg_amplitude_gain": 0.5297269084118087
+        },
+        {
+          "frequency": 0.125,
+          "fx": 0.125,
+          "fy": 0.0,
+          "predicted": {
+            "ll": 0.8535533905932737,
+            "lh": 0.14644660940672624,
+            "hl": 0.0,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.8535533905932737,
+            "lh": 0.1464466094067263,
+            "hl": 3.851859888774472e-34,
+            "hh": 0.0
+          },
+          "predicted_ll2_energy_fraction": 0.426776695296637,
+          "measured_ll2_energy_fraction": 0.4267766952966368,
+          "measured_phase_avg_amplitude_gain": 0.4267766952966368
+        },
+        {
+          "frequency": 0.140625,
+          "fx": 0.140625,
+          "fy": 0.0,
+          "predicted": {
+            "ll": 0.8171966420818227,
+            "lh": 0.18280335791817726,
+            "hl": 0.0,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.8171966420818227,
+            "lh": 0.18280335791817726,
+            "hl": 4.728308476747569e-34,
+            "hh": 1.6588576278804121e-34
+          },
+          "predicted_ll2_energy_fraction": 0.32888474301379067,
+          "measured_ll2_energy_fraction": 0.32888474301379067,
+          "measured_phase_avg_amplitude_gain": 0.3288847430137906
+        },
+        {
+          "frequency": 0.15625,
+          "fx": 0.15625,
+          "fy": 0.0,
+          "predicted": {
+            "ll": 0.7777851165098012,
+            "lh": 0.22221488349019888,
+            "hl": 0.0,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.7777851165098012,
+            "lh": 0.22221488349019897,
+            "hl": 5.5671412454943545e-34,
+            "hh": 1.2337988706230732e-34
+          },
+          "predicted_ll2_energy_fraction": 0.2400698192406746,
+          "measured_ll2_energy_fraction": 0.24006981924067441,
+          "measured_phase_avg_amplitude_gain": 0.2400698192406746
+        },
+        {
+          "frequency": 0.171875,
+          "fx": 0.171875,
+          "fy": 0.0,
+          "predicted": {
+            "ll": 0.735698368412999,
+            "lh": 0.2643016315870011,
+            "hl": 0.0,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.7356983684129987,
+            "lh": 0.26430163158700126,
+            "hl": 4.739593222515463e-34,
+            "hh": 2.8136632781282274e-34
+          },
+          "predicted_ll2_energy_fraction": 0.1634831272208241,
+          "measured_ll2_energy_fraction": 0.16348312722082398,
+          "measured_phase_avg_amplitude_gain": 0.16348312722082392
+        },
+        {
+          "frequency": 0.1875,
+          "fx": 0.1875,
+          "fy": 0.0,
+          "predicted": {
+            "ll": 0.6913417161825449,
+            "lh": 0.3086582838174551,
+            "hl": 0.0,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.6913417161825448,
+            "lh": 0.3086582838174553,
+            "hl": 4.513898307157584e-34,
+            "hh": 1.4444474582904269e-34
+          },
+          "predicted_ll2_energy_fraction": 0.10124465027636098,
+          "measured_ll2_energy_fraction": 0.10124465027636104,
+          "measured_phase_avg_amplitude_gain": 0.10124465027636095
+        },
+        {
+          "frequency": 0.203125,
+          "fx": 0.203125,
+          "fy": 0.0,
+          "predicted": {
+            "ll": 0.6451423386272312,
+            "lh": 0.3548576613727688,
+            "hl": 0.0,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.645142338627231,
+            "lh": 0.354857661372769,
+            "hl": 5.24364520014806e-34,
+            "hh": 3.0769740127124198e-34
+          },
+          "predicted_ll2_energy_fraction": 0.054363044224444934,
+          "measured_ll2_energy_fraction": 0.05436304422444498,
+          "measured_phase_avg_amplitude_gain": 0.054363044224444955
+        },
+        {
+          "frequency": 0.21875,
+          "fx": 0.21875,
+          "fy": 0.0,
+          "predicted": {
+            "ll": 0.5975451610080642,
+            "lh": 0.40245483899193585,
+            "hl": 0.0,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.5975451610080638,
+            "lh": 0.4024548389919362,
+            "hl": 3.8969988718460475e-34,
+            "hh": 3.535887007273441e-34
+          },
+          "predicted_ll2_energy_fraction": 0.02274270850077617,
+          "measured_ll2_energy_fraction": 0.022742708500776185,
+          "measured_phase_avg_amplitude_gain": 0.022742708500776136
+        },
+        {
+          "frequency": 0.234375,
+          "fx": 0.234375,
+          "fy": 0.0,
+          "predicted": {
+            "ll": 0.5490085701647804,
+            "lh": 0.4509914298352196,
+            "hl": 0.0,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.54900857016478,
+            "lh": 0.45099142983522,
+            "hl": 4.630507346759155e-34,
+            "hh": 5.4129163866664695e-34
+          },
+          "predicted_ll2_energy_fraction": 0.005274522865969751,
+          "measured_ll2_energy_fraction": 0.005274522865969819,
+          "measured_phase_avg_amplitude_gain": 0.005274522865969816
+        },
+        {
+          "frequency": 0.25,
+          "fx": 0.25,
+          "fy": 0.0,
+          "predicted": {
+            "ll": 0.5000000000000001,
+            "lh": 0.5000000000000001,
+            "hl": 0.0,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.4999999999999999,
+            "lh": 0.5000000000000001,
+            "hl": 2.4691135538288632e-34,
+            "hh": 2.2156277427796283e-34
+          },
+          "predicted_ll2_energy_fraction": -1.1481063742006436e-17,
+          "measured_ll2_energy_fraction": 1.610847805485484e-30,
+          "measured_phase_avg_amplitude_gain": -1.3131548963008988e-18
+        },
+        {
+          "frequency": 0.265625,
+          "fx": 0.265625,
+          "fy": 0.0,
+          "predicted": {
+            "ll": 0.4509914298352196,
+            "lh": 0.5490085701647803,
+            "hl": 0.0,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.4509914298352199,
+            "lh": 0.5490085701647801,
+            "hl": 4.592891527532842e-34,
+            "hh": 3.5697412445771227e-34
+          },
+          "predicted_ll2_energy_fraction": 0.004332836932415027,
+          "measured_ll2_energy_fraction": 0.004332836932414909,
+          "measured_phase_avg_amplitude_gain": 0.004332836932414961
+        },
+        {
+          "frequency": 0.28125,
+          "fx": 0.28125,
+          "fy": 0.0,
+          "predicted": {
+            "ll": 0.40245483899193585,
+            "lh": 0.597545161008064,
+            "hl": 0.0,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.4024548389919359,
+            "lh": 0.597545161008064,
+            "hl": 3.656257628797643e-34,
+            "hh": 3.656257628797643e-34
+          },
+          "predicted_ll2_energy_fraction": 0.015317525243580439,
+          "measured_ll2_energy_fraction": 0.015317525243580465,
+          "measured_phase_avg_amplitude_gain": 0.015317525243580491
+        },
+        {
+          "frequency": 0.296875,
+          "fx": 0.296875,
+          "fy": 0.0,
+          "predicted": {
+            "ll": 0.354857661372769,
+            "lh": 0.645142338627231,
+            "hl": 0.0,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.3548576613727687,
+            "lh": 0.6451423386272312,
+            "hl": 2.971649718878743e-34,
+            "hh": 4.41609717716917e-34
+          },
+          "predicted_ll2_energy_fraction": 0.029902149624282386,
+          "measured_ll2_energy_fraction": 0.029902149624282427,
+          "measured_phase_avg_amplitude_gain": 0.02990214962428242
+        },
+        {
+          "frequency": 0.3125,
+          "fx": 0.3125,
+          "fy": 0.0,
+          "predicted": {
+            "ll": 0.3086582838174552,
+            "lh": 0.6913417161825449,
+            "hl": 0.0,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.3086582838174549,
+            "lh": 0.691341716182545,
+            "hl": 2.2268564981977415e-34,
+            "hh": 2.6481536735324493e-34
+          },
+          "predicted_ll2_energy_fraction": 0.04520195913036523,
+          "measured_ll2_energy_fraction": 0.045201959130365336,
+          "measured_phase_avg_amplitude_gain": 0.045201959130365295
+        },
+        {
+          "frequency": 0.328125,
+          "fx": 0.328125,
+          "fy": 0.0,
+          "predicted": {
+            "ll": 0.2643016315870011,
+            "lh": 0.735698368412999,
+            "hl": 0.0,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.2643016315870025,
+            "lh": 0.7356983684129975,
+            "hl": 2.1553864416677464e-34,
+            "hh": 4.322057629103387e-34
+          },
+          "predicted_ll2_energy_fraction": 0.058731756269374935,
+          "measured_ll2_energy_fraction": 0.058731756269375185,
+          "measured_phase_avg_amplitude_gain": 0.058731756269374935
+        },
+        {
+          "frequency": 0.34375,
+          "fx": 0.34375,
+          "fy": 0.0,
+          "predicted": {
+            "ll": 0.22221488349019905,
+            "lh": 0.777785116509801,
+            "hl": 0.0,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.22221488349019872,
+            "lh": 0.7777851165098013,
+            "hl": 1.233798870623073e-34,
+            "hh": 3.881952544155522e-34
+          },
+          "predicted_ll2_energy_fraction": 0.06858846457678053,
+          "measured_ll2_energy_fraction": 0.06858846457678044,
+          "measured_phase_avg_amplitude_gain": 0.06858846457678053
+        },
+        {
+          "frequency": 0.359375,
+          "fx": 0.359375,
+          "fy": 0.0,
+          "predicted": {
+            "ll": 0.18280335791817734,
+            "lh": 0.8171966420818227,
+            "hl": 0.0,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.18280335791817715,
+            "lh": 0.8171966420818229,
+            "hl": 1.1435209044799213e-34,
+            "hh": 5.657419211637505e-34
+          },
+          "predicted_ll2_energy_fraction": 0.07357009597814518,
+          "measured_ll2_energy_fraction": 0.0735700959781452,
+          "measured_phase_avg_amplitude_gain": 0.07357009597814526
+        },
+        {
+          "frequency": 0.375,
+          "fx": 0.375,
+          "fy": 0.0,
+          "predicted": {
+            "ll": 0.1464466094067263,
+            "lh": 0.8535533905932737,
+            "hl": 0.0,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.146446609406726,
+            "lh": 0.853553390593274,
+            "hl": 0.0,
+            "hh": 4.092601131822876e-34
+          },
+          "predicted_ll2_energy_fraction": 0.07322330470336312,
+          "measured_ll2_energy_fraction": 0.0732233047033629,
+          "measured_phase_avg_amplitude_gain": 0.0732233047033631
+        },
+        {
+          "frequency": 0.390625,
+          "fx": 0.390625,
+          "fy": 0.0,
+          "predicted": {
+            "ll": 0.11349477331863152,
+            "lh": 0.8865052266813686,
+            "hl": 0.0,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.11349477331863121,
+            "lh": 0.8865052266813688,
+            "hl": 4.7772090417417764e-35,
+            "hh": 6.767085878813745e-34
+          },
+          "predicted_ll2_energy_fraction": 0.06781825259625542,
+          "measured_ll2_energy_fraction": 0.06781825259625525,
+          "measured_phase_avg_amplitude_gain": 0.06781825259625542
+        },
+        {
+          "frequency": 0.40625,
+          "fx": 0.40625,
+          "fy": 0.0,
+          "predicted": {
+            "ll": 0.08426519384872735,
+            "lh": 0.9157348061512728,
+            "hl": 0.0,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.08426519384872719,
+            "lh": 0.9157348061512729,
+            "hl": 4.0625084764418256e-35,
+            "hh": 4.258110736418654e-34
+          },
+          "predicted_ll2_energy_fraction": 0.058256043729833965,
+          "measured_ll2_energy_fraction": 0.058256043729833874,
+          "measured_phase_avg_amplitude_gain": 0.05825604372983401
+        },
+        {
+          "frequency": 0.421875,
+          "fx": 0.421875,
+          "fy": 0.0,
+          "predicted": {
+            "ll": 0.05903936782582253,
+            "lh": 0.9409606321741775,
+            "hl": 0.0,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.05903936782582242,
+            "lh": 0.9409606321741776,
+            "hl": 1.128474576789396e-35,
+            "hh": 4.596653109455473e-34
+          },
+          "predicted_ll2_energy_fraction": 0.045919941583072346,
+          "measured_ll2_energy_fraction": 0.045919941583072305,
+          "measured_phase_avg_amplitude_gain": 0.045919941583072346
+        },
+        {
+          "frequency": 0.4375,
+          "fx": 0.4375,
+          "fy": 0.0,
+          "predicted": {
+            "ll": 0.038060233744356645,
+            "lh": 0.9619397662556434,
+            "hl": 0.0,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.03806023374435639,
+            "lh": 0.9619397662556435,
+            "hl": 0.0,
+            "hh": 5.7777898331617076e-34
+          },
+          "predicted_ll2_energy_fraction": 0.03248644155926811,
+          "measured_ll2_energy_fraction": 0.032486441559267915,
+          "measured_phase_avg_amplitude_gain": 0.03248644155926812
+        },
+        {
+          "frequency": 0.453125,
+          "fx": 0.453125,
+          "fy": 0.0,
+          "predicted": {
+            "ll": 0.021529832133895567,
+            "lh": 0.9784701678661045,
+            "hl": 0.0,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.021529832133895442,
+            "lh": 0.9784701678661046,
+            "hl": 1.1660903960157092e-35,
+            "hh": 5.3188768386006865e-34
+          },
+          "predicted_ll2_energy_fraction": 0.019715616655602383,
+          "measured_ll2_energy_fraction": 0.019715616655602185,
+          "measured_phase_avg_amplitude_gain": 0.019715616655602293
+        },
+        {
+          "frequency": 0.46875,
+          "fx": 0.46875,
+          "fy": 0.0,
+          "predicted": {
+            "ll": 0.009607359798384809,
+            "lh": 0.9903926402016151,
+            "hl": 0.0,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.00960735979838465,
+            "lh": 0.9903926402016153,
+            "hl": 0.0,
+            "hh": 6.4699209069258704e-34
+          },
+          "predicted_ll2_energy_fraction": 0.009241701438792209,
+          "measured_ll2_energy_fraction": 0.009241701438791994,
+          "measured_phase_avg_amplitude_gain": 0.009241701438792119
+        },
+        {
+          "frequency": 0.484375,
+          "fx": 0.484375,
+          "fy": 0.0,
+          "predicted": {
+            "ll": 0.0024076366639015677,
+            "lh": 0.9975923633360985,
+            "hl": 0.0,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.0024076366639013253,
+            "lh": 0.9975923633360986,
+            "hl": 0.0,
+            "hh": 5.913206782376435e-34
+          },
+          "predicted_ll2_energy_fraction": 0.002384505632207705,
+          "measured_ll2_energy_fraction": 0.0023845056322074434,
+          "measured_phase_avg_amplitude_gain": 0.0023845056322076715
+        },
+        {
+          "frequency": 0.5,
+          "fx": 0.5,
+          "fy": 0.0,
+          "predicted": {
+            "ll": 3.749399456654644e-33,
+            "lh": 1.0,
+            "hl": 0.0,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 2.156482590304568e-29,
+            "lh": 1.0,
+            "hl": 1.2030764436686661e-62,
+            "hh": 2.540527160658934e-62
+          },
+          "predicted_ll2_energy_fraction": 0.0,
+          "measured_ll2_energy_fraction": 1.6387926212532795e-29,
+          "measured_phase_avg_amplitude_gain": 9.684740738283312e-30
+        }
+      ],
+      "diagonal": [
+        {
+          "frequency": 0.0,
+          "fx": 0.0,
+          "fy": 0.0,
+          "predicted": {
+            "ll": 1.0,
+            "lh": 0.0,
+            "hl": 0.0,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 1.0,
+            "lh": 0.0,
+            "hl": 0.0,
+            "hh": 0.0
+          },
+          "predicted_ll2_energy_fraction": 1.0,
+          "measured_ll2_energy_fraction": 1.0,
+          "measured_phase_avg_amplitude_gain": 1.0
+        },
+        {
+          "frequency": 0.015625,
+          "fx": 0.015625,
+          "fy": 0.015625,
+          "predicted": {
+            "ll": 0.9951905233865023,
+            "lh": 0.002401839949596194,
+            "hl": 0.002401839949596194,
+            "hh": 5.7967143053630184e-06
+          },
+          "measured": {
+            "ll": 0.9951905233865022,
+            "lh": 0.0024018399495961936,
+            "hl": 0.0024018399495961936,
+            "hh": 5.796714305363008e-06
+          },
+          "predicted_ll2_energy_fraction": 0.9761600739753205,
+          "measured_ll2_energy_fraction": 0.9761600739753205,
+          "measured_phase_avg_amplitude_gain": 0.9761600739753203
+        },
+        {
+          "frequency": 0.03125,
+          "fx": 0.03125,
+          "fy": 0.03125,
+          "predicted": {
+            "ll": 0.9808775817655263,
+            "lh": 0.009515058436089158,
+            "hl": 0.009515058436089158,
+            "hh": 9.230136229561996e-05
+          },
+          "measured": {
+            "ll": 0.980877581765526,
+            "lh": 0.009515058436089154,
+            "hl": 0.009515058436089154,
+            "hh": 9.230136229561984e-05
+          },
+          "predicted_ll2_energy_fraction": 0.9076336027057733,
+          "measured_ll2_energy_fraction": 0.9076336027057733,
+          "measured_phase_avg_amplitude_gain": 0.9076336027057733
+        },
+        {
+          "frequency": 0.046875,
+          "fx": 0.046875,
+          "fy": 0.046875,
+          "predicted": {
+            "ll": 0.9574038694039227,
+            "lh": 0.021066298462181846,
+            "hl": 0.021066298462181846,
+            "hh": 0.00046353367171372216
+          },
+          "measured": {
+            "ll": 0.9574038694039224,
+            "lh": 0.021066298462181842,
+            "hl": 0.021066298462181842,
+            "hh": 0.0004635336717137221
+          },
+          "predicted_ll2_energy_fraction": 0.8028503879444778,
+          "measured_ll2_energy_fraction": 0.8028503879444779,
+          "measured_phase_avg_amplitude_gain": 0.8028503879444778
+        },
+        {
+          "frequency": 0.0625,
+          "fx": 0.0625,
+          "fy": 0.0625,
+          "predicted": {
+            "ll": 0.9253281139039617,
+            "lh": 0.03661165235168155,
+            "hl": 0.03661165235168155,
+            "hh": 0.0014485813926750622
+          },
+          "measured": {
+            "ll": 0.925328113903962,
+            "lh": 0.03661165235168156,
+            "hl": 0.03661165235168155,
+            "hh": 0.0014485813926750624
+          },
+          "predicted_ll2_energy_fraction": 0.6741509347960105,
+          "measured_ll2_energy_fraction": 0.6741509347960104,
+          "measured_phase_avg_amplitude_gain": 0.6741509347960104
+        },
+        {
+          "frequency": 0.078125,
+          "fx": 0.078125,
+          "fy": 0.078125,
+          "predicted": {
+            "ll": 0.8854069113016277,
+            "lh": 0.05555372087254971,
+            "hl": 0.05555372087254971,
+            "hh": 0.003485646953272762
+          },
+          "measured": {
+            "ll": 0.8854069113016279,
+            "lh": 0.05555372087254972,
+            "hl": 0.05555372087254972,
+            "hh": 0.003485646953272763
+          },
+          "predicted_ll2_energy_fraction": 0.5356266342705313,
+          "measured_ll2_energy_fraction": 0.5356266342705313,
+          "measured_phase_avg_amplitude_gain": 0.5356266342705314
+        },
+        {
+          "frequency": 0.09375,
+          "fx": 0.09375,
+          "fy": 0.09375,
+          "predicted": {
+            "ll": 0.8385702351969088,
+            "lh": 0.07716457095436374,
+            "hl": 0.07716457095436374,
+            "hh": 0.007100622894363598
+          },
+          "measured": {
+            "ll": 0.8385702351969089,
+            "lh": 0.07716457095436377,
+            "hl": 0.07716457095436377,
+            "hh": 0.007100622894363601
+          },
+          "predicted_ll2_energy_fraction": 0.4007974686649011,
+          "measured_ll2_energy_fraction": 0.40079746866490107,
+          "measured_phase_avg_amplitude_gain": 0.40079746866490107
+        },
+        {
+          "frequency": 0.109375,
+          "fx": 0.109375,
+          "fy": 0.109375,
+          "predicted": {
+            "ll": 0.7858915169333847,
+            "lh": 0.10061370974798398,
+            "hl": 0.10061370974798398,
+            "hh": 0.012881063570647552
+          },
+          "measured": {
+            "ll": 0.7858915169333844,
+            "lh": 0.10061370974798396,
+            "hl": 0.10061370974798396,
+            "hh": 0.012881063570647552
+          },
+          "predicted_ll2_energy_fraction": 0.28061059749553274,
+          "measured_ll2_energy_fraction": 0.28061059749553285,
+          "measured_phase_avg_amplitude_gain": 0.2806105974955328
+        },
+        {
+          "frequency": 0.125,
+          "fx": 0.125,
+          "fy": 0.125,
+          "predicted": {
+            "ll": 0.7285533905932737,
+            "lh": 0.125,
+            "hl": 0.125,
+            "hh": 0.021446609406726238
+          },
+          "measured": {
+            "ll": 0.7285533905932737,
+            "lh": 0.125,
+            "hl": 0.125,
+            "hh": 0.021446609406726234
+          },
+          "predicted_ll2_energy_fraction": 0.18213834764831852,
+          "measured_ll2_energy_fraction": 0.18213834764831846,
+          "measured_phase_avg_amplitude_gain": 0.18213834764831843
+        },
+        {
+          "frequency": 0.140625,
+          "fx": 0.140625,
+          "fy": 0.140625,
+          "predicted": {
+            "ll": 0.6678103518298067,
+            "lh": 0.14938629025201602,
+            "hl": 0.14938629025201602,
+            "hh": 0.03341706766616122
+          },
+          "measured": {
+            "ll": 0.6678103518298067,
+            "lh": 0.14938629025201602,
+            "hl": 0.149386290252016,
+            "hh": 0.03341706766616121
+          },
+          "predicted_ll2_energy_fraction": 0.10816517418724714,
+          "measured_ll2_energy_fraction": 0.10816517418724711,
+          "measured_phase_avg_amplitude_gain": 0.10816517418724708
+        },
+        {
+          "frequency": 0.15625,
+          "fx": 0.15625,
+          "fy": 0.15625,
+          "predicted": {
+            "ll": 0.604949687464165,
+            "lh": 0.17283542904563623,
+            "hl": 0.17283542904563623,
+            "hh": 0.04937945444456267
+          },
+          "measured": {
+            "ll": 0.6049496874641649,
+            "lh": 0.1728354290456362,
+            "hl": 0.1728354290456362,
+            "hh": 0.049379454444562654
+          },
+          "predicted_ll2_energy_fraction": 0.05763351811025018,
+          "measured_ll2_energy_fraction": 0.057633518110250095,
+          "measured_phase_avg_amplitude_gain": 0.057633518110250165
+        },
+        {
+          "frequency": 0.171875,
+          "fx": 0.171875,
+          "fy": 0.171875,
+          "predicted": {
+            "ll": 0.5412520892855488,
+            "lh": 0.19444627912745024,
+            "hl": 0.19444627912745024,
+            "hh": 0.06985535245955085
+          },
+          "measured": {
+            "ll": 0.5412520892855486,
+            "lh": 0.19444627912745027,
+            "hl": 0.19444627912745027,
+            "hh": 0.06985535245955089
+          },
+          "predicted_ll2_energy_fraction": 0.026726732885900155,
+          "measured_ll2_energy_fraction": 0.02672673288590016,
+          "measured_phase_avg_amplitude_gain": 0.02672673288590011
+        },
+        {
+          "frequency": 0.1875,
+          "fx": 0.1875,
+          "fy": 0.1875,
+          "predicted": {
+            "ll": 0.4779533685342265,
+            "lh": 0.21338834764831843,
+            "hl": 0.21338834764831843,
+            "hh": 0.09526993616913665
+          },
+          "measured": {
+            "ll": 0.47795336853422654,
+            "lh": 0.21338834764831843,
+            "hl": 0.21338834764831843,
+            "hh": 0.09526993616913668
+          },
+          "predicted_ll2_energy_fraction": 0.010250479209582641,
+          "measured_ll2_energy_fraction": 0.01025047920958265,
+          "measured_phase_avg_amplitude_gain": 0.010250479209582632
+        },
+        {
+          "frequency": 0.203125,
+          "fx": 0.203125,
+          "fy": 0.203125,
+          "predicted": {
+            "ll": 0.41620863708941314,
+            "lh": 0.22893370153781817,
+            "hl": 0.22893370153781817,
+            "hh": 0.12592395983495067
+          },
+          "measured": {
+            "ll": 0.416208637089413,
+            "lh": 0.2289337015378181,
+            "hl": 0.2289337015378181,
+            "hh": 0.12592395983495064
+          },
+          "predicted_ll2_energy_fraction": 0.002955340577348956,
+          "measured_ll2_energy_fraction": 0.002955340577348945,
+          "measured_phase_avg_amplitude_gain": 0.002955340577348958
+        },
+        {
+          "frequency": 0.21875,
+          "fx": 0.21875,
+          "fy": 0.21875,
+          "predicted": {
+            "ll": 0.3570602194441534,
+            "lh": 0.24048494156391087,
+            "hl": 0.24048494156391087,
+            "hh": 0.161969897428025
+          },
+          "measured": {
+            "ll": 0.35706021944415334,
+            "lh": 0.24048494156391084,
+            "hl": 0.24048494156391081,
+            "hh": 0.161969897428025
+          },
+          "predicted_ll2_energy_fraction": 0.0005172307899512767,
+          "measured_ll2_energy_fraction": 0.000517230789951283,
+          "measured_phase_avg_amplitude_gain": 0.000517230789951275
+        },
+        {
+          "frequency": 0.234375,
+          "fx": 0.234375,
+          "fy": 0.234375,
+          "predicted": {
+            "ll": 0.30141041011437664,
+            "lh": 0.24759816005040383,
+            "hl": 0.24759816005040383,
+            "hh": 0.2033932697848158
+          },
+          "measured": {
+            "ll": 0.3014104101143765,
+            "lh": 0.2475981600504038,
+            "hl": 0.2475981600504038,
+            "hh": 0.20339326978481587
+          },
+          "predicted_ll2_energy_fraction": 2.7820591463637756e-05,
+          "measured_ll2_energy_fraction": 2.7820591463643383e-05,
+          "measured_phase_avg_amplitude_gain": 2.782059146363844e-05
+        },
+        {
+          "frequency": 0.25,
+          "fx": 0.25,
+          "fy": 0.25,
+          "predicted": {
+            "ll": 0.2500000000000001,
+            "lh": 0.2500000000000001,
+            "hl": 0.2500000000000001,
+            "hh": 0.2500000000000001
+          },
+          "measured": {
+            "ll": 0.25,
+            "lh": 0.25,
+            "hl": 0.25,
+            "hh": 0.24999999999999997
+          },
+          "predicted_ll2_energy_fraction": 1.318148246480148e-34,
+          "measured_ll2_energy_fraction": 6.3560976948962e-30,
+          "measured_phase_avg_amplitude_gain": 6.1284535277860135e-30
+        },
+        {
+          "frequency": 0.265625,
+          "fx": 0.265625,
+          "fy": 0.265625,
+          "predicted": {
+            "ll": 0.2033932697848158,
+            "lh": 0.24759816005040378,
+            "hl": 0.24759816005040378,
+            "hh": 0.3014104101143765
+          },
+          "measured": {
+            "ll": 0.20339326978481592,
+            "lh": 0.2475981600504038,
+            "hl": 0.2475981600504038,
+            "hh": 0.3014104101143764
+          },
+          "predicted_ll2_energy_fraction": 1.877347588289966e-05,
+          "measured_ll2_energy_fraction": 1.8773475882895608e-05,
+          "measured_phase_avg_amplitude_gain": 1.8773475882899064e-05
+        },
+        {
+          "frequency": 0.28125,
+          "fx": 0.28125,
+          "fy": 0.28125,
+          "predicted": {
+            "ll": 0.161969897428025,
+            "lh": 0.2404849415639108,
+            "hl": 0.2404849415639108,
+            "hh": 0.3570602194441531
+          },
+          "measured": {
+            "ll": 0.16196989742802503,
+            "lh": 0.24048494156391087,
+            "hl": 0.24048494156391087,
+            "hh": 0.3570602194441532
+          },
+          "predicted_ll2_energy_fraction": 0.000234626579587724,
+          "measured_ll2_energy_fraction": 0.00023462657958772112,
+          "measured_phase_avg_amplitude_gain": 0.0002346265795877255
+        },
+        {
+          "frequency": 0.296875,
+          "fx": 0.296875,
+          "fy": 0.296875,
+          "predicted": {
+            "ll": 0.12592395983495078,
+            "lh": 0.2289337015378182,
+            "hl": 0.2289337015378182,
+            "hh": 0.4162086370894128
+          },
+          "measured": {
+            "ll": 0.1259239598349507,
+            "lh": 0.22893370153781817,
+            "hl": 0.22893370153781817,
+            "hh": 0.416208637089413
+          },
+          "predicted_ll2_energy_fraction": 0.0008941385521529712,
+          "measured_ll2_energy_fraction": 0.0008941385521529881,
+          "measured_phase_avg_amplitude_gain": 0.0008941385521529736
+        },
+        {
+          "frequency": 0.3125,
+          "fx": 0.3125,
+          "fy": 0.3125,
+          "predicted": {
+            "ll": 0.09526993616913672,
+            "lh": 0.21338834764831852,
+            "hl": 0.21338834764831852,
+            "hh": 0.4779533685342265
+          },
+          "measured": {
+            "ll": 0.0952699361691367,
+            "lh": 0.2133883476483185,
+            "hl": 0.2133883476483185,
+            "hh": 0.4779533685342264
+          },
+          "predicted_ll2_energy_fraction": 0.002043217109223209,
+          "measured_ll2_energy_fraction": 0.002043217109223165,
+          "measured_phase_avg_amplitude_gain": 0.0020432171092232146
+        },
+        {
+          "frequency": 0.328125,
+          "fx": 0.328125,
+          "fy": 0.328125,
+          "predicted": {
+            "ll": 0.06985535245955085,
+            "lh": 0.19444627912745024,
+            "hl": 0.19444627912745024,
+            "hh": 0.5412520892855488
+          },
+          "measured": {
+            "ll": 0.06985535245955093,
+            "lh": 0.1944462791274503,
+            "hl": 0.1944462791274503,
+            "hh": 0.5412520892855485
+          },
+          "predicted_ll2_energy_fraction": 0.003449419194485262,
+          "measured_ll2_energy_fraction": 0.003449419194485135,
+          "measured_phase_avg_amplitude_gain": 0.0034494191944852617
+        },
+        {
+          "frequency": 0.34375,
+          "fx": 0.34375,
+          "fy": 0.34375,
+          "predicted": {
+            "ll": 0.04937945444456274,
+            "lh": 0.1728354290456363,
+            "hl": 0.1728354290456363,
+            "hh": 0.6049496874641647
+          },
+          "measured": {
+            "ll": 0.04937945444456267,
+            "lh": 0.1728354290456362,
+            "hl": 0.17283542904563626,
+            "hh": 0.6049496874641649
+          },
+          "predicted_ll2_energy_fraction": 0.004704377473000277,
+          "measured_ll2_energy_fraction": 0.00470437747300031,
+          "measured_phase_avg_amplitude_gain": 0.004704377473000278
+        },
+        {
+          "frequency": 0.359375,
+          "fx": 0.359375,
+          "fy": 0.359375,
+          "predicted": {
+            "ll": 0.03341706766616125,
+            "lh": 0.1493862902520161,
+            "hl": 0.1493862902520161,
+            "hh": 0.6678103518298067
+          },
+          "measured": {
+            "ll": 0.03341706766616123,
+            "lh": 0.14938629025201605,
+            "hl": 0.14938629025201605,
+            "hh": 0.6678103518298066
+          },
+          "predicted_ll2_energy_fraction": 0.005412559022233494,
+          "measured_ll2_energy_fraction": 0.005412559022233504,
+          "measured_phase_avg_amplitude_gain": 0.005412559022233504
+        },
+        {
+          "frequency": 0.375,
+          "fx": 0.375,
+          "fy": 0.375,
+          "predicted": {
+            "ll": 0.021446609406726255,
+            "lh": 0.12500000000000006,
+            "hl": 0.12500000000000006,
+            "hh": 0.7285533905932737
+          },
+          "measured": {
+            "ll": 0.02144660940672625,
+            "lh": 0.125,
+            "hl": 0.125,
+            "hh": 0.7285533905932737
+          },
+          "predicted_ll2_energy_fraction": 0.0053616523516815595,
+          "measured_ll2_energy_fraction": 0.005361652351681569,
+          "measured_phase_avg_amplitude_gain": 0.00536165235168156
+        },
+        {
+          "frequency": 0.390625,
+          "fx": 0.390625,
+          "fy": 0.390625,
+          "predicted": {
+            "ll": 0.012881063570647552,
+            "lh": 0.10061370974798398,
+            "hl": 0.10061370974798398,
+            "hh": 0.7858915169333847
+          },
+          "measured": {
+            "ll": 0.012881063570647559,
+            "lh": 0.10061370974798399,
+            "hl": 0.10061370974798398,
+            "hh": 0.7858915169333844
+          },
+          "predicted_ll2_energy_fraction": 0.004599315385209505,
+          "measured_ll2_energy_fraction": 0.004599315385209536,
+          "measured_phase_avg_amplitude_gain": 0.004599315385209505
+        },
+        {
+          "frequency": 0.40625,
+          "fx": 0.40625,
+          "fy": 0.40625,
+          "predicted": {
+            "ll": 0.007100622894363598,
+            "lh": 0.07716457095436377,
+            "hl": 0.07716457095436377,
+            "hh": 0.8385702351969091
+          },
+          "measured": {
+            "ll": 0.007100622894363607,
+            "lh": 0.0771645709543638,
+            "hl": 0.0771645709543638,
+            "hh": 0.8385702351969088
+          },
+          "predicted_ll2_energy_fraction": 0.003393766631052327,
+          "measured_ll2_energy_fraction": 0.0033937666310523253,
+          "measured_phase_avg_amplitude_gain": 0.003393766631052333
+        },
+        {
+          "frequency": 0.421875,
+          "fx": 0.421875,
+          "fy": 0.421875,
+          "predicted": {
+            "ll": 0.0034856469532727687,
+            "lh": 0.05555372087254976,
+            "hl": 0.05555372087254976,
+            "hh": 0.8854069113016277
+          },
+          "measured": {
+            "ll": 0.0034856469532727656,
+            "lh": 0.05555372087254975,
+            "hl": 0.05555372087254975,
+            "hh": 0.8854069113016279
+          },
+          "predicted_ll2_energy_fraction": 0.002108641034992777,
+          "measured_ll2_energy_fraction": 0.0021086410349927774,
+          "measured_phase_avg_amplitude_gain": 0.0021086410349927765
+        },
+        {
+          "frequency": 0.4375,
+          "fx": 0.4375,
+          "fy": 0.4375,
+          "predicted": {
+            "ll": 0.0014485813926750641,
+            "lh": 0.03661165235168158,
+            "hl": 0.03661165235168158,
+            "hh": 0.9253281139039617
+          },
+          "measured": {
+            "ll": 0.0014485813926750635,
+            "lh": 0.03661165235168157,
+            "hl": 0.03661165235168157,
+            "hh": 0.9253281139039617
+          },
+          "predicted_ll2_energy_fraction": 0.0010553688851837422,
+          "measured_ll2_energy_fraction": 0.0010553688851837437,
+          "measured_phase_avg_amplitude_gain": 0.0010553688851837432
+        },
+        {
+          "frequency": 0.453125,
+          "fx": 0.453125,
+          "fy": 0.453125,
+          "predicted": {
+            "ll": 0.00046353367171372216,
+            "lh": 0.021066298462181846,
+            "hl": 0.021066298462181846,
+            "hh": 0.9574038694039227
+          },
+          "measured": {
+            "ll": 0.00046353367171372286,
+            "lh": 0.021066298462181866,
+            "hl": 0.02106629846218186,
+            "hh": 0.9574038694039224
+          },
+          "predicted_ll2_energy_fraction": 0.0003887055401106661,
+          "measured_ll2_energy_fraction": 0.00038870554011066543,
+          "measured_phase_avg_amplitude_gain": 0.0003887055401106626
+        },
+        {
+          "frequency": 0.46875,
+          "fx": 0.46875,
+          "fy": 0.46875,
+          "predicted": {
+            "ll": 9.23013622956206e-05,
+            "lh": 0.009515058436089187,
+            "hl": 0.009515058436089187,
+            "hh": 0.9808775817655259
+          },
+          "measured": {
+            "ll": 9.230136229562005e-05,
+            "lh": 0.009515058436089166,
+            "hl": 0.009515058436089165,
+            "hh": 0.980877581765526
+          },
+          "predicted_ll2_energy_fraction": 8.540904548377398e-05,
+          "measured_ll2_energy_fraction": 8.540904548377238e-05,
+          "measured_phase_avg_amplitude_gain": 8.540904548377227e-05
+        },
+        {
+          "frequency": 0.484375,
+          "fx": 0.484375,
+          "fy": 0.484375,
+          "predicted": {
+            "ll": 5.796714305363071e-06,
+            "lh": 0.002401839949596205,
+            "hl": 0.002401839949596205,
+            "hh": 0.9951905233865023
+          },
+          "measured": {
+            "ll": 5.796714305363018e-06,
+            "lh": 0.0024018399495961966,
+            "hl": 0.002401839949596196,
+            "hh": 0.9951905233865022
+          },
+          "predicted_ll2_energy_fraction": 5.6858671100302666e-06,
+          "measured_ll2_energy_fraction": 5.685867110030089e-06,
+          "measured_phase_avg_amplitude_gain": 5.685867110030112e-06
+        },
+        {
+          "frequency": 0.5,
+          "fx": 0.5,
+          "fy": 0.5,
+          "predicted": {
+            "ll": 1.405799628556214e-65,
+            "lh": 3.749399456654644e-33,
+            "hl": 3.749399456654644e-33,
+            "hh": 1.0
+          },
+          "measured": {
+            "ll": 4.1304263959306415e-29,
+            "lh": 1.8175496053094328e-29,
+            "hl": 1.8175496053094328e-29,
+            "hh": 1.0
+          },
+          "predicted_ll2_energy_fraction": 0.0,
+          "measured_ll2_energy_fraction": 1.304701981525689e-29,
+          "measured_phase_avg_amplitude_gain": 1.335552971822342e-29
+        }
+      ],
+      "rows_only": [
+        {
+          "frequency": 0.0,
+          "fx": 0.0,
+          "fy": 0.0,
+          "predicted": {
+            "ll": 1.0,
+            "lh": 0.0,
+            "hl": 0.0,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 1.0,
+            "lh": 0.0,
+            "hl": 0.0,
+            "hh": 0.0
+          },
+          "predicted_ll2_energy_fraction": 1.0,
+          "measured_ll2_energy_fraction": 1.0,
+          "measured_phase_avg_amplitude_gain": 1.0
+        },
+        {
+          "frequency": 0.015625,
+          "fx": 0.0,
+          "fy": 0.015625,
+          "predicted": {
+            "ll": 0.9975923633360985,
+            "lh": 0.0,
+            "hl": 0.002407636663901557,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.9975923633360982,
+            "lh": 0.0,
+            "hl": 0.0024076366639015573,
+            "hh": 0.0
+          },
+          "predicted_ll2_energy_fraction": 0.9880081345694075,
+          "measured_ll2_energy_fraction": 0.9880081345694075,
+          "measured_phase_avg_amplitude_gain": 0.9880081345694074
+        },
+        {
+          "frequency": 0.03125,
+          "fx": 0.0,
+          "fy": 0.03125,
+          "predicted": {
+            "ll": 0.9903926402016153,
+            "lh": 0.0,
+            "hl": 0.009607359798384776,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.9903926402016153,
+            "lh": 0.0,
+            "hl": 0.00960735979838478,
+            "hh": 0.0
+          },
+          "predicted_ll2_energy_fraction": 0.9526980648168513,
+          "measured_ll2_energy_fraction": 0.9526980648168513,
+          "measured_phase_avg_amplitude_gain": 0.9526980648168515
+        },
+        {
+          "frequency": 0.046875,
+          "fx": 0.0,
+          "fy": 0.046875,
+          "predicted": {
+            "ll": 0.9784701678661045,
+            "lh": 0.0,
+            "hl": 0.021529832133895567,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.9784701678661045,
+            "lh": 0.0,
+            "hl": 0.021529832133895584,
+            "hh": 0.0
+          },
+          "predicted_ll2_energy_fraction": 0.8960191894956703,
+          "measured_ll2_energy_fraction": 0.8960191894956702,
+          "measured_phase_avg_amplitude_gain": 0.8960191894956704
+        },
+        {
+          "frequency": 0.0625,
+          "fx": 0.0,
+          "fy": 0.0625,
+          "predicted": {
+            "ll": 0.9619397662556434,
+            "lh": 0.0,
+            "hl": 0.03806023374435662,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.9619397662556435,
+            "lh": 0.0,
+            "hl": 0.03806023374435664,
+            "hh": 0.0
+          },
+          "predicted_ll2_energy_fraction": 0.8210669490340057,
+          "measured_ll2_energy_fraction": 0.8210669490340057,
+          "measured_phase_avg_amplitude_gain": 0.8210669490340057
+        },
+        {
+          "frequency": 0.078125,
+          "fx": 0.0,
+          "fy": 0.078125,
+          "predicted": {
+            "ll": 0.9409606321741775,
+            "lh": 0.0,
+            "hl": 0.059039367825822475,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.9409606321741774,
+            "lh": 0.0,
+            "hl": 0.05903936782582252,
+            "hh": 0.0
+          },
+          "predicted_ll2_energy_fraction": 0.7318651749267288,
+          "measured_ll2_energy_fraction": 0.7318651749267286,
+          "measured_phase_avg_amplitude_gain": 0.7318651749267289
+        },
+        {
+          "frequency": 0.09375,
+          "fx": 0.0,
+          "fy": 0.09375,
+          "predicted": {
+            "ll": 0.9157348061512726,
+            "lh": 0.0,
+            "hl": 0.08426519384872735,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.9157348061512726,
+            "lh": 0.0,
+            "hl": 0.08426519384872744,
+            "hh": 0.0
+          },
+          "predicted_ll2_energy_fraction": 0.6330856724527109,
+          "measured_ll2_energy_fraction": 0.633085672452711,
+          "measured_phase_avg_amplitude_gain": 0.6330856724527109
+        },
+        {
+          "frequency": 0.109375,
+          "fx": 0.0,
+          "fy": 0.109375,
+          "predicted": {
+            "ll": 0.8865052266813686,
+            "lh": 0.0,
+            "hl": 0.11349477331863152,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.8865052266813683,
+            "lh": 0.0,
+            "hl": 0.11349477331863161,
+            "hh": 0.0
+          },
+          "predicted_ll2_energy_fraction": 0.5297269084118087,
+          "measured_ll2_energy_fraction": 0.5297269084118088,
+          "measured_phase_avg_amplitude_gain": 0.5297269084118088
+        },
+        {
+          "frequency": 0.125,
+          "fx": 0.0,
+          "fy": 0.125,
+          "predicted": {
+            "ll": 0.8535533905932737,
+            "lh": 0.0,
+            "hl": 0.14644660940672624,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.8535533905932737,
+            "lh": 0.0,
+            "hl": 0.1464466094067263,
+            "hh": 0.0
+          },
+          "predicted_ll2_energy_fraction": 0.426776695296637,
+          "measured_ll2_energy_fraction": 0.42677669529663687,
+          "measured_phase_avg_amplitude_gain": 0.42677669529663687
+        },
+        {
+          "frequency": 0.140625,
+          "fx": 0.0,
+          "fy": 0.140625,
+          "predicted": {
+            "ll": 0.8171966420818227,
+            "lh": 0.0,
+            "hl": 0.18280335791817726,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.8171966420818227,
+            "lh": 0.0,
+            "hl": 0.18280335791817726,
+            "hh": 0.0
+          },
+          "predicted_ll2_energy_fraction": 0.32888474301379067,
+          "measured_ll2_energy_fraction": 0.3288847430137908,
+          "measured_phase_avg_amplitude_gain": 0.32888474301379067
+        },
+        {
+          "frequency": 0.15625,
+          "fx": 0.0,
+          "fy": 0.15625,
+          "predicted": {
+            "ll": 0.7777851165098012,
+            "lh": 0.0,
+            "hl": 0.22221488349019888,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.7777851165098012,
+            "lh": 0.0,
+            "hl": 0.22221488349019897,
+            "hh": 0.0
+          },
+          "predicted_ll2_energy_fraction": 0.2400698192406746,
+          "measured_ll2_energy_fraction": 0.24006981924067441,
+          "measured_phase_avg_amplitude_gain": 0.24006981924067455
+        },
+        {
+          "frequency": 0.171875,
+          "fx": 0.0,
+          "fy": 0.171875,
+          "predicted": {
+            "ll": 0.735698368412999,
+            "lh": 0.0,
+            "hl": 0.2643016315870011,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.7356983684129988,
+            "lh": 0.0,
+            "hl": 0.26430163158700126,
+            "hh": 0.0
+          },
+          "predicted_ll2_energy_fraction": 0.1634831272208241,
+          "measured_ll2_energy_fraction": 0.163483127220824,
+          "measured_phase_avg_amplitude_gain": 0.16348312722082398
+        },
+        {
+          "frequency": 0.1875,
+          "fx": 0.0,
+          "fy": 0.1875,
+          "predicted": {
+            "ll": 0.6913417161825449,
+            "lh": 0.0,
+            "hl": 0.3086582838174551,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.6913417161825449,
+            "lh": 0.0,
+            "hl": 0.3086582838174554,
+            "hh": 0.0
+          },
+          "predicted_ll2_energy_fraction": 0.10124465027636098,
+          "measured_ll2_energy_fraction": 0.10124465027636105,
+          "measured_phase_avg_amplitude_gain": 0.10124465027636094
+        },
+        {
+          "frequency": 0.203125,
+          "fx": 0.0,
+          "fy": 0.203125,
+          "predicted": {
+            "ll": 0.6451423386272312,
+            "lh": 0.0,
+            "hl": 0.3548576613727688,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.645142338627231,
+            "lh": 0.0,
+            "hl": 0.354857661372769,
+            "hh": 0.0
+          },
+          "predicted_ll2_energy_fraction": 0.054363044224444934,
+          "measured_ll2_energy_fraction": 0.05436304422444497,
+          "measured_phase_avg_amplitude_gain": 0.05436304422444496
+        },
+        {
+          "frequency": 0.21875,
+          "fx": 0.0,
+          "fy": 0.21875,
+          "predicted": {
+            "ll": 0.5975451610080642,
+            "lh": 0.0,
+            "hl": 0.40245483899193585,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.5975451610080639,
+            "lh": 0.0,
+            "hl": 0.40245483899193607,
+            "hh": 0.0
+          },
+          "predicted_ll2_energy_fraction": 0.02274270850077617,
+          "measured_ll2_energy_fraction": 0.022742708500776188,
+          "measured_phase_avg_amplitude_gain": 0.022742708500776136
+        },
+        {
+          "frequency": 0.234375,
+          "fx": 0.0,
+          "fy": 0.234375,
+          "predicted": {
+            "ll": 0.5490085701647804,
+            "lh": 0.0,
+            "hl": 0.4509914298352196,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.54900857016478,
+            "lh": 0.0,
+            "hl": 0.45099142983522,
+            "hh": 0.0
+          },
+          "predicted_ll2_energy_fraction": 0.005274522865969751,
+          "measured_ll2_energy_fraction": 0.005274522865969819,
+          "measured_phase_avg_amplitude_gain": 0.005274522865969815
+        },
+        {
+          "frequency": 0.25,
+          "fx": 0.0,
+          "fy": 0.25,
+          "predicted": {
+            "ll": 0.5000000000000001,
+            "lh": 0.0,
+            "hl": 0.5000000000000001,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.4999999999999999,
+            "lh": 0.0,
+            "hl": 0.5000000000000001,
+            "hh": 0.0
+          },
+          "predicted_ll2_energy_fraction": -1.1481063742006436e-17,
+          "measured_ll2_energy_fraction": 1.582801450670345e-30,
+          "measured_phase_avg_amplitude_gain": -1.3131548963009034e-18
+        },
+        {
+          "frequency": 0.265625,
+          "fx": 0.0,
+          "fy": 0.265625,
+          "predicted": {
+            "ll": 0.4509914298352196,
+            "lh": 0.0,
+            "hl": 0.5490085701647803,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.4509914298352199,
+            "lh": 0.0,
+            "hl": 0.5490085701647801,
+            "hh": 0.0
+          },
+          "predicted_ll2_energy_fraction": 0.004332836932415027,
+          "measured_ll2_energy_fraction": 0.004332836932414909,
+          "measured_phase_avg_amplitude_gain": 0.004332836932414961
+        },
+        {
+          "frequency": 0.28125,
+          "fx": 0.0,
+          "fy": 0.28125,
+          "predicted": {
+            "ll": 0.40245483899193585,
+            "lh": 0.0,
+            "hl": 0.597545161008064,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.4024548389919359,
+            "lh": 0.0,
+            "hl": 0.5975451610080641,
+            "hh": 0.0
+          },
+          "predicted_ll2_energy_fraction": 0.015317525243580439,
+          "measured_ll2_energy_fraction": 0.01531752524358046,
+          "measured_phase_avg_amplitude_gain": 0.015317525243580491
+        },
+        {
+          "frequency": 0.296875,
+          "fx": 0.0,
+          "fy": 0.296875,
+          "predicted": {
+            "ll": 0.354857661372769,
+            "lh": 0.0,
+            "hl": 0.645142338627231,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.35485766137276864,
+            "lh": 0.0,
+            "hl": 0.6451423386272314,
+            "hh": 0.0
+          },
+          "predicted_ll2_energy_fraction": 0.029902149624282386,
+          "measured_ll2_energy_fraction": 0.029902149624282434,
+          "measured_phase_avg_amplitude_gain": 0.029902149624282427
+        },
+        {
+          "frequency": 0.3125,
+          "fx": 0.0,
+          "fy": 0.3125,
+          "predicted": {
+            "ll": 0.3086582838174552,
+            "lh": 0.0,
+            "hl": 0.6913417161825449,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.30865828381745497,
+            "lh": 0.0,
+            "hl": 0.6913417161825453,
+            "hh": 0.0
+          },
+          "predicted_ll2_energy_fraction": 0.04520195913036523,
+          "measured_ll2_energy_fraction": 0.045201959130365336,
+          "measured_phase_avg_amplitude_gain": 0.04520195913036531
+        },
+        {
+          "frequency": 0.328125,
+          "fx": 0.0,
+          "fy": 0.328125,
+          "predicted": {
+            "ll": 0.2643016315870011,
+            "lh": 0.0,
+            "hl": 0.735698368412999,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.26430163158700254,
+            "lh": 0.0,
+            "hl": 0.7356983684129976,
+            "hh": 0.0
+          },
+          "predicted_ll2_energy_fraction": 0.058731756269374935,
+          "measured_ll2_energy_fraction": 0.058731756269375185,
+          "measured_phase_avg_amplitude_gain": 0.058731756269374935
+        },
+        {
+          "frequency": 0.34375,
+          "fx": 0.0,
+          "fy": 0.34375,
+          "predicted": {
+            "ll": 0.22221488349019905,
+            "lh": 0.0,
+            "hl": 0.777785116509801,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.22221488349019874,
+            "lh": 0.0,
+            "hl": 0.7777851165098013,
+            "hh": 0.0
+          },
+          "predicted_ll2_energy_fraction": 0.06858846457678053,
+          "measured_ll2_energy_fraction": 0.06858846457678044,
+          "measured_phase_avg_amplitude_gain": 0.06858846457678053
+        },
+        {
+          "frequency": 0.359375,
+          "fx": 0.0,
+          "fy": 0.359375,
+          "predicted": {
+            "ll": 0.18280335791817734,
+            "lh": 0.0,
+            "hl": 0.8171966420818227,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.18280335791817717,
+            "lh": 0.0,
+            "hl": 0.8171966420818229,
+            "hh": 0.0
+          },
+          "predicted_ll2_energy_fraction": 0.07357009597814518,
+          "measured_ll2_energy_fraction": 0.0735700959781452,
+          "measured_phase_avg_amplitude_gain": 0.07357009597814525
+        },
+        {
+          "frequency": 0.375,
+          "fx": 0.0,
+          "fy": 0.375,
+          "predicted": {
+            "ll": 0.1464466094067263,
+            "lh": 0.0,
+            "hl": 0.8535533905932737,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.14644660940672596,
+            "lh": 0.0,
+            "hl": 0.8535533905932742,
+            "hh": 0.0
+          },
+          "predicted_ll2_energy_fraction": 0.07322330470336312,
+          "measured_ll2_energy_fraction": 0.07322330470336288,
+          "measured_phase_avg_amplitude_gain": 0.07322330470336312
+        },
+        {
+          "frequency": 0.390625,
+          "fx": 0.0,
+          "fy": 0.390625,
+          "predicted": {
+            "ll": 0.11349477331863152,
+            "lh": 0.0,
+            "hl": 0.8865052266813686,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.11349477331863123,
+            "lh": 0.0,
+            "hl": 0.8865052266813689,
+            "hh": 0.0
+          },
+          "predicted_ll2_energy_fraction": 0.06781825259625542,
+          "measured_ll2_energy_fraction": 0.06781825259625524,
+          "measured_phase_avg_amplitude_gain": 0.06781825259625542
+        },
+        {
+          "frequency": 0.40625,
+          "fx": 0.0,
+          "fy": 0.40625,
+          "predicted": {
+            "ll": 0.08426519384872735,
+            "lh": 0.0,
+            "hl": 0.9157348061512728,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.08426519384872719,
+            "lh": 0.0,
+            "hl": 0.9157348061512728,
+            "hh": 0.0
+          },
+          "predicted_ll2_energy_fraction": 0.058256043729833965,
+          "measured_ll2_energy_fraction": 0.05825604372983387,
+          "measured_phase_avg_amplitude_gain": 0.05825604372983401
+        },
+        {
+          "frequency": 0.421875,
+          "fx": 0.0,
+          "fy": 0.421875,
+          "predicted": {
+            "ll": 0.05903936782582253,
+            "lh": 0.0,
+            "hl": 0.9409606321741775,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.05903936782582243,
+            "lh": 0.0,
+            "hl": 0.9409606321741775,
+            "hh": 0.0
+          },
+          "predicted_ll2_energy_fraction": 0.045919941583072346,
+          "measured_ll2_energy_fraction": 0.045919941583072305,
+          "measured_phase_avg_amplitude_gain": 0.045919941583072346
+        },
+        {
+          "frequency": 0.4375,
+          "fx": 0.0,
+          "fy": 0.4375,
+          "predicted": {
+            "ll": 0.038060233744356645,
+            "lh": 0.0,
+            "hl": 0.9619397662556434,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.038060233744356395,
+            "lh": 0.0,
+            "hl": 0.9619397662556436,
+            "hh": 0.0
+          },
+          "predicted_ll2_energy_fraction": 0.03248644155926811,
+          "measured_ll2_energy_fraction": 0.03248644155926792,
+          "measured_phase_avg_amplitude_gain": 0.03248644155926813
+        },
+        {
+          "frequency": 0.453125,
+          "fx": 0.0,
+          "fy": 0.453125,
+          "predicted": {
+            "ll": 0.021529832133895567,
+            "lh": 0.0,
+            "hl": 0.9784701678661045,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.02152983213389544,
+            "lh": 0.0,
+            "hl": 0.9784701678661047,
+            "hh": 0.0
+          },
+          "predicted_ll2_energy_fraction": 0.019715616655602383,
+          "measured_ll2_energy_fraction": 0.019715616655602182,
+          "measured_phase_avg_amplitude_gain": 0.019715616655602293
+        },
+        {
+          "frequency": 0.46875,
+          "fx": 0.0,
+          "fy": 0.46875,
+          "predicted": {
+            "ll": 0.009607359798384809,
+            "lh": 0.0,
+            "hl": 0.9903926402016151,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.009607359798384651,
+            "lh": 0.0,
+            "hl": 0.9903926402016153,
+            "hh": 0.0
+          },
+          "predicted_ll2_energy_fraction": 0.009241701438792209,
+          "measured_ll2_energy_fraction": 0.009241701438791997,
+          "measured_phase_avg_amplitude_gain": 0.00924170143879212
+        },
+        {
+          "frequency": 0.484375,
+          "fx": 0.0,
+          "fy": 0.484375,
+          "predicted": {
+            "ll": 0.0024076366639015677,
+            "lh": 0.0,
+            "hl": 0.9975923633360985,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 0.0024076366639013257,
+            "lh": 0.0,
+            "hl": 0.9975923633360986,
+            "hh": 0.0
+          },
+          "predicted_ll2_energy_fraction": 0.002384505632207705,
+          "measured_ll2_energy_fraction": 0.002384505632207444,
+          "measured_phase_avg_amplitude_gain": 0.002384505632207673
+        },
+        {
+          "frequency": 0.5,
+          "fx": 0.0,
+          "fy": 0.5,
+          "predicted": {
+            "ll": 3.749399456654644e-33,
+            "lh": 0.0,
+            "hl": 1.0,
+            "hh": 0.0
+          },
+          "measured": {
+            "ll": 2.1564825903045677e-29,
+            "lh": 0.0,
+            "hl": 1.0,
+            "hh": 0.0
+          },
+          "predicted_ll2_energy_fraction": 0.0,
+          "measured_ll2_energy_fraction": 1.638792621253279e-29,
+          "measured_phase_avg_amplitude_gain": 9.684740738283312e-30
+        }
+      ]
+    },
+    "max_errors": {
+      "band_energy_fraction": 1.4432899320127035e-15,
+      "two_level_coarse_energy_fraction": 2.6150956400350367e-16,
+      "phase_avg_gain_max_pixel_error": 1.2820907512213072e-14,
+      "perfect_reconstruction_max_pixel_error": 2.220446049250313e-16
+    }
+  },
+  "alias": {
+    "input_frequency": 0.125,
+    "folded_frequency": 0.625,
+    "folded_frequency_signed": -0.375,
+    "downsampled_frequency_cycles_per_output_sample": 0.25,
+    "max_even_sample_difference_between_input_and_folded_tones": 2.0579018070768238e-14,
+    "max_reconstruction_error": 1.1102230246251565e-16,
+    "coefficients": {
+      "low_only": {
+        "base": [
+          0.8535533905932737,
+          -9.43689570931383e-16
+        ],
+        "folded": [
+          3.885780586188048e-16,
+          0.3535533905932738
+        ]
+      },
+      "high_only": {
+        "base": [
+          0.14644660940672627,
+          -1.5265566588595902e-16
+        ],
+        "folded": [
+          -3.677613769070831e-16,
+          -0.35355339059327384
+        ]
+      },
+      "full": {
+        "base": [
+          1.0,
+          -1.0581813203458523e-15
+        ],
+        "folded": [
+          -5.551115123125783e-17,
+          -5.898059818321144e-17
+        ]
+      }
+    },
+    "predicted_base_low": 0.8535533905932737,
+    "predicted_base_high": 0.14644660940672624,
+    "predicted_folded_low_imag": 0.3535533905932738,
+    "predicted_folded_high_imag": -0.3535533905932738
+  },
+  "cycle_spinning": {
+    "phase_count": 16,
+    "offsets": [
+      -3,
+      -2,
+      -1,
+      0,
+      1,
+      2,
+      3
+    ],
+    "kernel_1d": [
+      0.0625,
+      0.125,
+      0.1875,
+      0.25,
+      0.1875,
+      0.125,
+      0.0625
+    ],
+    "impulse_error": 0.0,
+    "fft_response_error": 1.3322676295501878e-15,
+    "explicit_phase_average_vs_convolution_max_error": 2.220446049250313e-16,
+    "white_noise_power_fraction": {
+      "fixed_predicted": 0.0625,
+      "phase_avg_predicted": 0.029541015625,
+      "fixed_measured": 0.06257379508946584,
+      "phase_avg_measured": 0.029221277359084502
+    },
+    "step": {
+      "columns": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32
+      ],
+      "input": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fixed": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.75,
+        0.75,
+        0.75,
+        0.75,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "phase_avg": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0625,
+        0.1875,
+        0.375,
+        0.625,
+        0.8125,
+        0.9375,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    }
+  },
+  "datasets": {
+    "FI": {
+      "split": "data/seed_audit/fi/test.csv",
+      "manifest_sha256": "365c7d1b5c4d42315bdb6b8b8c1b99a0ba7a41f8fe1ddbc4de653c6e16a309ab",
+      "manifest_size": 1593,
+      "images": 192,
+      "images_per_class": {
+        "amusement": 24,
+        "anger": 24,
+        "awe": 24,
+        "contentment": 24,
+        "disgust": 24,
+        "excitement": 24,
+        "fear": 24,
+        "sadness": 24
+      },
+      "selected_zero_based_rows": [
+        2,
+        11,
+        21,
+        25,
+        52,
+        53,
+        54,
+        58,
+        64,
+        99,
+        100,
+        111,
+        113,
+        130,
+        139,
+        141,
+        145,
+        165,
+        173,
+        177,
+        178,
+        188,
+        189,
+        197,
+        207,
+        217,
+        223,
+        225,
+        227,
+        234,
+        239,
+        247,
+        253,
+        266,
+        267,
+        271,
+        292,
+        306,
+        311,
+        318,
+        320,
+        330,
+        348,
+        359,
+        360,
+        364,
+        384,
+        392,
+        404,
+        426,
+        432,
+        434,
+        446,
+        447,
+        461,
+        472,
+        474,
+        490,
+        494,
+        511,
+        514,
+        523,
+        530,
+        532,
+        537,
+        543,
+        550,
+        560,
+        561,
+        580,
+        584,
+        599,
+        604,
+        625,
+        628,
+        631,
+        644,
+        661,
+        665,
+        671,
+        673,
+        674,
+        682,
+        694,
+        698,
+        719,
+        722,
+        724,
+        743,
+        747,
+        753,
+        761,
+        783,
+        789,
+        791,
+        793,
+        804,
+        810,
+        813,
+        815,
+        818,
+        840,
+        850,
+        853,
+        863,
+        864,
+        865,
+        869,
+        875,
+        887,
+        893,
+        902,
+        914,
+        919,
+        926,
+        962,
+        964,
+        980,
+        984,
+        995,
+        1011,
+        1021,
+        1023,
+        1034,
+        1063,
+        1083,
+        1084,
+        1089,
+        1093,
+        1100,
+        1106,
+        1109,
+        1110,
+        1113,
+        1115,
+        1126,
+        1128,
+        1131,
+        1136,
+        1142,
+        1145,
+        1151,
+        1153,
+        1172,
+        1211,
+        1213,
+        1223,
+        1224,
+        1235,
+        1241,
+        1251,
+        1263,
+        1265,
+        1266,
+        1268,
+        1273,
+        1274,
+        1277,
+        1287,
+        1290,
+        1309,
+        1329,
+        1331,
+        1334,
+        1351,
+        1353,
+        1383,
+        1385,
+        1404,
+        1414,
+        1433,
+        1435,
+        1439,
+        1452,
+        1455,
+        1459,
+        1471,
+        1485,
+        1493,
+        1498,
+        1514,
+        1515,
+        1519,
+        1538,
+        1539,
+        1552,
+        1561,
+        1575,
+        1582,
+        1586,
+        1589,
+        1591
+      ],
+      "methods": {
+        "fixed": {
+          "shift_commutator_rms_rel_centered": {
+            "mean": 0.22735142084676374,
+            "median": 0.23059176952768862
+          },
+          "clean_distortion_rms_rel_centered": {
+            "mean": 0.31785338219182474,
+            "median": 0.30451699348240296
+          },
+          "gradient_energy_fraction": {
+            "mean": 0.6925510205872468,
+            "median": 0.6310380190268794
+          },
+          "noise_energy_fraction": {
+            "mean": 0.06253285607448465,
+            "median": 0.06250025759077114
+          }
+        },
+        "phase_avg": {
+          "shift_commutator_rms_rel_centered": {
+            "mean": 0.0,
+            "median": 0.0
+          },
+          "clean_distortion_rms_rel_centered": {
+            "mean": 0.2735620445001821,
+            "median": 0.25418557741379766
+          },
+          "gradient_energy_fraction": {
+            "mean": 0.19242878909421668,
+            "median": 0.16498485482139105
+          },
+          "noise_energy_fraction": {
+            "mean": 0.02955919811871803,
+            "median": 0.029555734388525844
+          }
+        }
+      }
+    },
+    "EmoSet subset": {
+      "split": "data/emoset_graph/test.csv",
+      "manifest_sha256": "cca4960a2da10c673632a974f0cc6de8b8f76fda9a86a9129bb06235eddc6085",
+      "manifest_size": 1600,
+      "images": 192,
+      "images_per_class": {
+        "amusement": 24,
+        "anger": 24,
+        "awe": 24,
+        "contentment": 24,
+        "disgust": 24,
+        "excitement": 24,
+        "fear": 24,
+        "sadness": 24
+      },
+      "selected_zero_based_rows": [
+        1,
+        7,
+        10,
+        12,
+        13,
+        69,
+        82,
+        84,
+        93,
+        99,
+        106,
+        121,
+        140,
+        147,
+        148,
+        153,
+        155,
+        166,
+        167,
+        186,
+        187,
+        200,
+        216,
+        229,
+        231,
+        233,
+        244,
+        246,
+        247,
+        250,
+        269,
+        281,
+        302,
+        304,
+        313,
+        324,
+        328,
+        329,
+        359,
+        361,
+        367,
+        399,
+        418,
+        419,
+        434,
+        439,
+        467,
+        471,
+        481,
+        485,
+        486,
+        493,
+        494,
+        497,
+        500,
+        502,
+        505,
+        530,
+        540,
+        570,
+        572,
+        573,
+        576,
+        580,
+        581,
+        582,
+        583,
+        588,
+        589,
+        600,
+        602,
+        603,
+        619,
+        625,
+        639,
+        643,
+        647,
+        653,
+        670,
+        673,
+        677,
+        692,
+        697,
+        702,
+        712,
+        744,
+        752,
+        753,
+        756,
+        762,
+        765,
+        774,
+        777,
+        784,
+        788,
+        789,
+        791,
+        799,
+        803,
+        820,
+        831,
+        839,
+        856,
+        872,
+        873,
+        894,
+        906,
+        907,
+        917,
+        925,
+        928,
+        958,
+        975,
+        981,
+        992,
+        997,
+        999,
+        1005,
+        1020,
+        1027,
+        1053,
+        1062,
+        1063,
+        1068,
+        1077,
+        1086,
+        1087,
+        1107,
+        1110,
+        1113,
+        1114,
+        1124,
+        1128,
+        1147,
+        1149,
+        1155,
+        1156,
+        1157,
+        1171,
+        1190,
+        1196,
+        1200,
+        1221,
+        1223,
+        1231,
+        1236,
+        1242,
+        1265,
+        1274,
+        1275,
+        1276,
+        1285,
+        1292,
+        1299,
+        1322,
+        1325,
+        1330,
+        1331,
+        1352,
+        1368,
+        1405,
+        1420,
+        1437,
+        1438,
+        1440,
+        1446,
+        1449,
+        1451,
+        1457,
+        1459,
+        1462,
+        1466,
+        1469,
+        1470,
+        1471,
+        1475,
+        1481,
+        1483,
+        1491,
+        1503,
+        1508,
+        1520,
+        1522,
+        1543,
+        1547,
+        1548,
+        1549,
+        1550,
+        1568,
+        1569,
+        1583,
+        1594
+      ],
+      "methods": {
+        "fixed": {
+          "shift_commutator_rms_rel_centered": {
+            "mean": 0.24170834417407105,
+            "median": 0.24276431115421046
+          },
+          "clean_distortion_rms_rel_centered": {
+            "mean": 0.32650514346938714,
+            "median": 0.319239189382308
+          },
+          "gradient_energy_fraction": {
+            "mean": 0.7567875549230743,
+            "median": 0.7175990027394262
+          },
+          "noise_energy_fraction": {
+            "mean": 0.06246634140446653,
+            "median": 0.062430360178030664
+          }
+        },
+        "phase_avg": {
+          "shift_commutator_rms_rel_centered": {
+            "mean": 0.0,
+            "median": 0.0
+          },
+          "clean_distortion_rms_rel_centered": {
+            "mean": 0.2696133424636032,
+            "median": 0.26005706927264904
+          },
+          "gradient_energy_fraction": {
+            "mean": 0.19283327764426747,
+            "median": 0.17640762835270132
+          },
+          "noise_energy_fraction": {
+            "mean": 0.029525282670726922,
+            "median": 0.029515925910169438
+          }
+        }
+      }
+    },
+    "ArtPhoto": {
+      "split": "data/seed_audit/artphoto/test.csv",
+      "manifest_sha256": "fc7cd431bcdd105f426e5b4988a865cc2b587ec65796e42fc1e1d0a6078534c7",
+      "manifest_size": 160,
+      "images": 150,
+      "images_per_class": {
+        "amusement": 21,
+        "anger": 16,
+        "awe": 20,
+        "contentment": 14,
+        "disgust": 14,
+        "excitement": 20,
+        "fear": 21,
+        "sadness": 24
+      },
+      "selected_zero_based_rows": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        135,
+        139,
+        140,
+        141,
+        142,
+        143,
+        145,
+        147,
+        148,
+        151,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159
+      ],
+      "methods": {
+        "fixed": {
+          "shift_commutator_rms_rel_centered": {
+            "mean": 0.21320431907928045,
+            "median": 0.2092162011034876
+          },
+          "clean_distortion_rms_rel_centered": {
+            "mean": 0.2814629511731686,
+            "median": 0.26994756537674114
+          },
+          "gradient_energy_fraction": {
+            "mean": 0.9047476867885235,
+            "median": 0.8615627223451551
+          },
+          "noise_energy_fraction": {
+            "mean": 0.06250690661505362,
+            "median": 0.06252942450015953
+          }
+        },
+        "phase_avg": {
+          "shift_commutator_rms_rel_centered": {
+            "mean": 0.0,
+            "median": 0.0
+          },
+          "clean_distortion_rms_rel_centered": {
+            "mean": 0.23268204087205685,
+            "median": 0.2167076096282109
+          },
+          "gradient_energy_fraction": {
+            "mean": 0.2495298528600165,
+            "median": 0.2255842761282677
+          },
+          "noise_energy_fraction": {
+            "mean": 0.02950461742002967,
+            "median": 0.029509383503013867
+          }
+        }
+      }
+    }
+  }
+}

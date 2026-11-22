@@ -1,0 +1,3708 @@
+{
+  "fresh_full_data": {
+    "dataset": "full_seed_replication",
+    "seeds": [
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "n_seed_pairs": 6,
+    "split_counts": {
+      "train": 94475,
+      "val": 5904,
+      "test": 17715
+    },
+    "classes": [
+      "amusement",
+      "anger",
+      "awe",
+      "contentment",
+      "disgust",
+      "excitement",
+      "fear",
+      "sadness"
+    ],
+    "method_summary": {
+      "ce": {
+        "acc": {
+          "mean": 71.32467776836955,
+          "sample_sd": 0.21749971681281488
+        },
+        "ecc": {
+          "mean": 80.46165141190544,
+          "sample_sd": 0.20173729448943933
+        },
+        "acc2": {
+          "mean": 91.0518393075548,
+          "sample_sd": 0.3490270599680863
+        },
+        "emc": {
+          "mean": 54.07158116864661,
+          "sample_sd": 0.6558681137432899
+        },
+        "brier": {
+          "mean": 0.3974984023662493,
+          "sample_sd": 0.003584367928434827
+        },
+        "gsee": {
+          "mean": 0.19441927754444224,
+          "sample_sd": 0.0018059198164389716
+        }
+      },
+      "graph": {
+        "acc": {
+          "mean": 71.11769686706181,
+          "sample_sd": 0.2239765707863764
+        },
+        "ecc": {
+          "mean": 80.3253251436994,
+          "sample_sd": 0.19457358023599852
+        },
+        "acc2": {
+          "mean": 91.04619437388277,
+          "sample_sd": 0.17513552654243
+        },
+        "emc": {
+          "mean": 54.09487950739928,
+          "sample_sd": 0.5257579943350379
+        },
+        "brier": {
+          "mean": 0.4008767366553643,
+          "sample_sd": 0.0035951853294964495
+        },
+        "gsee": {
+          "mean": 0.19598159426515596,
+          "sample_sd": 0.0017540807677558644
+        }
+      }
+    },
+    "comparisons": {
+      "graph_minus_ce": {
+        "role": "primary",
+        "metrics": {
+          "acc": {
+            "n_seed_pairs": 6,
+            "differences": [
+              0.10725373976856645,
+              -0.2427321478972715,
+              -0.1693480101608742,
+              -0.5870731018910504,
+              -0.1693480101608884,
+              -0.18063787750493532
+            ],
+            "mean_difference": -0.20698090130774224,
+            "sample_sd_difference": 0.22271868629486025,
+            "standard_error_difference": 0.0909245229342341,
+            "t95": [
+              -0.4407098283763819,
+              0.02674802576089741
+            ],
+            "t95_note": "Student t95 over independent seed-pair differences; normality assumption, fragile for small n",
+            "exact_signflip": {
+              "p_two_sided": 0.0625,
+              "assignments": 64,
+              "assumption": "Treatment-label exchangeability within seed pairs / sign symmetry under the null"
+            },
+            "positive_pairs": 1,
+            "negative_pairs": 5,
+            "zero_pairs": 0,
+            "leave_one_out_mean_range": [
+              -0.269827829523004,
+              -0.1309624611910806
+            ],
+            "unit": "paired independently trained seed, not test image"
+          },
+          "ecc": {
+            "n_seed_pairs": 6,
+            "differences": [
+              0.003252557020545055,
+              -0.16200959638722168,
+              -0.00047713129845305957,
+              -0.6027176323535315,
+              -0.07462736717604912,
+              0.018621560958550276
+            ],
+            "mean_difference": -0.13632626820602667,
+            "sample_sd_difference": 0.23829954196310063,
+            "standard_error_difference": 0.09728538062475743,
+            "t95": [
+              -0.3864063005129932,
+              0.11375376410093985
+            ],
+            "t95_note": "Student t95 over independent seed-pair differences; normality assumption, fragile for small n",
+            "exact_signflip": {
+              "p_two_sided": 0.21875,
+              "assignments": 64,
+              "assumption": "Treatment-label exchangeability within seed pairs / sign symmetry under the null"
+            },
+            "positive_pairs": 2,
+            "negative_pairs": 4,
+            "zero_pairs": 0,
+            "leave_one_out_mean_range": [
+              -0.16731583403894207,
+              -0.043047995376525705
+            ],
+            "unit": "paired independently trained seed, not test image"
+          },
+          "acc2": {
+            "n_seed_pairs": 6,
+            "differences": [
+              -0.06773920406435252,
+              -0.022579734688122244,
+              0.17499294383290476,
+              -0.5419136325148202,
+              0.197572678521027,
+              0.2257973468811656
+            ],
+            "mean_difference": -0.00564493367203293,
+            "sample_sd_difference": 0.2895581368852025,
+            "standard_error_difference": 0.11821161437328516,
+            "t95": [
+              -0.3095175623412445,
+              0.2982276949971786
+            ],
+            "t95_note": "Student t95 over independent seed-pair differences; normality assumption, fragile for small n",
+            "exact_signflip": {
+              "p_two_sided": 0.96875,
+              "assignments": 64,
+              "assumption": "Treatment-label exchangeability within seed pairs / sign symmetry under the null"
+            },
+            "positive_pairs": 3,
+            "negative_pairs": 3,
+            "zero_pairs": 0,
+            "leave_one_out_mean_range": [
+              -0.05193338978267263,
+              0.10160880609652452
+            ],
+            "unit": "paired independently trained seed, not test image"
+          },
+          "emc": {
+            "n_seed_pairs": 6,
+            "differences": [
+              -0.5499964581082111,
+              -0.01792023104029994,
+              1.022519115669958,
+              -1.7478532107503355,
+              0.2559131819418212,
+              1.1771276348031563
+            ],
+            "mean_difference": 0.023298338752681502,
+            "sample_sd_difference": 1.081777941781944,
+            "standard_error_difference": 0.441633995393995,
+            "t95": [
+              -1.1119579878066137,
+              1.1585546653119767
+            ],
+            "t95_note": "Student t95 over independent seed-pair differences; normality assumption, fragile for small n",
+            "exact_signflip": {
+              "p_two_sided": 1.0,
+              "assignments": 64,
+              "assumption": "Treatment-label exchangeability within seed pairs / sign symmetry under the null"
+            },
+            "positive_pairs": 3,
+            "negative_pairs": 3,
+            "zero_pairs": 0,
+            "leave_one_out_mean_range": [
+              -0.20746752045741346,
+              0.3775286486532849
+            ],
+            "unit": "paired independently trained seed, not test image"
+          },
+          "brier": {
+            "n_seed_pairs": 6,
+            "differences": [
+              0.004216129668196733,
+              0.0020120298117015656,
+              0.0037365514093288255,
+              0.011475931633520009,
+              -0.0022804481584847713,
+              0.0011098113704274826
+            ],
+            "mean_difference": 0.003378334289114974,
+            "sample_sd_difference": 0.004592082453558817,
+            "standard_error_difference": 0.001874709811334489,
+            "t95": [
+              -0.0014407606989906454,
+              0.008197429277220593
+            ],
+            "t95_note": "Student t95 over independent seed-pair differences; normality assumption, fragile for small n",
+            "exact_signflip": {
+              "p_two_sided": 0.125,
+              "assignments": 64,
+              "assumption": "Treatment-label exchangeability within seed pairs / sign symmetry under the null"
+            },
+            "positive_pairs": 5,
+            "negative_pairs": 1,
+            "zero_pairs": 0,
+            "leave_one_out_mean_range": [
+              0.0017588148202339672,
+              0.0045100907786349235
+            ],
+            "unit": "paired independently trained seed, not test image"
+          },
+          "gsee": {
+            "n_seed_pairs": 6,
+            "differences": [
+              0.002289724307005442,
+              0.0007050781422078822,
+              0.0017145210817382794,
+              0.005650796265004476,
+              -0.0013423109668914412,
+              0.000356091495217592
+            ],
+            "mean_difference": 0.001562316720713705,
+            "sample_sd_difference": 0.002361975962066422,
+            "standard_error_difference": 0.000964272648630355,
+            "t95": [
+              -0.0009164250344564037,
+              0.004041058475883813
+            ],
+            "t95_note": "Student t95 over independent seed-pair differences; normality assumption, fragile for small n",
+            "exact_signflip": {
+              "p_two_sided": 0.15625,
+              "assignments": 64,
+              "assumption": "Treatment-label exchangeability within seed pairs / sign symmetry under the null"
+            },
+            "positive_pairs": 5,
+            "negative_pairs": 1,
+            "zero_pairs": 0,
+            "leave_one_out_mean_range": [
+              0.0007446208118555509,
+              0.0021432422582347344
+            ],
+            "unit": "paired independently trained seed, not test image"
+          }
+        },
+        "ecc_crossed_bootstrap": {
+          "mean_difference": -0.13632626820603108,
+          "ci95": [
+            -0.4366422276879516,
+            0.13113164119726353
+          ],
+          "bootstrap_sd": 0.13962851304876253,
+          "n_seed_pairs": 6,
+          "n_images": 17715,
+          "repeats": 1500,
+          "rng_seed": 20261117,
+          "definition": "Crossed paired-seed and shared class-stratified image bootstrap for an additive mean metric",
+          "limitation": "Exploratory percentile interval; few seeds give unstable uncertainty; no new training-dataset variation"
+        },
+        "minimum_meaningful_ecc_gain": 0.5
+      }
+    },
+    "protocol_hash": "9b23c25a5cae457f7095b7ef8bda5714a2d7a2492e85dd30ce7d674948c1799f",
+    "epochs": 8,
+    "planned_training_minibatches_per_run": 11816,
+    "diagnostics": {
+      "evaluation_graph": "Same correct emotion graph for all four methods, including the wrong-label training control",
+      "eigenvalues": [
+        0.0,
+        1.2087970973857887,
+        1.8285624099418074,
+        1.9957100340512641,
+        2.2626314740427835,
+        2.2857142857142856,
+        2.4571518757724786,
+        2.4757185373773063
+      ],
+      "non_dc_eigenspace_energy": {
+        "ce": [
+          {
+            "indices": [
+              1
+            ],
+            "multiplicity": 1,
+            "eigenvalue": 1.2087970973857887,
+            "mean": 0.03269991222220369,
+            "sample_sd": 0.000653139800255008
+          },
+          {
+            "indices": [
+              2
+            ],
+            "multiplicity": 1,
+            "eigenvalue": 1.8285624099418074,
+            "mean": 0.06624678766044893,
+            "sample_sd": 0.0007289312784056532
+          },
+          {
+            "indices": [
+              3
+            ],
+            "multiplicity": 1,
+            "eigenvalue": 1.9957100340512641,
+            "mean": 0.06329145322249997,
+            "sample_sd": 0.0005046119259400622
+          },
+          {
+            "indices": [
+              4
+            ],
+            "multiplicity": 1,
+            "eigenvalue": 2.2626314740427835,
+            "mean": 0.06291842232041629,
+            "sample_sd": 0.0007451558251103164
+          },
+          {
+            "indices": [
+              5
+            ],
+            "multiplicity": 1,
+            "eigenvalue": 2.2857142857142856,
+            "mean": 0.054093815837964576,
+            "sample_sd": 0.0009992363447076746
+          },
+          {
+            "indices": [
+              6
+            ],
+            "multiplicity": 1,
+            "eigenvalue": 2.4571518757724786,
+            "mean": 0.06167444755299206,
+            "sample_sd": 0.0003785034868585154
+          },
+          {
+            "indices": [
+              7
+            ],
+            "multiplicity": 1,
+            "eigenvalue": 2.4757185373773063,
+            "mean": 0.05657356354972353,
+            "sample_sd": 0.0005661762093533396
+          }
+        ],
+        "graph": [
+          {
+            "indices": [
+              1
+            ],
+            "multiplicity": 1,
+            "eigenvalue": 1.2087970973857887,
+            "mean": 0.032655156359714825,
+            "sample_sd": 0.00028146060042484833
+          },
+          {
+            "indices": [
+              2
+            ],
+            "multiplicity": 1,
+            "eigenvalue": 1.8285624099418074,
+            "mean": 0.06688254743713894,
+            "sample_sd": 0.00119351103019076
+          },
+          {
+            "indices": [
+              3
+            ],
+            "multiplicity": 1,
+            "eigenvalue": 1.9957100340512641,
+            "mean": 0.06417974973145095,
+            "sample_sd": 0.001383999757518006
+          },
+          {
+            "indices": [
+              4
+            ],
+            "multiplicity": 1,
+            "eigenvalue": 2.2626314740427835,
+            "mean": 0.0636391975861325,
+            "sample_sd": 0.000492911028021219
+          },
+          {
+            "indices": [
+              5
+            ],
+            "multiplicity": 1,
+            "eigenvalue": 2.2857142857142856,
+            "mean": 0.054408237039372837,
+            "sample_sd": 0.0007479308456305398
+          },
+          {
+            "indices": [
+              6
+            ],
+            "multiplicity": 1,
+            "eigenvalue": 2.4571518757724786,
+            "mean": 0.06217135883806285,
+            "sample_sd": 0.0005220560743437229
+          },
+          {
+            "indices": [
+              7
+            ],
+            "multiplicity": 1,
+            "eigenvalue": 2.4757185373773063,
+            "mean": 0.05694048966349074,
+            "sample_sd": 0.00033245889560788174
+          }
+        ]
+      },
+      "energy_note": "Repeated eigenvalues are summed within each eigenspace; DC is omitted. Error energy and GSEE are related to the optimized objective, not independent validation.",
+      "probability_roughness": {
+        "ce": {
+          "dirichlet": {
+            "mean": 1.1310254074888944,
+            "sample_sd": 0.028422507653915723
+          },
+          "brier": {
+            "mean": 0.3974984023662493,
+            "sample_sd": 0.003584367928434827
+          },
+          "gsee": {
+            "mean": 0.19441927754444224,
+            "sample_sd": 0.0018059198164389716
+          }
+        },
+        "graph": {
+          "dirichlet": {
+            "mean": 1.1520348516714478,
+            "sample_sd": 0.038389536807448006
+          },
+          "brier": {
+            "mean": 0.4008767366553643,
+            "sample_sd": 0.0035951853294964495
+          },
+          "gsee": {
+            "mean": 0.19598159426515596,
+            "sample_sd": 0.0017540807677558644
+          }
+        }
+      },
+      "per_class_seed_metrics": [
+        {
+          "method": "ce",
+          "seed": 3,
+          "class": "amusement",
+          "count": 2770,
+          "acc": 67.65342960288808,
+          "ecc": 79.13421866941724
+        },
+        {
+          "method": "ce",
+          "seed": 3,
+          "class": "anger",
+          "count": 1708,
+          "acc": 74.18032786885246,
+          "ecc": 80.01693710270995
+        },
+        {
+          "method": "ce",
+          "seed": 3,
+          "class": "awe",
+          "count": 2260,
+          "acc": 75.66371681415929,
+          "ecc": 84.95022123893806
+        },
+        {
+          "method": "ce",
+          "seed": 3,
+          "class": "contentment",
+          "count": 2484,
+          "acc": 66.54589371980676,
+          "ecc": 79.1616344605475
+        },
+        {
+          "method": "ce",
+          "seed": 3,
+          "class": "disgust",
+          "count": 1661,
+          "acc": 79.28958458759783,
+          "ecc": 85.589575986927
+        },
+        {
+          "method": "ce",
+          "seed": 3,
+          "class": "excitement",
+          "count": 3014,
+          "acc": 72.85998672859986,
+          "ecc": 80.26515151515152
+        },
+        {
+          "method": "ce",
+          "seed": 3,
+          "class": "fear",
+          "count": 1973,
+          "acc": 67.66345666497719,
+          "ecc": 77.42813699225256
+        },
+        {
+          "method": "ce",
+          "seed": 3,
+          "class": "sadness",
+          "count": 1845,
+          "acc": 68.9430894308943,
+          "ecc": 78.28332688088786
+        },
+        {
+          "method": "ce",
+          "seed": 4,
+          "class": "amusement",
+          "count": 2770,
+          "acc": 63.10469314079422,
+          "ecc": 75.06244627815025
+        },
+        {
+          "method": "ce",
+          "seed": 4,
+          "class": "anger",
+          "count": 1708,
+          "acc": 75.0,
+          "ecc": 80.42196386751421
+        },
+        {
+          "method": "ce",
+          "seed": 4,
+          "class": "awe",
+          "count": 2260,
+          "acc": 76.8141592920354,
+          "ecc": 85.66398019384744
+        },
+        {
+          "method": "ce",
+          "seed": 4,
+          "class": "contentment",
+          "count": 2484,
+          "acc": 61.51368760064412,
+          "ecc": 75.70378997009432
+        },
+        {
+          "method": "ce",
+          "seed": 4,
+          "class": "disgust",
+          "count": 1661,
+          "acc": 81.5171583383504,
+          "ecc": 87.64764484963162
+        },
+        {
+          "method": "ce",
+          "seed": 4,
+          "class": "excitement",
+          "count": 3014,
+          "acc": 81.61911081619111,
+          "ecc": 86.61729389831581
+        },
+        {
+          "method": "ce",
+          "seed": 4,
+          "class": "fear",
+          "count": 1973,
+          "acc": 65.8388241256969,
+          "ecc": 76.40823739531292
+        },
+        {
+          "method": "ce",
+          "seed": 4,
+          "class": "sadness",
+          "count": 1845,
+          "acc": 66.9918699186992,
+          "ecc": 76.63117821654406
+        },
+        {
+          "method": "ce",
+          "seed": 5,
+          "class": "amusement",
+          "count": 2770,
+          "acc": 66.10108303249098,
+          "ecc": 77.14818635035242
+        },
+        {
+          "method": "ce",
+          "seed": 5,
+          "class": "anger",
+          "count": 1708,
+          "acc": 76.46370023419203,
+          "ecc": 81.68778577004574
+        },
+        {
+          "method": "ce",
+          "seed": 5,
+          "class": "awe",
+          "count": 2260,
+          "acc": 75.53097345132743,
+          "ecc": 84.84644964180363
+        },
+        {
+          "method": "ce",
+          "seed": 5,
+          "class": "contentment",
+          "count": 2484,
+          "acc": 62.27858293075684,
+          "ecc": 76.3280231577333
+        },
+        {
+          "method": "ce",
+          "seed": 5,
+          "class": "disgust",
+          "count": 1661,
+          "acc": 73.81095725466587,
+          "ecc": 81.69311372953756
+        },
+        {
+          "method": "ce",
+          "seed": 5,
+          "class": "excitement",
+          "count": 3014,
+          "acc": 77.90311877903119,
+          "ecc": 83.8809365816665
+        },
+        {
+          "method": "ce",
+          "seed": 5,
+          "class": "fear",
+          "count": 1973,
+          "acc": 70.75519513431323,
+          "ecc": 79.82357058383413
+        },
+        {
+          "method": "ce",
+          "seed": 5,
+          "class": "sadness",
+          "count": 1845,
+          "acc": 68.130081300813,
+          "ecc": 77.40547167376435
+        },
+        {
+          "method": "ce",
+          "seed": 6,
+          "class": "amusement",
+          "count": 2770,
+          "acc": 61.588447653429604,
+          "ecc": 74.57645693656525
+        },
+        {
+          "method": "ce",
+          "seed": 6,
+          "class": "anger",
+          "count": 1708,
+          "acc": 69.73067915690866,
+          "ecc": 76.52747574439613
+        },
+        {
+          "method": "ce",
+          "seed": 6,
+          "class": "awe",
+          "count": 2260,
+          "acc": 78.45132743362832,
+          "ecc": 86.87842393594606
+        },
+        {
+          "method": "ce",
+          "seed": 6,
+          "class": "contentment",
+          "count": 2484,
+          "acc": 63.64734299516909,
+          "ecc": 77.43438961736064
+        },
+        {
+          "method": "ce",
+          "seed": 6,
+          "class": "disgust",
+          "count": 1661,
+          "acc": 81.39674894641782,
+          "ecc": 86.95206559444969
+        },
+        {
+          "method": "ce",
+          "seed": 6,
+          "class": "excitement",
+          "count": 3014,
+          "acc": 81.38686131386861,
+          "ecc": 86.71927828862137
+        },
+        {
+          "method": "ce",
+          "seed": 6,
+          "class": "fear",
+          "count": 1973,
+          "acc": 67.25798276735935,
+          "ecc": 77.7752033403326
+        },
+        {
+          "method": "ce",
+          "seed": 6,
+          "class": "sadness",
+          "count": 1845,
+          "acc": 70.02710027100271,
+          "ecc": 78.69337979094078
+        },
+        {
+          "method": "ce",
+          "seed": 7,
+          "class": "amusement",
+          "count": 2770,
+          "acc": 61.227436823104696,
+          "ecc": 74.15841499054496
+        },
+        {
+          "method": "ce",
+          "seed": 7,
+          "class": "anger",
+          "count": 1708,
+          "acc": 72.89227166276346,
+          "ecc": 79.11613415858147
+        },
+        {
+          "method": "ce",
+          "seed": 7,
+          "class": "awe",
+          "count": 2260,
+          "acc": 75.13274336283186,
+          "ecc": 84.7287189211968
+        },
+        {
+          "method": "ce",
+          "seed": 7,
+          "class": "contentment",
+          "count": 2484,
+          "acc": 67.5925925925926,
+          "ecc": 79.00563607085346
+        },
+        {
+          "method": "ce",
+          "seed": 7,
+          "class": "disgust",
+          "count": 1661,
+          "acc": 79.53040337146298,
+          "ecc": 85.5953097674952
+        },
+        {
+          "method": "ce",
+          "seed": 7,
+          "class": "excitement",
+          "count": 3014,
+          "acc": 76.44326476443266,
+          "ecc": 82.63283249597119
+        },
+        {
+          "method": "ce",
+          "seed": 7,
+          "class": "fear",
+          "count": 1973,
+          "acc": 70.40040547389762,
+          "ecc": 79.78610045133108
+        },
+        {
+          "method": "ce",
+          "seed": 7,
+          "class": "sadness",
+          "count": 1845,
+          "acc": 67.37127371273712,
+          "ecc": 77.43741127887468
+        },
+        {
+          "method": "ce",
+          "seed": 8,
+          "class": "amusement",
+          "count": 2770,
+          "acc": 66.06498194945848,
+          "ecc": 77.29804882241706
+        },
+        {
+          "method": "ce",
+          "seed": 8,
+          "class": "anger",
+          "count": 1708,
+          "acc": 75.58548009367682,
+          "ecc": 81.11896397903423
+        },
+        {
+          "method": "ce",
+          "seed": 8,
+          "class": "awe",
+          "count": 2260,
+          "acc": 73.36283185840709,
+          "ecc": 83.15212810788032
+        },
+        {
+          "method": "ce",
+          "seed": 8,
+          "class": "contentment",
+          "count": 2484,
+          "acc": 62.03703703703704,
+          "ecc": 75.36207921171689
+        },
+        {
+          "method": "ce",
+          "seed": 8,
+          "class": "disgust",
+          "count": 1661,
+          "acc": 83.1426851294401,
+          "ecc": 88.49051059315958
+        },
+        {
+          "method": "ce",
+          "seed": 8,
+          "class": "excitement",
+          "count": 3014,
+          "acc": 80.88918380889184,
+          "ecc": 85.9289585110753
+        },
+        {
+          "method": "ce",
+          "seed": 8,
+          "class": "fear",
+          "count": 1973,
+          "acc": 62.84845413076533,
+          "ecc": 74.63579755267541
+        },
+        {
+          "method": "ce",
+          "seed": 8,
+          "class": "sadness",
+          "count": 1845,
+          "acc": 70.35230352303523,
+          "ecc": 79.2102206736353
+        },
+        {
+          "method": "graph",
+          "seed": 3,
+          "class": "amusement",
+          "count": 2770,
+          "acc": 67.29241877256318,
+          "ecc": 78.18484614062231
+        },
+        {
+          "method": "graph",
+          "seed": 3,
+          "class": "anger",
+          "count": 1708,
+          "acc": 78.80562060889929,
+          "ecc": 83.3670681387309
+        },
+        {
+          "method": "graph",
+          "seed": 3,
+          "class": "awe",
+          "count": 2260,
+          "acc": 73.71681415929203,
+          "ecc": 83.32964601769912
+        },
+        {
+          "method": "graph",
+          "seed": 3,
+          "class": "contentment",
+          "count": 2484,
+          "acc": 62.11755233494364,
+          "ecc": 76.78787094547964
+        },
+        {
+          "method": "graph",
+          "seed": 3,
+          "class": "disgust",
+          "count": 1661,
+          "acc": 77.001806140879,
+          "ecc": 83.77805968865573
+        },
+        {
+          "method": "graph",
+          "seed": 3,
+          "class": "excitement",
+          "count": 3014,
+          "acc": 80.62375580623757,
+          "ecc": 85.71705058931336
+        },
+        {
+          "method": "graph",
+          "seed": 3,
+          "class": "fear",
+          "count": 1973,
+          "acc": 62.79776989356311,
+          "ecc": 74.38798783578306
+        },
+        {
+          "method": "graph",
+          "seed": 3,
+          "class": "sadness",
+          "count": 1845,
+          "acc": 69.15989159891599,
+          "ecc": 77.79519938056522
+        },
+        {
+          "method": "graph",
+          "seed": 4,
+          "class": "amusement",
+          "count": 2770,
+          "acc": 61.11913357400722,
+          "ecc": 73.50249269382843
+        },
+        {
+          "method": "graph",
+          "seed": 4,
+          "class": "anger",
+          "count": 1708,
+          "acc": 76.22950819672131,
+          "ecc": 81.56595015055203
+        },
+        {
+          "method": "graph",
+          "seed": 4,
+          "class": "awe",
+          "count": 2260,
+          "acc": 76.06194690265487,
+          "ecc": 84.7995680573114
+        },
+        {
+          "method": "graph",
+          "seed": 4,
+          "class": "contentment",
+          "count": 2484,
+          "acc": 60.507246376811594,
+          "ecc": 74.82003872402424
+        },
+        {
+          "method": "graph",
+          "seed": 4,
+          "class": "disgust",
+          "count": 1661,
+          "acc": 81.39674894641782,
+          "ecc": 87.38675783377771
+        },
+        {
+          "method": "graph",
+          "seed": 4,
+          "class": "excitement",
+          "count": 3014,
+          "acc": 81.91771731917717,
+          "ecc": 86.83627200050557
+        },
+        {
+          "method": "graph",
+          "seed": 4,
+          "class": "fear",
+          "count": 1973,
+          "acc": 65.07856056766346,
+          "ecc": 76.33233171626482
+        },
+        {
+          "method": "graph",
+          "seed": 4,
+          "class": "sadness",
+          "count": 1845,
+          "acc": 69.21409214092141,
+          "ecc": 78.56562137049941
+        },
+        {
+          "method": "graph",
+          "seed": 5,
+          "class": "amusement",
+          "count": 2770,
+          "acc": 70.97472924187726,
+          "ecc": 81.04714629534125
+        },
+        {
+          "method": "graph",
+          "seed": 5,
+          "class": "anger",
+          "count": 1708,
+          "acc": 72.71662763466043,
+          "ecc": 78.85113471618156
+        },
+        {
+          "method": "graph",
+          "seed": 5,
+          "class": "awe",
+          "count": 2260,
+          "acc": 75.08849557522123,
+          "ecc": 84.65628950695323
+        },
+        {
+          "method": "graph",
+          "seed": 5,
+          "class": "contentment",
+          "count": 2484,
+          "acc": 64.21095008051529,
+          "ecc": 78.20335863814124
+        },
+        {
+          "method": "graph",
+          "seed": 5,
+          "class": "disgust",
+          "count": 1661,
+          "acc": 80.85490668272125,
+          "ecc": 86.18983114016227
+        },
+        {
+          "method": "graph",
+          "seed": 5,
+          "class": "excitement",
+          "count": 3014,
+          "acc": 73.15859323158594,
+          "ecc": 80.22541631118274
+        },
+        {
+          "method": "graph",
+          "seed": 5,
+          "class": "fear",
+          "count": 1973,
+          "acc": 72.12366953877344,
+          "ecc": 80.17986870369029
+        },
+        {
+          "method": "graph",
+          "seed": 5,
+          "class": "sadness",
+          "count": 1845,
+          "acc": 60.5420054200542,
+          "ecc": 73.42366757000904
+        },
+        {
+          "method": "graph",
+          "seed": 6,
+          "class": "amusement",
+          "count": 2770,
+          "acc": 57.54512635379061,
+          "ecc": 71.05260443527591
+        },
+        {
+          "method": "graph",
+          "seed": 6,
+          "class": "anger",
+          "count": 1708,
+          "acc": 78.5128805620609,
+          "ecc": 83.31165662986506
+        },
+        {
+          "method": "graph",
+          "seed": 6,
+          "class": "awe",
+          "count": 2260,
+          "acc": 75.35398230088497,
+          "ecc": 84.77586388537715
+        },
+        {
+          "method": "graph",
+          "seed": 6,
+          "class": "contentment",
+          "count": 2484,
+          "acc": 63.64734299516909,
+          "ecc": 76.35893528103674
+        },
+        {
+          "method": "graph",
+          "seed": 6,
+          "class": "disgust",
+          "count": 1661,
+          "acc": 76.88139674894641,
+          "ecc": 84.42920214443394
+        },
+        {
+          "method": "graph",
+          "seed": 6,
+          "class": "excitement",
+          "count": 3014,
+          "acc": 82.5481088254811,
+          "ecc": 87.15352166082094
+        },
+        {
+          "method": "graph",
+          "seed": 6,
+          "class": "fear",
+          "count": 1973,
+          "acc": 63.15255955397872,
+          "ecc": 75.21758018970387
+        },
+        {
+          "method": "graph",
+          "seed": 6,
+          "class": "sadness",
+          "count": 1845,
+          "acc": 72.6829268292683,
+          "ecc": 80.23680474899987
+        },
+        {
+          "method": "graph",
+          "seed": 7,
+          "class": "amusement",
+          "count": 2770,
+          "acc": 71.76895306859205,
+          "ecc": 81.1100223482895
+        },
+        {
+          "method": "graph",
+          "seed": 7,
+          "class": "anger",
+          "count": 1708,
+          "acc": 71.89695550351288,
+          "ecc": 78.6331130812981
+        },
+        {
+          "method": "graph",
+          "seed": 7,
+          "class": "awe",
+          "count": 2260,
+          "acc": 74.24778761061947,
+          "ecc": 83.7310366624526
+        },
+        {
+          "method": "graph",
+          "seed": 7,
+          "class": "contentment",
+          "count": 2484,
+          "acc": 58.333333333333336,
+          "ecc": 73.77381910896403
+        },
+        {
+          "method": "graph",
+          "seed": 7,
+          "class": "disgust",
+          "count": 1661,
+          "acc": 75.55689343768815,
+          "ecc": 82.59475072388979
+        },
+        {
+          "method": "graph",
+          "seed": 7,
+          "class": "excitement",
+          "count": 3014,
+          "acc": 74.81751824817519,
+          "ecc": 81.40846683729896
+        },
+        {
+          "method": "graph",
+          "seed": 7,
+          "class": "fear",
+          "count": 1973,
+          "acc": 68.22098327420171,
+          "ecc": 78.04732942340647
+        },
+        {
+          "method": "graph",
+          "seed": 7,
+          "class": "sadness",
+          "count": 1845,
+          "acc": 72.95392953929539,
+          "ecc": 81.55794296038196
+        },
+        {
+          "method": "graph",
+          "seed": 8,
+          "class": "amusement",
+          "count": 2770,
+          "acc": 66.13718411552347,
+          "ecc": 77.70156438026474
+        },
+        {
+          "method": "graph",
+          "seed": 8,
+          "class": "anger",
+          "count": 1708,
+          "acc": 74.06323185011709,
+          "ecc": 79.93810639009703
+        },
+        {
+          "method": "graph",
+          "seed": 8,
+          "class": "awe",
+          "count": 2260,
+          "acc": 74.070796460177,
+          "ecc": 83.72445217024864
+        },
+        {
+          "method": "graph",
+          "seed": 8,
+          "class": "contentment",
+          "count": 2484,
+          "acc": 63.32528180354268,
+          "ecc": 76.77109692508245
+        },
+        {
+          "method": "graph",
+          "seed": 8,
+          "class": "disgust",
+          "count": 1661,
+          "acc": 84.40698374473209,
+          "ecc": 89.30040709842034
+        },
+        {
+          "method": "graph",
+          "seed": 8,
+          "class": "excitement",
+          "count": 3014,
+          "acc": 78.9980092899801,
+          "ecc": 84.61742029260277
+        },
+        {
+          "method": "graph",
+          "seed": 8,
+          "class": "fear",
+          "count": 1973,
+          "acc": 60.6183476938672,
+          "ecc": 73.3007506094176
+        },
+        {
+          "method": "graph",
+          "seed": 8,
+          "class": "sadness",
+          "count": 1845,
+          "acc": 71.65311653116531,
+          "ecc": 80.11937024132146
+        }
+      ],
+      "per_class_summary": [
+        {
+          "method": "ce",
+          "class": "amusement",
+          "count": 2770,
+          "acc": {
+            "mean": 64.29001203369434,
+            "sample_sd": 2.676784339778254
+          },
+          "ecc": {
+            "mean": 76.22962867457453,
+            "sample_sd": 1.9394396366462865
+          }
+        },
+        {
+          "method": "ce",
+          "class": "anger",
+          "count": 1708,
+          "acc": {
+            "mean": 73.97540983606557,
+            "sample_sd": 2.4110835151477112
+          },
+          "ecc": {
+            "mean": 79.81487677038028,
+            "sample_sd": 1.8391879421851083
+          }
+        },
+        {
+          "method": "ce",
+          "class": "awe",
+          "count": 2260,
+          "acc": {
+            "mean": 75.82595870206491,
+            "sample_sd": 1.7046982997309792
+          },
+          "ecc": {
+            "mean": 85.0366536732687,
+            "sample_sd": 1.2227481197147623
+          }
+        },
+        {
+          "method": "ce",
+          "class": "contentment",
+          "count": 2484,
+          "acc": {
+            "mean": 63.93585614600107,
+            "sample_sd": 2.5489694543230916
+          },
+          "ecc": {
+            "mean": 77.16592541471769,
+            "sample_sd": 1.6451896119761438
+          }
+        },
+        {
+          "method": "ce",
+          "class": "disgust",
+          "count": 1661,
+          "acc": {
+            "mean": 79.7812562713225,
+            "sample_sd": 3.2518153424824074
+          },
+          "ecc": {
+            "mean": 85.99470342020011,
+            "sample_sd": 2.3960437617137424
+          }
+        },
+        {
+          "method": "ce",
+          "class": "excitement",
+          "count": 3014,
+          "acc": {
+            "mean": 78.51692103516922,
+            "sample_sd": 3.468875281586654
+          },
+          "ecc": {
+            "mean": 84.34074188180027,
+            "sample_sd": 2.5729892656182773
+          }
+        },
+        {
+          "method": "ce",
+          "class": "fear",
+          "count": 1973,
+          "acc": {
+            "mean": 67.46071971616827,
+            "sample_sd": 2.9489341909396907
+          },
+          "ecc": {
+            "mean": 77.64284105262313,
+            "sample_sd": 1.998965559904149
+          }
+        },
+        {
+          "method": "ce",
+          "class": "sadness",
+          "count": 1845,
+          "acc": {
+            "mean": 68.63595302619693,
+            "sample_sd": 1.3808556541951602
+          },
+          "ecc": {
+            "mean": 77.9434980857745,
+            "sample_sd": 0.9539572329663041
+          }
+        },
+        {
+          "method": "graph",
+          "class": "amusement",
+          "count": 2770,
+          "acc": {
+            "mean": 65.80625752105897,
+            "sample_sd": 5.564179092295724
+          },
+          "ecc": {
+            "mean": 77.09977938227037,
+            "sample_sd": 4.067236545990488
+          }
+        },
+        {
+          "method": "graph",
+          "class": "anger",
+          "count": 1708,
+          "acc": {
+            "mean": 75.37080405932865,
+            "sample_sd": 2.940408258664501
+          },
+          "ecc": {
+            "mean": 80.94450485112078,
+            "sample_sd": 2.1258402096152067
+          }
+        },
+        {
+          "method": "graph",
+          "class": "awe",
+          "count": 2260,
+          "acc": {
+            "mean": 74.7566371681416,
+            "sample_sd": 0.8923364781965998
+          },
+          "ecc": {
+            "mean": 84.16947605000702,
+            "sample_sd": 0.647657211756072
+          }
+        },
+        {
+          "method": "graph",
+          "class": "contentment",
+          "count": 2484,
+          "acc": {
+            "mean": 62.02361782071927,
+            "sample_sd": 2.2379294281888624
+          },
+          "ecc": {
+            "mean": 76.11918660378807,
+            "sample_sd": 1.578728109088323
+          }
+        },
+        {
+          "method": "graph",
+          "class": "disgust",
+          "count": 1661,
+          "acc": {
+            "mean": 79.34978928356412,
+            "sample_sd": 3.4065432187370455
+          },
+          "ecc": {
+            "mean": 85.61316810488995,
+            "sample_sd": 2.488137213212031
+          }
+        },
+        {
+          "method": "graph",
+          "class": "excitement",
+          "count": 3014,
+          "acc": {
+            "mean": 78.67728378677283,
+            "sample_sd": 3.8659811066802416
+          },
+          "ecc": {
+            "mean": 84.32635794862074,
+            "sample_sd": 2.8859340728296208
+          }
+        },
+        {
+          "method": "graph",
+          "class": "fear",
+          "count": 1973,
+          "acc": {
+            "mean": 65.33198175367461,
+            "sample_sd": 4.193519571424973
+          },
+          "ecc": {
+            "mean": 76.24430807971102,
+            "sample_sd": 2.5263371564573496
+          }
+        },
+        {
+          "method": "graph",
+          "class": "sadness",
+          "count": 1845,
+          "acc": {
+            "mean": 69.36766034327009,
+            "sample_sd": 4.626760518417163
+          },
+          "ecc": {
+            "mean": 78.6164343786295,
+            "sample_sd": 2.8697987766954807
+          }
+        }
+      ],
+      "per_class_seed_differences": [
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 3,
+          "class": "amusement",
+          "count": 2770,
+          "acc": -0.36101083032490067,
+          "ecc": -0.9493725287949246
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 4,
+          "class": "amusement",
+          "count": 2770,
+          "acc": -1.9855595667869963,
+          "ecc": -1.5599535843218177
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 5,
+          "class": "amusement",
+          "count": 2770,
+          "acc": 4.87364620938628,
+          "ecc": 3.8989599449888317
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 6,
+          "class": "amusement",
+          "count": 2770,
+          "acc": -4.043321299638997,
+          "ecc": -3.5238525012893405
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 7,
+          "class": "amusement",
+          "count": 2770,
+          "acc": 10.541516245487358,
+          "ecc": 6.95160735774455
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 8,
+          "class": "amusement",
+          "count": 2770,
+          "acc": 0.07220216606498298,
+          "ecc": 0.4035155578476832
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 3,
+          "class": "anger",
+          "count": 1708,
+          "acc": 4.625292740046831,
+          "ecc": 3.3501310360209544
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 4,
+          "class": "anger",
+          "count": 1708,
+          "acc": 1.2295081967213122,
+          "ecc": 1.143986283037819
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 5,
+          "class": "anger",
+          "count": 1708,
+          "acc": -3.747072599531606,
+          "ecc": -2.8366510538641734
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 6,
+          "class": "anger",
+          "count": 1708,
+          "acc": 8.782201405152236,
+          "ecc": 6.784180885468928
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 7,
+          "class": "anger",
+          "count": 1708,
+          "acc": -0.9953161592505779,
+          "ecc": -0.48302107728336807
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 8,
+          "class": "anger",
+          "count": 1708,
+          "acc": -1.52224824355973,
+          "ecc": -1.1808575889372008
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 3,
+          "class": "awe",
+          "count": 2260,
+          "acc": -1.9469026548672588,
+          "ecc": -1.620575221238937
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 4,
+          "class": "awe",
+          "count": 2260,
+          "acc": -0.7522123893805315,
+          "ecc": -0.864412136536032
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 5,
+          "class": "awe",
+          "count": 2260,
+          "acc": -0.4424778761061958,
+          "ecc": -0.19016013485040162
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 6,
+          "class": "awe",
+          "count": 2260,
+          "acc": -3.0973451327433565,
+          "ecc": -2.1025600505689113
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 7,
+          "class": "awe",
+          "count": 2260,
+          "acc": -0.8849557522123916,
+          "ecc": -0.9976822587442058
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 8,
+          "class": "awe",
+          "count": 2260,
+          "acc": 0.707964601769902,
+          "ecc": 0.5723240623683239
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 3,
+          "class": "contentment",
+          "count": 2484,
+          "acc": -4.428341384863117,
+          "ecc": -2.373763515067864
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 4,
+          "class": "contentment",
+          "count": 2484,
+          "acc": -1.0064412238325247,
+          "ecc": -0.8837512460700765
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 5,
+          "class": "contentment",
+          "count": 2484,
+          "acc": 1.9323671497584485,
+          "ecc": 1.8753354804079407
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 6,
+          "class": "contentment",
+          "count": 2484,
+          "acc": 0.0,
+          "ecc": -1.0754543363239009
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 7,
+          "class": "contentment",
+          "count": 2484,
+          "acc": -9.25925925925926,
+          "ecc": -5.231816961889422
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 8,
+          "class": "contentment",
+          "count": 2484,
+          "acc": 1.2882447665056418,
+          "ecc": 1.4090177133655573
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 3,
+          "class": "disgust",
+          "count": 1661,
+          "acc": -2.287778446718832,
+          "ecc": -1.8115162982712718
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 4,
+          "class": "disgust",
+          "count": 1661,
+          "acc": -0.12040939193258282,
+          "ecc": -0.2608870158539105
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 5,
+          "class": "disgust",
+          "count": 1661,
+          "acc": 7.0439494280553845,
+          "ecc": 4.496717410624711
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 6,
+          "class": "disgust",
+          "count": 1661,
+          "acc": -4.515352197471401,
+          "ecc": -2.5228634500157483
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 7,
+          "class": "disgust",
+          "count": 1661,
+          "acc": -3.973509933774835,
+          "ecc": -3.0005590436054064
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 8,
+          "class": "disgust",
+          "count": 1661,
+          "acc": 1.2642986152919917,
+          "ecc": 0.8098965052607525
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 3,
+          "class": "excitement",
+          "count": 3014,
+          "acc": 7.763769077637704,
+          "ecc": 5.451899074161844
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 4,
+          "class": "excitement",
+          "count": 3014,
+          "acc": 0.2986065029860612,
+          "ecc": 0.21897810218976588
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 5,
+          "class": "excitement",
+          "count": 3014,
+          "acc": -4.7445255474452495,
+          "ecc": -3.6555202704837626
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 6,
+          "class": "excitement",
+          "count": 3014,
+          "acc": 1.161247511612487,
+          "ecc": 0.43424337219957465
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 7,
+          "class": "excitement",
+          "count": 3014,
+          "acc": -1.6257465162574647,
+          "ecc": -1.2243656586722267
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 8,
+          "class": "excitement",
+          "count": 3014,
+          "acc": -1.8911745189117397,
+          "ecc": -1.3115382184725206
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 3,
+          "class": "fear",
+          "count": 1973,
+          "acc": -4.865686771414083,
+          "ecc": -3.0401491564694965
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 4,
+          "class": "fear",
+          "count": 1973,
+          "acc": -0.7602635580334436,
+          "ecc": -0.07590567904810541
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 5,
+          "class": "fear",
+          "count": 1973,
+          "acc": 1.3684744044602155,
+          "ecc": 0.356298119856163
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 6,
+          "class": "fear",
+          "count": 1973,
+          "acc": -4.105423213380632,
+          "ecc": -2.5576231506287286
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 7,
+          "class": "fear",
+          "count": 1973,
+          "acc": -2.1794221996959067,
+          "ecc": -1.7387710279246136
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 8,
+          "class": "fear",
+          "count": 1973,
+          "acc": -2.230106436898133,
+          "ecc": -1.335046943257808
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 3,
+          "class": "sadness",
+          "count": 1845,
+          "acc": 0.21680216802168673,
+          "ecc": -0.4881275003226335
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 4,
+          "class": "sadness",
+          "count": 1845,
+          "acc": 2.2222222222222143,
+          "ecc": 1.9344431539553568
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 5,
+          "class": "sadness",
+          "count": 1845,
+          "acc": -7.588075880758801,
+          "ecc": -3.9818041037553087
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 6,
+          "class": "sadness",
+          "count": 1845,
+          "acc": 2.6558265582655878,
+          "ecc": 1.5434249580590915
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 7,
+          "class": "sadness",
+          "count": 1845,
+          "acc": 5.582655826558266,
+          "ecc": 4.120531681507288
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "seed": 8,
+          "class": "sadness",
+          "count": 1845,
+          "acc": 1.3008130081300777,
+          "ecc": 0.909149567686157
+        }
+      ],
+      "per_class_difference_summary": [
+        {
+          "comparison": "graph_minus_ce",
+          "class": "amusement",
+          "count": 2770,
+          "acc": {
+            "mean": 1.5162454873646212,
+            "sample_sd": 5.319932814579293
+          },
+          "ecc": {
+            "mean": 0.8701507076958303,
+            "sample_sd": 3.8703716778674213
+          }
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "class": "anger",
+          "count": 1708,
+          "acc": {
+            "mean": 1.3953942232630776,
+            "sample_sd": 4.5977773253115135
+          },
+          "ecc": {
+            "mean": 1.129628080740493,
+            "sample_sd": 3.4806654094901472
+          }
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "class": "awe",
+          "count": 2260,
+          "acc": {
+            "mean": -1.0693215339233053,
+            "sample_sd": 1.3091414187703048
+          },
+          "ecc": {
+            "mean": -0.867177623261694,
+            "sample_sd": 0.9634660941292124
+          }
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "class": "contentment",
+          "count": 2484,
+          "acc": {
+            "mean": -1.9122383252818018,
+            "sample_sd": 4.238176454371259
+          },
+          "ecc": {
+            "mean": -1.0467388109296276,
+            "sample_sd": 2.6027877936338206
+          }
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "class": "disgust",
+          "count": 1661,
+          "acc": {
+            "mean": -0.43146698775837916,
+            "sample_sd": 4.278418101785594
+          },
+          "ecc": {
+            "mean": -0.3815353153101455,
+            "sample_sd": 2.7828342579035237
+          }
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "class": "excitement",
+          "count": 3014,
+          "acc": {
+            "mean": 0.16036275160363309,
+            "sample_sd": 4.249460909611684
+          },
+          "ecc": {
+            "mean": -0.014383933179554257,
+            "sample_sd": 3.050918322661228
+          }
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "class": "fear",
+          "count": 1973,
+          "acc": {
+            "mean": -2.128737962493664,
+            "sample_sd": 2.2589481781779215
+          },
+          "ecc": {
+            "mean": -1.398532972912098,
+            "sample_sd": 1.3406685844649997
+          }
+        },
+        {
+          "comparison": "graph_minus_ce",
+          "class": "sadness",
+          "count": 1845,
+          "acc": {
+            "mean": 0.7317073170731719,
+            "sample_sd": 4.455634007355503
+          },
+          "ecc": {
+            "mean": 0.6729362928549918,
+            "sample_sd": 2.731502811405435
+          }
+        }
+      ],
+      "balanced_macro_ecc": {
+        "ce": {
+          "mean": 80.52110862166741,
+          "sample_sd": 0.1598230951458408,
+          "per_seed": {
+            "3": 80.60365035585396,
+            "4": 80.51956683367632,
+            "5": 80.35169218609221,
+            "6": 80.69458415607656,
+            "7": 80.3075697668561,
+            "8": 80.64958843144926
+          }
+        },
+        "graph": {
+          "mean": 80.39165192487967,
+          "sample_sd": 0.19076491424875872,
+          "per_seed": {
+            "3": 80.41846609210617,
+            "4": 80.47612906834544,
+            "5": 80.34708911020769,
+            "6": 80.31702112193918,
+            "7": 80.10706014324768,
+            "8": 80.68414601343189
+          }
+        }
+      },
+      "macro_note": "Diagnostic arithmetic mean of class-wise ECC; distinct from primary image-weighted ECC; no new inferential tests or class selection"
+    },
+    "data_provenance": {
+      "manifest_path": "C:\\Users\\thota\\Documents\\Acad Projects\\SP\\To-Err-Like-Human\\data\\kaggle_full_8epoch\\data\\emoset_full\\manifest.json",
+      "manifest_sha256": "9012a2ea76fc40e5b31560fc9624338f19248c74e3b5267ca94033aeca753a11",
+      "protocol_data_manifest_sha256": "9012a2ea76fc40e5b31560fc9624338f19248c74e3b5267ca94033aeca753a11",
+      "manifest_hash_verified": true,
+      "manifest_verbatim": {
+        "source_repository": "udeman/EmoSet-118K",
+        "revision": "cd2344cbf316bd77331ee63a79ce6999f0bf7572",
+        "image_size": [
+          192,
+          192
+        ],
+        "source_shards": 24,
+        "source_inventory": {
+          "data/train-00000-of-00018.parquet": {
+            "sha256": "090a4bcd42c1a2feba914c5662da0cf06bd2b6a3e1a57bbbb963106d7731cdb7",
+            "size": 508611497
+          },
+          "data/train-00001-of-00018.parquet": {
+            "sha256": "090a2ad2f16ffee48ae449b4a2e477daf0e096a6ffdacd83d78a6f38aa1a8a37",
+            "size": 503546768
+          },
+          "data/train-00002-of-00018.parquet": {
+            "sha256": "263354c830dff902315ac0a1d51f8f3d90813b4ac5a6fee5e2d3721b08008ec7",
+            "size": 489448805
+          },
+          "data/train-00003-of-00018.parquet": {
+            "sha256": "b11839db6580e58b5d4a4677532da581b0507ddd4466ced0e6f427b37b651a83",
+            "size": 506918375
+          },
+          "data/train-00004-of-00018.parquet": {
+            "sha256": "d9f472b86f35e56fedf6cdb4f37f1d5d2434a0605a185e6600f78283d29ccc99",
+            "size": 495188083
+          },
+          "data/train-00005-of-00018.parquet": {
+            "sha256": "d0993c1dbda889c58f82d0c5b5c241237eb3e65cf7c82abb3e8c57185ad229be",
+            "size": 500893246
+          },
+          "data/train-00006-of-00018.parquet": {
+            "sha256": "34156e6319818821e4cb2677d25f720dbaa6a6e8d584035481f710daf6695d94",
+            "size": 510172188
+          },
+          "data/train-00007-of-00018.parquet": {
+            "sha256": "623991d9990ad2de4504bf46352f0e29f87ad5a6ee0d09dcc2889b169cb86211",
+            "size": 496688567
+          },
+          "data/train-00008-of-00018.parquet": {
+            "sha256": "7ec73a84c5c258c7d6b11e65ff9b49f20828382effd54569d2cfb8e751b7f656",
+            "size": 511858564
+          },
+          "data/train-00009-of-00018.parquet": {
+            "sha256": "b18244b07c6a6c942f9cd629278fe966030c87eab60d23d3b6581de59d7bbf6f",
+            "size": 502008369
+          },
+          "data/train-00010-of-00018.parquet": {
+            "sha256": "a65503d851b9672c9d380a932003f2db50c719abc6a1731acdde339a7ad3fcb9",
+            "size": 507481653
+          },
+          "data/train-00011-of-00018.parquet": {
+            "sha256": "6b2c909602b869d78348effe32037c4e4fe41019cbff455dfb58d0da0762f420",
+            "size": 500406329
+          },
+          "data/train-00012-of-00018.parquet": {
+            "sha256": "6116d4d504469e7125323fc9c58dcb8ce894d395406aeabec664baef37e567aa",
+            "size": 503555741
+          },
+          "data/train-00013-of-00018.parquet": {
+            "sha256": "f3e2a0ec51861e3d5bd2ddb74c779d2fe1b89a105136efbbc73862727ab3cccf",
+            "size": 490963236
+          },
+          "data/train-00014-of-00018.parquet": {
+            "sha256": "2312e2f8348622f984e55397ca41ee78f60bb9687d895507f95ac703d07fc432",
+            "size": 501608196
+          },
+          "data/train-00015-of-00018.parquet": {
+            "sha256": "4c8812ebceeb09cf40d15a9c7968a9cd40f6c1a1139f19a7fa128587bedfee96",
+            "size": 503591098
+          },
+          "data/train-00016-of-00018.parquet": {
+            "sha256": "a651f255615da011eba06b49c41f19c598400c438bc8aa234f52a3731cd3eeb1",
+            "size": 506671704
+          },
+          "data/train-00017-of-00018.parquet": {
+            "sha256": "ecfe46e48f02b8d30d4445c88870450343fc6bb64d0f856c26433d6fa936a99d",
+            "size": 493897506
+          },
+          "data/val-00000-of-00002.parquet": {
+            "sha256": "cdd16d7cc23a9c08adc46f94e465982bced2d4082f229cc5c4d279ab3eb2a95e",
+            "size": 281745071
+          },
+          "data/val-00001-of-00002.parquet": {
+            "sha256": "706ad5e77d5181bf5b1239fc209873ef8786effd736c8b5ed2651dde3f296bc9",
+            "size": 283271428
+          },
+          "data/test-00000-of-00004.parquet": {
+            "sha256": "fe84c3ffe78431afbdefff771db4bcdecd2fa04c82bd8b28c11a560a07b59f12",
+            "size": 421773311
+          },
+          "data/test-00001-of-00004.parquet": {
+            "sha256": "9a79f383cb90be997a990f760af534282d9132b2df1b64849492e24013a236d7",
+            "size": 429848691
+          },
+          "data/test-00002-of-00004.parquet": {
+            "sha256": "6050ca0f7735bb16c2b8d21ebecfe45336928db528ab0af84b505b5d720d1603",
+            "size": 420085971
+          },
+          "data/test-00003-of-00004.parquet": {
+            "sha256": "7cd6d95af547fa18d8be38d509858959606bce7b37260dc777e88e412ca28d21",
+            "size": 421560609
+          }
+        },
+        "processing": "all shards; preserve source splits; reject corrupt and exact encoded-byte duplicates; JPEG resized 192x192",
+        "train": {
+          "images": 94475,
+          "per_class": {
+            "amusement": 15680,
+            "excitement": 15833,
+            "anger": 8434,
+            "fear": 10786,
+            "sadness": 10218,
+            "contentment": 13035,
+            "awe": 12022,
+            "disgust": 8467
+          }
+        },
+        "val": {
+          "images": 5904,
+          "per_class": {
+            "amusement": 994,
+            "awe": 755,
+            "fear": 693,
+            "disgust": 538,
+            "contentment": 816,
+            "excitement": 977,
+            "sadness": 613,
+            "anger": 518
+          }
+        },
+        "test": {
+          "images": 17715,
+          "per_class": {
+            "awe": 2260,
+            "contentment": 2484,
+            "excitement": 3014,
+            "anger": 1708,
+            "sadness": 1845,
+            "amusement": 2770,
+            "fear": 1973,
+            "disgust": 1661
+          }
+        }
+      },
+      "summary": {
+        "raw_rows": null,
+        "raw_scope": "raw source row count not recorded in preparation manifest",
+        "usable_before_caps": 118094,
+        "mirror": "udeman/EmoSet-118K",
+        "pinned_revision": "cd2344cbf316bd77331ee63a79ce6999f0bf7572",
+        "source_url": "https://huggingface.co/datasets/udeman/EmoSet-118K/tree/cd2344cbf316bd77331ee63a79ce6999f0bf7572",
+        "archive": null,
+        "archive_sha256": null,
+        "shards": [
+          {
+            "path": "data/train-00000-of-00018.parquet",
+            "sha256": "090a4bcd42c1a2feba914c5662da0cf06bd2b6a3e1a57bbbb963106d7731cdb7",
+            "size": 508611497
+          },
+          {
+            "path": "data/train-00001-of-00018.parquet",
+            "sha256": "090a2ad2f16ffee48ae449b4a2e477daf0e096a6ffdacd83d78a6f38aa1a8a37",
+            "size": 503546768
+          },
+          {
+            "path": "data/train-00002-of-00018.parquet",
+            "sha256": "263354c830dff902315ac0a1d51f8f3d90813b4ac5a6fee5e2d3721b08008ec7",
+            "size": 489448805
+          },
+          {
+            "path": "data/train-00003-of-00018.parquet",
+            "sha256": "b11839db6580e58b5d4a4677532da581b0507ddd4466ced0e6f427b37b651a83",
+            "size": 506918375
+          },
+          {
+            "path": "data/train-00004-of-00018.parquet",
+            "sha256": "d9f472b86f35e56fedf6cdb4f37f1d5d2434a0605a185e6600f78283d29ccc99",
+            "size": 495188083
+          },
+          {
+            "path": "data/train-00005-of-00018.parquet",
+            "sha256": "d0993c1dbda889c58f82d0c5b5c241237eb3e65cf7c82abb3e8c57185ad229be",
+            "size": 500893246
+          },
+          {
+            "path": "data/train-00006-of-00018.parquet",
+            "sha256": "34156e6319818821e4cb2677d25f720dbaa6a6e8d584035481f710daf6695d94",
+            "size": 510172188
+          },
+          {
+            "path": "data/train-00007-of-00018.parquet",
+            "sha256": "623991d9990ad2de4504bf46352f0e29f87ad5a6ee0d09dcc2889b169cb86211",
+            "size": 496688567
+          },
+          {
+            "path": "data/train-00008-of-00018.parquet",
+            "sha256": "7ec73a84c5c258c7d6b11e65ff9b49f20828382effd54569d2cfb8e751b7f656",
+            "size": 511858564
+          },
+          {
+            "path": "data/train-00009-of-00018.parquet",
+            "sha256": "b18244b07c6a6c942f9cd629278fe966030c87eab60d23d3b6581de59d7bbf6f",
+            "size": 502008369
+          },
+          {
+            "path": "data/train-00010-of-00018.parquet",
+            "sha256": "a65503d851b9672c9d380a932003f2db50c719abc6a1731acdde339a7ad3fcb9",
+            "size": 507481653
+          },
+          {
+            "path": "data/train-00011-of-00018.parquet",
+            "sha256": "6b2c909602b869d78348effe32037c4e4fe41019cbff455dfb58d0da0762f420",
+            "size": 500406329
+          },
+          {
+            "path": "data/train-00012-of-00018.parquet",
+            "sha256": "6116d4d504469e7125323fc9c58dcb8ce894d395406aeabec664baef37e567aa",
+            "size": 503555741
+          },
+          {
+            "path": "data/train-00013-of-00018.parquet",
+            "sha256": "f3e2a0ec51861e3d5bd2ddb74c779d2fe1b89a105136efbbc73862727ab3cccf",
+            "size": 490963236
+          },
+          {
+            "path": "data/train-00014-of-00018.parquet",
+            "sha256": "2312e2f8348622f984e55397ca41ee78f60bb9687d895507f95ac703d07fc432",
+            "size": 501608196
+          },
+          {
+            "path": "data/train-00015-of-00018.parquet",
+            "sha256": "4c8812ebceeb09cf40d15a9c7968a9cd40f6c1a1139f19a7fa128587bedfee96",
+            "size": 503591098
+          },
+          {
+            "path": "data/train-00016-of-00018.parquet",
+            "sha256": "a651f255615da011eba06b49c41f19c598400c438bc8aa234f52a3731cd3eeb1",
+            "size": 506671704
+          },
+          {
+            "path": "data/train-00017-of-00018.parquet",
+            "sha256": "ecfe46e48f02b8d30d4445c88870450343fc6bb64d0f856c26433d6fa936a99d",
+            "size": 493897506
+          },
+          {
+            "path": "data/val-00000-of-00002.parquet",
+            "sha256": "cdd16d7cc23a9c08adc46f94e465982bced2d4082f229cc5c4d279ab3eb2a95e",
+            "size": 281745071
+          },
+          {
+            "path": "data/val-00001-of-00002.parquet",
+            "sha256": "706ad5e77d5181bf5b1239fc209873ef8786effd736c8b5ed2651dde3f296bc9",
+            "size": 283271428
+          },
+          {
+            "path": "data/test-00000-of-00004.parquet",
+            "sha256": "fe84c3ffe78431afbdefff771db4bcdecd2fa04c82bd8b28c11a560a07b59f12",
+            "size": 421773311
+          },
+          {
+            "path": "data/test-00001-of-00004.parquet",
+            "sha256": "9a79f383cb90be997a990f760af534282d9132b2df1b64849492e24013a236d7",
+            "size": 429848691
+          },
+          {
+            "path": "data/test-00002-of-00004.parquet",
+            "sha256": "6050ca0f7735bb16c2b8d21ebecfe45336928db528ab0af84b505b5d720d1603",
+            "size": 420085971
+          },
+          {
+            "path": "data/test-00003-of-00004.parquet",
+            "sha256": "7cd6d95af547fa18d8be38d509858959606bce7b37260dc777e88e412ca28d21",
+            "size": 421560609
+          }
+        ],
+        "prepared_image_transform": "all shards; preserve source splits; reject corrupt and exact encoded-byte duplicates; JPEG resized 192x192",
+        "preparation_description_source": "preparation manifest",
+        "classifier_input_pipeline": "PIL EXIF transpose RGB; Resize192x192; random crop160/flip0.5 train; center160 val/test",
+        "split_rule": "Preserve full mirror source splits after encoded-byte deduplication",
+        "exclusion_limits": "Corrupt images and exact encoded-byte duplicates rejected; re-encoded, pixel-identical and near duplicates remain possible",
+        "actual_split_counts": {
+          "train": 94475,
+          "val": 5904,
+          "test": 17715
+        },
+        "actual_class_counts": {
+          "train": [
+            15680,
+            8434,
+            12022,
+            13035,
+            8467,
+            15833,
+            10786,
+            10218
+          ],
+          "val": [
+            994,
+            518,
+            755,
+            816,
+            538,
+            977,
+            693,
+            613
+          ],
+          "test": [
+            2770,
+            1708,
+            2260,
+            2484,
+            1661,
+            3014,
+            1973,
+            1845
+          ]
+        }
+      }
+    }
+  },
+  "primary_endpoint": "Fresh-seed mean graph-minus-CE ECC",
+  "primary_exact_p": 0.21875,
+  "global_holm_sensitivity": {
+    "source_summary": "C:\\Users\\thota\\Documents\\Acad Projects\\SP\\To-Err-Like-Human\\outputs\\seed_evidence\\summary.json",
+    "source_summary_sha256": "ca37de928b3d3844ed2f6eeae1d2ad952faf398688331dbb8079cd9fdd0c27bb",
+    "family_size": 10,
+    "full_comparison_adjusted_p": 1.0,
+    "comparisons": [
+      {
+        "name": "artphoto/graph_minus_ce",
+        "raw_p": 0.61865234375,
+        "holm_adjusted_p": 1.0
+      },
+      {
+        "name": "artphoto/graph_minus_isotropic",
+        "raw_p": 0.8837890625,
+        "holm_adjusted_p": 1.0
+      },
+      {
+        "name": "artphoto/graph_minus_permuted",
+        "raw_p": 0.9892578125,
+        "holm_adjusted_p": 1.0
+      },
+      {
+        "name": "emoset/graph_minus_ce",
+        "raw_p": 0.0537109375,
+        "holm_adjusted_p": 0.4833984375
+      },
+      {
+        "name": "emoset/graph_minus_isotropic",
+        "raw_p": 0.85400390625,
+        "holm_adjusted_p": 1.0
+      },
+      {
+        "name": "emoset/graph_minus_permuted",
+        "raw_p": 0.91650390625,
+        "holm_adjusted_p": 1.0
+      },
+      {
+        "name": "fi/graph_minus_ce",
+        "raw_p": 0.0439453125,
+        "holm_adjusted_p": 0.439453125
+      },
+      {
+        "name": "fi/graph_minus_isotropic",
+        "raw_p": 0.53955078125,
+        "holm_adjusted_p": 1.0
+      },
+      {
+        "name": "fi/graph_minus_permuted",
+        "raw_p": 0.3544921875,
+        "holm_adjusted_p": 1.0
+      },
+      {
+        "name": "full_emoset/graph_minus_ce",
+        "raw_p": 0.21875,
+        "holm_adjusted_p": 1.0
+      }
+    ],
+    "interpretation": "Sensitivity across the earlier nine ECC tests plus this follow-up; not a claim that all ten experiments were planned before any outcomes"
+  },
+  "prior_three_t4_seeds_not_pooled": {
+    "seed_pairs": [
+      0,
+      1,
+      2
+    ],
+    "graph_method": "graph_a0p3",
+    "selection_note": "Historical exploratory protocol; alpha0.3 selected on prior full-data validation; not fresh confirmatory seeds",
+    "metrics": {
+      "acc": {
+        "n_seed_pairs": 3,
+        "differences": [
+          0.17499294383290476,
+          0.5588484335308976,
+          0.34434095399379316
+        ],
+        "mean_difference": 0.35939411045253183,
+        "sample_sd_difference": 0.1923699752621233,
+        "standard_error_difference": 0.11106485700158854,
+        "t95": [
+          -0.11847939970458671,
+          0.8372676206096503
+        ],
+        "t95_note": "Student t95 over independent seed-pair differences; normality assumption, fragile for small n",
+        "exact_signflip": {
+          "p_two_sided": 0.25,
+          "assignments": 8,
+          "assumption": "Treatment-label exchangeability within seed pairs / sign symmetry under the null"
+        },
+        "positive_pairs": 3,
+        "negative_pairs": 0,
+        "zero_pairs": 0,
+        "leave_one_out_mean_range": [
+          0.25966694891334896,
+          0.4515946937623454
+        ],
+        "unit": "paired independently trained seed, not test image"
+      },
+      "ecc": {
+        "n_seed_pairs": 3,
+        "differences": [
+          0.16648522237007057,
+          0.3801056409015615,
+          0.25682432159993596
+        ],
+        "mean_difference": 0.26780506162385603,
+        "sample_sd_difference": 0.10723270626071614,
+        "standard_error_difference": 0.06191083182555653,
+        "t95": [
+          0.0014242520685653348,
+          0.5341858711791467
+        ],
+        "t95_note": "Student t95 over independent seed-pair differences; normality assumption, fragile for small n",
+        "exact_signflip": {
+          "p_two_sided": 0.25,
+          "assignments": 8,
+          "assumption": "Treatment-label exchangeability within seed pairs / sign symmetry under the null"
+        },
+        "positive_pairs": 3,
+        "negative_pairs": 0,
+        "zero_pairs": 0,
+        "leave_one_out_mean_range": [
+          0.21165477198500326,
+          0.31846498125074874
+        ],
+        "unit": "paired independently trained seed, not test image"
+      },
+      "acc2": {
+        "n_seed_pairs": 3,
+        "differences": [
+          0.06209427039232196,
+          0.2991814846175487,
+          0.3274061529777015
+        ],
+        "mean_difference": 0.22956063599585738,
+        "sample_sd_difference": 0.14571511823538727,
+        "standard_error_difference": 0.084128662738199,
+        "t95": [
+          -0.13241578438482635,
+          0.5915370563765411
+        ],
+        "t95_note": "Student t95 over independent seed-pair differences; normality assumption, fragile for small n",
+        "exact_signflip": {
+          "p_two_sided": 0.25,
+          "assignments": 8,
+          "assumption": "Treatment-label exchangeability within seed pairs / sign symmetry under the null"
+        },
+        "positive_pairs": 3,
+        "negative_pairs": 0,
+        "zero_pairs": 0,
+        "leave_one_out_mean_range": [
+          0.18063787750493532,
+          0.3132938187976251
+        ],
+        "unit": "paired independently trained seed, not test image"
+      },
+      "emc": {
+        "n_seed_pairs": 3,
+        "differences": [
+          0.47626232125352885,
+          -0.14995470562890745,
+          0.0802080820290243
+        ],
+        "mean_difference": 0.13550523255121524,
+        "sample_sd_difference": 0.31674954195906085,
+        "standard_error_difference": 0.18287543331575445,
+        "t95": [
+          -0.6513442498089314,
+          0.9223547149113619
+        ],
+        "t95_note": "Student t95 over independent seed-pair differences; normality assumption, fragile for small n",
+        "exact_signflip": {
+          "p_two_sided": 0.75,
+          "assignments": 8,
+          "assumption": "Treatment-label exchangeability within seed pairs / sign symmetry under the null"
+        },
+        "positive_pairs": 2,
+        "negative_pairs": 1,
+        "zero_pairs": 0,
+        "leave_one_out_mean_range": [
+          -0.034873311799941575,
+          0.2782352016412766
+        ],
+        "unit": "paired independently trained seed, not test image"
+      },
+      "brier": {
+        "n_seed_pairs": 3,
+        "differences": [
+          -0.0007647840299946917,
+          -0.004730957386787971,
+          -0.00859217119174116
+        ],
+        "mean_difference": -0.004695970869507941,
+        "sample_sd_difference": 0.003913810865034474,
+        "standard_error_difference": 0.002259639756484936,
+        "t95": [
+          -0.01441841603599826,
+          0.005026474296982378
+        ],
+        "t95_note": "Student t95 over independent seed-pair differences; normality assumption, fragile for small n",
+        "exact_signflip": {
+          "p_two_sided": 0.25,
+          "assignments": 8,
+          "assumption": "Treatment-label exchangeability within seed pairs / sign symmetry under the null"
+        },
+        "positive_pairs": 0,
+        "negative_pairs": 3,
+        "zero_pairs": 0,
+        "leave_one_out_mean_range": [
+          -0.0066615642892645655,
+          -0.002747870708391331
+        ],
+        "unit": "paired independently trained seed, not test image"
+      },
+      "gsee": {
+        "n_seed_pairs": 3,
+        "differences": [
+          -0.0004626163246459203,
+          -0.002442668573670592,
+          -0.004413865489757807
+        ],
+        "mean_difference": -0.002439716796024773,
+        "sample_sd_difference": 0.001975626236397664,
+        "standard_error_difference": 0.0011406283394022785,
+        "t95": [
+          -0.007347444434183583,
+          0.002468010842134036
+        ],
+        "t95_note": "Student t95 over independent seed-pair differences; normality assumption, fragile for small n",
+        "exact_signflip": {
+          "p_two_sided": 0.25,
+          "assignments": 8,
+          "assumption": "Treatment-label exchangeability within seed pairs / sign symmetry under the null"
+        },
+        "positive_pairs": 0,
+        "negative_pairs": 3,
+        "zero_pairs": 0,
+        "leave_one_out_mean_range": [
+          -0.0034282670317141994,
+          -0.0014526424491582562
+        ],
+        "unit": "paired independently trained seed, not test image"
+      }
+    }
+  },
+  "timing_and_amp": {
+    "epochs": [
+      {
+        "method": "ce",
+        "seed": 3,
+        "epoch": 1,
+        "epoch_seconds": 117.08790320000026,
+        "train_seconds": 114.52256409999973,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "ce",
+        "seed": 3,
+        "epoch": 2,
+        "epoch_seconds": 76.81037900000047,
+        "train_seconds": 74.92463990000033,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "ce",
+        "seed": 3,
+        "epoch": 3,
+        "epoch_seconds": 74.57684459999928,
+        "train_seconds": 73.07720969999991,
+        "attempted": 1477,
+        "skipped_scale_decrease": 1,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "ce",
+        "seed": 3,
+        "epoch": 4,
+        "epoch_seconds": 71.62142219999987,
+        "train_seconds": 70.14657729999999,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "ce",
+        "seed": 3,
+        "epoch": 5,
+        "epoch_seconds": 71.81831970000076,
+        "train_seconds": 70.3773099,
+        "attempted": 1477,
+        "skipped_scale_decrease": 1,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "ce",
+        "seed": 3,
+        "epoch": 6,
+        "epoch_seconds": 71.79107270000077,
+        "train_seconds": 70.35566319999998,
+        "attempted": 1477,
+        "skipped_scale_decrease": 2,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "ce",
+        "seed": 3,
+        "epoch": 7,
+        "epoch_seconds": 71.87864939999963,
+        "train_seconds": 70.4498281999995,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "ce",
+        "seed": 3,
+        "epoch": 8,
+        "epoch_seconds": 72.11233950000042,
+        "train_seconds": 70.65645239999958,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "graph",
+        "seed": 3,
+        "epoch": 1,
+        "epoch_seconds": 83.94912529999965,
+        "train_seconds": 82.42112339999949,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "graph",
+        "seed": 3,
+        "epoch": 2,
+        "epoch_seconds": 74.00301000000036,
+        "train_seconds": 72.55550050000056,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "graph",
+        "seed": 3,
+        "epoch": 3,
+        "epoch_seconds": 74.16084710000086,
+        "train_seconds": 72.66500160000032,
+        "attempted": 1477,
+        "skipped_scale_decrease": 1,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "graph",
+        "seed": 3,
+        "epoch": 4,
+        "epoch_seconds": 76.54222610000033,
+        "train_seconds": 75.03411700000015,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "graph",
+        "seed": 3,
+        "epoch": 5,
+        "epoch_seconds": 75.81676359999983,
+        "train_seconds": 74.28992980000021,
+        "attempted": 1477,
+        "skipped_scale_decrease": 1,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "graph",
+        "seed": 3,
+        "epoch": 6,
+        "epoch_seconds": 75.62068060000001,
+        "train_seconds": 74.08717819999947,
+        "attempted": 1477,
+        "skipped_scale_decrease": 2,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "graph",
+        "seed": 3,
+        "epoch": 7,
+        "epoch_seconds": 76.59724639999968,
+        "train_seconds": 75.10923490000005,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "graph",
+        "seed": 3,
+        "epoch": 8,
+        "epoch_seconds": 74.73098680000021,
+        "train_seconds": 73.31041000000005,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "ce",
+        "seed": 4,
+        "epoch": 1,
+        "epoch_seconds": 72.68646220000028,
+        "train_seconds": 71.2242785999997,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "ce",
+        "seed": 4,
+        "epoch": 2,
+        "epoch_seconds": 74.65486079999937,
+        "train_seconds": 73.14123769999969,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "ce",
+        "seed": 4,
+        "epoch": 3,
+        "epoch_seconds": 75.48979940000027,
+        "train_seconds": 73.96817069999997,
+        "attempted": 1477,
+        "skipped_scale_decrease": 1,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "ce",
+        "seed": 4,
+        "epoch": 4,
+        "epoch_seconds": 73.86933610000051,
+        "train_seconds": 72.35746579999977,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "ce",
+        "seed": 4,
+        "epoch": 5,
+        "epoch_seconds": 74.86450999999943,
+        "train_seconds": 73.3657277000002,
+        "attempted": 1477,
+        "skipped_scale_decrease": 1,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "ce",
+        "seed": 4,
+        "epoch": 6,
+        "epoch_seconds": 75.18947939999998,
+        "train_seconds": 73.6614441999991,
+        "attempted": 1477,
+        "skipped_scale_decrease": 1,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "ce",
+        "seed": 4,
+        "epoch": 7,
+        "epoch_seconds": 73.81571359999907,
+        "train_seconds": 72.32163089999995,
+        "attempted": 1477,
+        "skipped_scale_decrease": 2,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "ce",
+        "seed": 4,
+        "epoch": 8,
+        "epoch_seconds": 74.64376119999906,
+        "train_seconds": 73.19463989999895,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "graph",
+        "seed": 4,
+        "epoch": 1,
+        "epoch_seconds": 75.33344020000004,
+        "train_seconds": 73.84389759999976,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "graph",
+        "seed": 4,
+        "epoch": 2,
+        "epoch_seconds": 73.56133199999931,
+        "train_seconds": 72.1076164999995,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "graph",
+        "seed": 4,
+        "epoch": 3,
+        "epoch_seconds": 74.46352039999874,
+        "train_seconds": 72.99028829999952,
+        "attempted": 1477,
+        "skipped_scale_decrease": 1,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "graph",
+        "seed": 4,
+        "epoch": 4,
+        "epoch_seconds": 76.89668580000034,
+        "train_seconds": 75.34940040000038,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "graph",
+        "seed": 4,
+        "epoch": 5,
+        "epoch_seconds": 75.58934390000104,
+        "train_seconds": 74.16047780000008,
+        "attempted": 1477,
+        "skipped_scale_decrease": 1,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "graph",
+        "seed": 4,
+        "epoch": 6,
+        "epoch_seconds": 74.21030170000085,
+        "train_seconds": 72.72687920000135,
+        "attempted": 1477,
+        "skipped_scale_decrease": 2,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "graph",
+        "seed": 4,
+        "epoch": 7,
+        "epoch_seconds": 76.5120865000008,
+        "train_seconds": 74.93710850000025,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "graph",
+        "seed": 4,
+        "epoch": 8,
+        "epoch_seconds": 75.43623800000023,
+        "train_seconds": 73.92050430000018,
+        "attempted": 1477,
+        "skipped_scale_decrease": 1,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "ce",
+        "seed": 5,
+        "epoch": 1,
+        "epoch_seconds": 74.05871040000056,
+        "train_seconds": 72.53611060000003,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "ce",
+        "seed": 5,
+        "epoch": 2,
+        "epoch_seconds": 74.69018039999901,
+        "train_seconds": 73.15102699999989,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "ce",
+        "seed": 5,
+        "epoch": 3,
+        "epoch_seconds": 74.90824959999918,
+        "train_seconds": 73.37662500000079,
+        "attempted": 1477,
+        "skipped_scale_decrease": 1,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "ce",
+        "seed": 5,
+        "epoch": 4,
+        "epoch_seconds": 73.77476340000067,
+        "train_seconds": 72.29599280000002,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "ce",
+        "seed": 5,
+        "epoch": 5,
+        "epoch_seconds": 73.81085549999989,
+        "train_seconds": 72.32781480000085,
+        "attempted": 1477,
+        "skipped_scale_decrease": 2,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "ce",
+        "seed": 5,
+        "epoch": 6,
+        "epoch_seconds": 74.01338249999935,
+        "train_seconds": 72.5856115000006,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "ce",
+        "seed": 5,
+        "epoch": 7,
+        "epoch_seconds": 74.26212040000064,
+        "train_seconds": 72.76861710000048,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "ce",
+        "seed": 5,
+        "epoch": 8,
+        "epoch_seconds": 74.12685609999971,
+        "train_seconds": 72.72160259999873,
+        "attempted": 1477,
+        "skipped_scale_decrease": 1,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "graph",
+        "seed": 5,
+        "epoch": 1,
+        "epoch_seconds": 76.0439366999999,
+        "train_seconds": 74.57300179999947,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "graph",
+        "seed": 5,
+        "epoch": 2,
+        "epoch_seconds": 73.7218670000002,
+        "train_seconds": 72.27047330000096,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "graph",
+        "seed": 5,
+        "epoch": 3,
+        "epoch_seconds": 74.73952540000028,
+        "train_seconds": 73.21455220000098,
+        "attempted": 1477,
+        "skipped_scale_decrease": 1,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "graph",
+        "seed": 5,
+        "epoch": 4,
+        "epoch_seconds": 75.48291310000059,
+        "train_seconds": 73.98430650000046,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "graph",
+        "seed": 5,
+        "epoch": 5,
+        "epoch_seconds": 74.88500250000106,
+        "train_seconds": 73.37044800000149,
+        "attempted": 1477,
+        "skipped_scale_decrease": 2,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "graph",
+        "seed": 5,
+        "epoch": 6,
+        "epoch_seconds": 75.67574209999839,
+        "train_seconds": 74.10686769999847,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "graph",
+        "seed": 5,
+        "epoch": 7,
+        "epoch_seconds": 76.59720589999961,
+        "train_seconds": 75.15322059999926,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "graph",
+        "seed": 5,
+        "epoch": 8,
+        "epoch_seconds": 75.6827916000002,
+        "train_seconds": 74.21011530000033,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 262144.0
+      },
+      {
+        "method": "ce",
+        "seed": 6,
+        "epoch": 1,
+        "epoch_seconds": 74.28063140000086,
+        "train_seconds": 72.75758750000023,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "ce",
+        "seed": 6,
+        "epoch": 2,
+        "epoch_seconds": 74.69336549999935,
+        "train_seconds": 73.18044060000102,
+        "attempted": 1477,
+        "skipped_scale_decrease": 1,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "ce",
+        "seed": 6,
+        "epoch": 3,
+        "epoch_seconds": 74.48459349999939,
+        "train_seconds": 73.00268609999875,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "ce",
+        "seed": 6,
+        "epoch": 4,
+        "epoch_seconds": 73.75355230000059,
+        "train_seconds": 72.22043169999961,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "ce",
+        "seed": 6,
+        "epoch": 5,
+        "epoch_seconds": 73.93538609999996,
+        "train_seconds": 72.49763610000082,
+        "attempted": 1477,
+        "skipped_scale_decrease": 1,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "ce",
+        "seed": 6,
+        "epoch": 6,
+        "epoch_seconds": 73.23064590000104,
+        "train_seconds": 71.78962200000024,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "ce",
+        "seed": 6,
+        "epoch": 7,
+        "epoch_seconds": 72.17135679999956,
+        "train_seconds": 70.73944420000043,
+        "attempted": 1477,
+        "skipped_scale_decrease": 2,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "ce",
+        "seed": 6,
+        "epoch": 8,
+        "epoch_seconds": 73.64037219999955,
+        "train_seconds": 72.14024809999864,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "graph",
+        "seed": 6,
+        "epoch": 1,
+        "epoch_seconds": 76.66105309999875,
+        "train_seconds": 75.10887889999867,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "graph",
+        "seed": 6,
+        "epoch": 2,
+        "epoch_seconds": 75.31669880000118,
+        "train_seconds": 73.80253570000059,
+        "attempted": 1477,
+        "skipped_scale_decrease": 1,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "graph",
+        "seed": 6,
+        "epoch": 3,
+        "epoch_seconds": 76.30985630000032,
+        "train_seconds": 74.80225819999941,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "graph",
+        "seed": 6,
+        "epoch": 4,
+        "epoch_seconds": 75.72771920000014,
+        "train_seconds": 74.27210550000018,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "graph",
+        "seed": 6,
+        "epoch": 5,
+        "epoch_seconds": 74.00492309999936,
+        "train_seconds": 72.51507010000023,
+        "attempted": 1477,
+        "skipped_scale_decrease": 1,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "graph",
+        "seed": 6,
+        "epoch": 6,
+        "epoch_seconds": 75.9220232000007,
+        "train_seconds": 74.39971689999948,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "graph",
+        "seed": 6,
+        "epoch": 7,
+        "epoch_seconds": 76.7509356999999,
+        "train_seconds": 75.22835680000026,
+        "attempted": 1477,
+        "skipped_scale_decrease": 2,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "graph",
+        "seed": 6,
+        "epoch": 8,
+        "epoch_seconds": 75.45920019999903,
+        "train_seconds": 73.96061009999903,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "ce",
+        "seed": 7,
+        "epoch": 1,
+        "epoch_seconds": 74.08581089999825,
+        "train_seconds": 72.59105839999938,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "ce",
+        "seed": 7,
+        "epoch": 2,
+        "epoch_seconds": 74.94071959999928,
+        "train_seconds": 73.32167589999881,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "ce",
+        "seed": 7,
+        "epoch": 3,
+        "epoch_seconds": 73.98952530000133,
+        "train_seconds": 72.44472730000052,
+        "attempted": 1477,
+        "skipped_scale_decrease": 2,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "ce",
+        "seed": 7,
+        "epoch": 4,
+        "epoch_seconds": 72.85691840000072,
+        "train_seconds": 71.3192739999995,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "ce",
+        "seed": 7,
+        "epoch": 5,
+        "epoch_seconds": 73.97757629999978,
+        "train_seconds": 72.46941619999961,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "ce",
+        "seed": 7,
+        "epoch": 6,
+        "epoch_seconds": 74.40863499999978,
+        "train_seconds": 72.87983709999935,
+        "attempted": 1477,
+        "skipped_scale_decrease": 1,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "ce",
+        "seed": 7,
+        "epoch": 7,
+        "epoch_seconds": 73.82984270000088,
+        "train_seconds": 72.31918490000135,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "ce",
+        "seed": 7,
+        "epoch": 8,
+        "epoch_seconds": 75.0315171000002,
+        "train_seconds": 73.52828360000058,
+        "attempted": 1477,
+        "skipped_scale_decrease": 1,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "graph",
+        "seed": 7,
+        "epoch": 1,
+        "epoch_seconds": 75.88285900000119,
+        "train_seconds": 74.39907560000029,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "graph",
+        "seed": 7,
+        "epoch": 2,
+        "epoch_seconds": 74.3152059999993,
+        "train_seconds": 72.79824689999987,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "graph",
+        "seed": 7,
+        "epoch": 3,
+        "epoch_seconds": 74.89898609999909,
+        "train_seconds": 73.4160111000001,
+        "attempted": 1477,
+        "skipped_scale_decrease": 2,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "graph",
+        "seed": 7,
+        "epoch": 4,
+        "epoch_seconds": 74.78436800000054,
+        "train_seconds": 73.29919340000015,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "graph",
+        "seed": 7,
+        "epoch": 5,
+        "epoch_seconds": 75.81668929999978,
+        "train_seconds": 74.2892694000002,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "graph",
+        "seed": 7,
+        "epoch": 6,
+        "epoch_seconds": 73.21260970000003,
+        "train_seconds": 71.79331879999881,
+        "attempted": 1477,
+        "skipped_scale_decrease": 1,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "graph",
+        "seed": 7,
+        "epoch": 7,
+        "epoch_seconds": 72.60134310000103,
+        "train_seconds": 71.16790370000126,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "graph",
+        "seed": 7,
+        "epoch": 8,
+        "epoch_seconds": 72.40462020000086,
+        "train_seconds": 70.97248820000095,
+        "attempted": 1477,
+        "skipped_scale_decrease": 1,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "ce",
+        "seed": 8,
+        "epoch": 1,
+        "epoch_seconds": 72.68612349999967,
+        "train_seconds": 71.06565580000097,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "ce",
+        "seed": 8,
+        "epoch": 2,
+        "epoch_seconds": 74.38428740000018,
+        "train_seconds": 72.90000379999947,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "ce",
+        "seed": 8,
+        "epoch": 3,
+        "epoch_seconds": 71.48676410000007,
+        "train_seconds": 70.01070289999916,
+        "attempted": 1477,
+        "skipped_scale_decrease": 1,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "ce",
+        "seed": 8,
+        "epoch": 4,
+        "epoch_seconds": 71.20003759999963,
+        "train_seconds": 69.69773460000033,
+        "attempted": 1477,
+        "skipped_scale_decrease": 1,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "ce",
+        "seed": 8,
+        "epoch": 5,
+        "epoch_seconds": 73.61299109999891,
+        "train_seconds": 72.10965570000008,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "ce",
+        "seed": 8,
+        "epoch": 6,
+        "epoch_seconds": 72.73523939999905,
+        "train_seconds": 71.2502414999999,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "ce",
+        "seed": 8,
+        "epoch": 7,
+        "epoch_seconds": 74.3396501999996,
+        "train_seconds": 72.87774399999944,
+        "attempted": 1477,
+        "skipped_scale_decrease": 1,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "ce",
+        "seed": 8,
+        "epoch": 8,
+        "epoch_seconds": 75.52713579999909,
+        "train_seconds": 73.88752190000014,
+        "attempted": 1477,
+        "skipped_scale_decrease": 1,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "graph",
+        "seed": 8,
+        "epoch": 1,
+        "epoch_seconds": 73.45200680000016,
+        "train_seconds": 71.99041919999945,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "graph",
+        "seed": 8,
+        "epoch": 2,
+        "epoch_seconds": 74.16658049999933,
+        "train_seconds": 72.6904969999996,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "graph",
+        "seed": 8,
+        "epoch": 3,
+        "epoch_seconds": 74.84747000000061,
+        "train_seconds": 73.31780140000046,
+        "attempted": 1477,
+        "skipped_scale_decrease": 2,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "graph",
+        "seed": 8,
+        "epoch": 4,
+        "epoch_seconds": 74.9131056999995,
+        "train_seconds": 73.39267699999982,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 65536.0
+      },
+      {
+        "method": "graph",
+        "seed": 8,
+        "epoch": 5,
+        "epoch_seconds": 75.06182660000013,
+        "train_seconds": 73.59750379999969,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 65536.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "graph",
+        "seed": 8,
+        "epoch": 6,
+        "epoch_seconds": 73.57868360000066,
+        "train_seconds": 72.11073140000008,
+        "attempted": 1477,
+        "skipped_scale_decrease": 1,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "graph",
+        "seed": 8,
+        "epoch": 7,
+        "epoch_seconds": 75.06860059999963,
+        "train_seconds": 73.59490019999976,
+        "attempted": 1477,
+        "skipped_scale_decrease": 0,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 131072.0
+      },
+      {
+        "method": "graph",
+        "seed": 8,
+        "epoch": 8,
+        "epoch_seconds": 74.69259839999904,
+        "train_seconds": 73.20455469999979,
+        "attempted": 1477,
+        "skipped_scale_decrease": 2,
+        "amp_scale_start": 131072.0,
+        "amp_scale_end": 65536.0
+      }
+    ],
+    "runs": [
+      {
+        "method": "ce",
+        "seed": 3,
+        "attempted": 11816,
+        "skipped_scale_decrease": 4,
+        "inferred_completed": 11812,
+        "total_epoch_seconds": 627.6969303000014
+      },
+      {
+        "method": "graph",
+        "seed": 3,
+        "attempted": 11816,
+        "skipped_scale_decrease": 4,
+        "inferred_completed": 11812,
+        "total_epoch_seconds": 611.4208859000009
+      },
+      {
+        "method": "ce",
+        "seed": 4,
+        "attempted": 11816,
+        "skipped_scale_decrease": 5,
+        "inferred_completed": 11811,
+        "total_epoch_seconds": 595.213922699998
+      },
+      {
+        "method": "graph",
+        "seed": 4,
+        "attempted": 11816,
+        "skipped_scale_decrease": 5,
+        "inferred_completed": 11811,
+        "total_epoch_seconds": 602.0029485000014
+      },
+      {
+        "method": "ce",
+        "seed": 5,
+        "attempted": 11816,
+        "skipped_scale_decrease": 4,
+        "inferred_completed": 11812,
+        "total_epoch_seconds": 593.645118299999
+      },
+      {
+        "method": "graph",
+        "seed": 5,
+        "attempted": 11816,
+        "skipped_scale_decrease": 3,
+        "inferred_completed": 11813,
+        "total_epoch_seconds": 602.8289843000002
+      },
+      {
+        "method": "ce",
+        "seed": 6,
+        "attempted": 11816,
+        "skipped_scale_decrease": 4,
+        "inferred_completed": 11812,
+        "total_epoch_seconds": 590.1899037000003
+      },
+      {
+        "method": "graph",
+        "seed": 6,
+        "attempted": 11816,
+        "skipped_scale_decrease": 4,
+        "inferred_completed": 11812,
+        "total_epoch_seconds": 606.1524095999994
+      },
+      {
+        "method": "ce",
+        "seed": 7,
+        "attempted": 11816,
+        "skipped_scale_decrease": 4,
+        "inferred_completed": 11812,
+        "total_epoch_seconds": 593.1205453000002
+      },
+      {
+        "method": "graph",
+        "seed": 7,
+        "attempted": 11816,
+        "skipped_scale_decrease": 4,
+        "inferred_completed": 11812,
+        "total_epoch_seconds": 593.9166814000018
+      },
+      {
+        "method": "ce",
+        "seed": 8,
+        "attempted": 11816,
+        "skipped_scale_decrease": 4,
+        "inferred_completed": 11812,
+        "total_epoch_seconds": 585.9722290999962
+      },
+      {
+        "method": "graph",
+        "seed": 8,
+        "attempted": 11816,
+        "skipped_scale_decrease": 5,
+        "inferred_completed": 11811,
+        "total_epoch_seconds": 595.7808721999991
+      }
+    ],
+    "definition": "Single-optimizer standard GradScaler scale decreases infer overflow-triggered skipped optimizer steps; saved counts are checked, not independently reconstructed from batch gradients"
+  },
+  "primary_scope": "Six seed pairs conditional on the same fixed full-data splits and locked alpha0.3; not independent datasets"
+}

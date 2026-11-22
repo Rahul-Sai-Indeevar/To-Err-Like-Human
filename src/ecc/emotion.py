@@ -1,10 +1,9 @@
 """Mikel's emotion wheel, emotional distance W (paper Eq. 1) and label ranks.
 
-ASSUMPTION TO VERIFY: the circular order of the wheel below was derived so that the
-excitement row reproduces the ranking given in the paper's Appendix B
-(excitement, awe, contentment, amusement, fear, sadness, disgust, anger).
-Compare with the order used in the official repo's metric.py and edit WHEEL_ORDER
-if it differs -- it is the only place the wheel is defined.
+All eight distance rows are regression-tested against the official repository's
+train.py eval_training matrix (commit 1c51f45cd1b17c12a009596109bb31c2f07bb84a),
+using the wheel class order below. The previous implementation's values are
+unchanged. ListMLE training details remain an independent reproduction question.
 """
 from __future__ import annotations
 

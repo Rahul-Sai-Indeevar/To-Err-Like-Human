@@ -1,0 +1,120 @@
+{
+  "audit": "CPU full source-image/CSV/cache alignment",
+  "python": "3.14.0",
+  "numpy": "2.5.4",
+  "pillow": "13.0.0",
+  "implementation": "Independent NumPy/Pillow; EXIF-transposed RGB, PIL bilinear192, CHWuint8 exact equality; no runner import or GPU",
+  "datasets": {
+    "artphoto": {
+      "protocol_path": "C:\\Users\\thota\\Documents\\Acad Projects\\SP\\To-Err-Like-Human\\outputs\\seed_evidence\\artphoto\\protocol.json",
+      "protocol_file_sha256": "43236a8e2f7fe3ed975bfee399ed3a7092660ef41d2e21f95b636d9b67ddc081",
+      "protocol_hash": "53356e2f6974b20cda87374ae25ddf34c8541b3b773541611113bfbb545a5134",
+      "data_root": "C:\\Users\\thota\\Documents\\Acad Projects\\SP\\To-Err-Like-Human\\data\\seed_audit\\artphoto",
+      "classes": [
+        "amusement",
+        "anger",
+        "awe",
+        "contentment",
+        "disgust",
+        "excitement",
+        "fear",
+        "sadness"
+      ],
+      "splits": {
+        "train": {
+          "rows_verified": 468,
+          "class_counts": [
+            60,
+            46,
+            60,
+            42,
+            42,
+            58,
+            61,
+            99
+          ],
+          "csv_sha256": "1515ab25917c07b484f2be53b642257efe1f710fa0520986120afbeeda097fa9",
+          "cache_key": "e5bdd007676a56586ddf473e945dfd272361cb72c879e653416cac8d325088d8",
+          "cache_path": "C:\\Users\\thota\\Documents\\Acad Projects\\SP\\To-Err-Like-Human\\data\\seed_audit\\artphoto\\train_seed_evidence_e5bdd007676a5658.npy",
+          "cache_npy_sha256": "2aa16384463a7e01ce76996244f6484e7e7f301db6aa81cf57916957c5dde289",
+          "cache_npy_bytes": 51757184,
+          "ordered_source_image_records_sha256": "64d86e9ded880e2590a0050d8dff26cd081265f702801494f0942190e9dbb7da",
+          "ordered_chw_uint8_rows_sha256": "d49da574b686dcb991c0dc11c37a5df8b991197f15a0e102c8680b46c2b4a907",
+          "exact_source_vs_cache_matches": 468,
+          "declared_resized_pixel_hashes_verified": 468,
+          "declared_prepared_encoded_hashes_verified": 0,
+          "shape": [
+            468,
+            3,
+            192,
+            192
+          ],
+          "dtype": "uint8"
+        },
+        "val": {
+          "rows_verified": 155,
+          "class_counts": [
+            20,
+            15,
+            20,
+            14,
+            14,
+            19,
+            20,
+            33
+          ],
+          "csv_sha256": "96fc7baf1aa5db50d1c15b1707c00564458e118ffe0d5e40dd7b02608be6a16e",
+          "cache_key": "a1eba2698b732d14e1dcc5948c7fbd9ea530a6dec3df0e7734ecd300065ca9d7",
+          "cache_path": "C:\\Users\\thota\\Documents\\Acad Projects\\SP\\To-Err-Like-Human\\data\\seed_audit\\artphoto\\val_seed_evidence_a1eba2698b732d14.npy",
+          "cache_npy_sha256": "167fb266dccd7e921b5bbfd7568c91594525a5e0c4944ff1ab307b5944993d0e",
+          "cache_npy_bytes": 17141888,
+          "ordered_source_image_records_sha256": "c7e662c80c022b2dbe9d1133f4e4a4c3528e308f2b9fe5bcff83f06e311595ae",
+          "ordered_chw_uint8_rows_sha256": "cd50460a77326189b5bf107c33392ec0ebc4c7342744351c18e133db0c988e36",
+          "exact_source_vs_cache_matches": 155,
+          "declared_resized_pixel_hashes_verified": 155,
+          "declared_prepared_encoded_hashes_verified": 0,
+          "shape": [
+            155,
+            3,
+            192,
+            192
+          ],
+          "dtype": "uint8"
+        },
+        "test": {
+          "rows_verified": 160,
+          "class_counts": [
+            21,
+            16,
+            20,
+            14,
+            14,
+            20,
+            21,
+            34
+          ],
+          "csv_sha256": "fc7cd431bcdd105f426e5b4988a865cc2b587ec65796e42fc1e1d0a6078534c7",
+          "cache_key": "259b5c57bb6eb491bdb01b5c0087d761dd1cb11b412aaaa0b87814c331fc7f69",
+          "cache_path": "C:\\Users\\thota\\Documents\\Acad Projects\\SP\\To-Err-Like-Human\\data\\seed_audit\\artphoto\\test_seed_evidence_259b5c57bb6eb491.npy",
+          "cache_npy_sha256": "346cb46c51bf593c6c9e8a77e7b2598db4c178991ee3d559d528678278f941b5",
+          "cache_npy_bytes": 17694848,
+          "ordered_source_image_records_sha256": "0a149f2e0962f5f9f9183fc57d2aa3f71614181d16e8f1f9559f904dfe40aac0",
+          "ordered_chw_uint8_rows_sha256": "83201060155df80ac9be2d12085de8df51c9a5ed0581069a47a389a00f2aeeac",
+          "exact_source_vs_cache_matches": 160,
+          "declared_resized_pixel_hashes_verified": 160,
+          "declared_prepared_encoded_hashes_verified": 0,
+          "shape": [
+            160,
+            3,
+            192,
+            192
+          ],
+          "dtype": "uint8"
+        }
+      },
+      "seconds": 5.304403999999522,
+      "status": "all checked rows match exactly"
+    }
+  },
+  "total_rows_verified": 783
+}

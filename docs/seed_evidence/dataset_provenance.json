@@ -1,0 +1,544 @@
+{
+  "artphoto": {
+    "manifest_path": "C:\\Users\\thota\\Documents\\Acad Projects\\SP\\To-Err-Like-Human\\data\\seed_audit\\artphoto\\manifest.json",
+    "manifest_sha256": "ac96cc8acfa4f4578ec945d2c4833a34592adbc62b78a4f100ec8447bec9e2f1",
+    "protocol_data_manifest_sha256": "ac96cc8acfa4f4578ec945d2c4833a34592adbc62b78a4f100ec8447bec9e2f1",
+    "manifest_hash_verified": true,
+    "manifest_verbatim": {
+      "dataset": "artphoto",
+      "mirror": "wudq/Small-Scale_VSA_Datasets",
+      "revision": "476a96fdfc8330626bf60ce686008bed5605e5c0",
+      "archive": "testImages_artphoto.zip",
+      "archive_sha256": "70e261192a414ad50a02d359ec8712a3b0c5336d149aa671364ea0a74f0dae3c",
+      "archive_size": 20794350,
+      "source_url": "https://huggingface.co/datasets/wudq/Small-Scale_VSA_Datasets/resolve/476a96fdfc8330626bf60ce686008bed5605e5c0/testImages_artphoto.zip",
+      "official_source": "https://imageemotion.org/",
+      "license_note": "Mirror supplies no dataset license card; original photographs may be copyright. Academic research use only; do not redistribute raw photos. ArtPhoto original site explicitly limits scientific use.",
+      "split_seed": 20261117,
+      "split_rule": "60/20/20 stratified by class after exact deduplication; optional per-class caps; fixed custom split, not official paper split",
+      "pixel_hash_rule": "sha256(str(EXIF-transposed RGB size).encode()+RGBbytes) before resize",
+      "image_transform": "PIL bilinear resize192x192; PNG lossless storage",
+      "raw_counts": {
+        "amusement": 101,
+        "anger": 77,
+        "awe": 102,
+        "contentment": 70,
+        "disgust": 70,
+        "excitement": 105,
+        "fear": 115,
+        "sadness": 166
+      },
+      "retained_counts": {
+        "amusement": 101,
+        "anger": 77,
+        "awe": 100,
+        "contentment": 70,
+        "disgust": 70,
+        "excitement": 97,
+        "fear": 102,
+        "sadness": 166
+      },
+      "rejected_counts": {
+        "within_dataset_exact_duplicate": 23
+      },
+      "identical_resized_input_diagnostic": 23,
+      "excluded_sources": [
+        {
+          "path": "data\\emoset_graph\\train.csv",
+          "sha256": "ea7d5bf0fd111abc8334867036df52fc528ce8b295a7d4e8ce420c440c354921",
+          "n": 4800
+        },
+        {
+          "path": "data\\emoset_graph\\val.csv",
+          "sha256": "850416f5a83c43de8e2098fbf5f287845690c138d0bc972578a585ce0835ea3a",
+          "n": 800
+        },
+        {
+          "path": "data\\emoset_graph\\test.csv",
+          "sha256": "cca4960a2da10c673632a974f0cc6de8b8f76fda9a86a9129bb06235eddc6085",
+          "n": 1600
+        },
+        {
+          "path": "data\\kaggle_full_8epoch\\data\\emoset_full\\train.csv",
+          "sha256": "ccf254465e6f0613da0bfe8fccc737d81ad27090d9fba184d980f756a4ee09ba",
+          "n": 94475
+        },
+        {
+          "path": "data\\kaggle_full_8epoch\\data\\emoset_full\\val.csv",
+          "sha256": "1badf6f0b2962ecf090524358e472d962148a8fef91ca00f5443cdda4262b845",
+          "n": 5904
+        },
+        {
+          "path": "data\\kaggle_full_8epoch\\data\\emoset_full\\test.csv",
+          "sha256": "d6c5a5b2c802d22943679df21eed57ececbad108e589d754597d8fa2791f3a9e",
+          "n": 17715
+        },
+        {
+          "path": "data\\seed_audit\\fi\\train.csv",
+          "sha256": "353d9847f7f5b98ad7aa88a3ca188bc11484d46a741dad61f20efbdc2d9bfa8b",
+          "n": 4777
+        },
+        {
+          "path": "data\\seed_audit\\fi\\val.csv",
+          "sha256": "7a819176c572776eb0559c4850ef31cefdea18a4143b1cc1d9443a41f9e5b629",
+          "n": 800
+        },
+        {
+          "path": "data\\seed_audit\\fi\\test.csv",
+          "sha256": "5f0346a21c987dcc95f5352c09ca63f0f394bae9f2db1904bb56f47536a3b519",
+          "n": 1593
+        },
+        {
+          "path": "data\\seed_audit\\fi\\full.csv",
+          "sha256": "355b965c9c505abab53fdbbb7cd77e0bcaa10998d81aa96eb2cda91f4e77523f",
+          "n": 21809
+        }
+      ],
+      "exclusion_scope": "Only encoded hashes provided by full EmoSet manifests and original pixel hashes provided by pilot manifests are checked. Re-encoded/near duplicates and other unprovided source images remain possible.",
+      "splits": {
+        "train": {
+          "n": 468,
+          "per_class": {
+            "amusement": 60,
+            "anger": 46,
+            "awe": 60,
+            "contentment": 42,
+            "disgust": 42,
+            "excitement": 58,
+            "fear": 61,
+            "sadness": 99
+          },
+          "csv_sha256": "1515ab25917c07b484f2be53b642257efe1f710fa0520986120afbeeda097fa9"
+        },
+        "val": {
+          "n": 155,
+          "per_class": {
+            "amusement": 20,
+            "anger": 15,
+            "awe": 20,
+            "contentment": 14,
+            "disgust": 14,
+            "excitement": 19,
+            "fear": 20,
+            "sadness": 33
+          },
+          "csv_sha256": "96fc7baf1aa5db50d1c15b1707c00564458e118ffe0d5e40dd7b02608be6a16e"
+        },
+        "test": {
+          "n": 160,
+          "per_class": {
+            "amusement": 21,
+            "anger": 16,
+            "awe": 20,
+            "contentment": 14,
+            "disgust": 14,
+            "excitement": 20,
+            "fear": 21,
+            "sadness": 34
+          },
+          "csv_sha256": "fc7cd431bcdd105f426e5b4988a865cc2b587ec65796e42fc1e1d0a6078534c7"
+        }
+      }
+    },
+    "summary": {
+      "raw_rows": 806,
+      "raw_scope": "raw archive image rows",
+      "usable_before_caps": 783,
+      "mirror": "wudq/Small-Scale_VSA_Datasets",
+      "pinned_revision": "476a96fdfc8330626bf60ce686008bed5605e5c0",
+      "source_url": "https://huggingface.co/datasets/wudq/Small-Scale_VSA_Datasets/resolve/476a96fdfc8330626bf60ce686008bed5605e5c0/testImages_artphoto.zip",
+      "archive": "testImages_artphoto.zip",
+      "archive_sha256": "70e261192a414ad50a02d359ec8712a3b0c5336d149aa671364ea0a74f0dae3c",
+      "shards": [],
+      "prepared_image_transform": "PIL bilinear resize192x192; PNG lossless storage",
+      "preparation_description_source": "preparation manifest",
+      "classifier_input_pipeline": "PIL EXIF transpose RGB; Resize192x192; random crop160/flip0.5 train; center160 val/test",
+      "split_rule": "60/20/20 stratified by class after exact deduplication; optional per-class caps; fixed custom split, not official paper split",
+      "exclusion_limits": "Only encoded hashes provided by full EmoSet manifests and original pixel hashes provided by pilot manifests are checked. Re-encoded/near duplicates and other unprovided source images remain possible.",
+      "actual_split_counts": {
+        "train": 468,
+        "val": 155,
+        "test": 160
+      },
+      "actual_class_counts": {
+        "train": [
+          60,
+          46,
+          60,
+          42,
+          42,
+          58,
+          61,
+          99
+        ],
+        "val": [
+          20,
+          15,
+          20,
+          14,
+          14,
+          19,
+          20,
+          33
+        ],
+        "test": [
+          21,
+          16,
+          20,
+          14,
+          14,
+          20,
+          21,
+          34
+        ]
+      }
+    }
+  },
+  "emoset": {
+    "manifest_path": "C:\\Users\\thota\\Documents\\Acad Projects\\SP\\To-Err-Like-Human\\data\\emoset_graph\\manifest.json",
+    "manifest_sha256": "af89fd8f7b3206c6eabad881c31e0603202602333d72d4d3b42778986a8533c4",
+    "protocol_data_manifest_sha256": "af89fd8f7b3206c6eabad881c31e0603202602333d72d4d3b42778986a8533c4",
+    "manifest_hash_verified": true,
+    "manifest_verbatim": {
+      "train": {
+        "available_rows": 10498,
+        "selected": 4800,
+        "per_class": {
+          "awe": 600,
+          "disgust": 600,
+          "excitement": 600,
+          "anger": 600,
+          "contentment": 600,
+          "fear": 600,
+          "sadness": 600,
+          "amusement": 600
+        },
+        "excluded": {}
+      },
+      "val": {
+        "available_rows": 2953,
+        "selected": 800,
+        "per_class": {
+          "contentment": 100,
+          "disgust": 100,
+          "sadness": 100,
+          "excitement": 100,
+          "awe": 100,
+          "fear": 100,
+          "amusement": 100,
+          "anger": 100
+        },
+        "excluded": {}
+      },
+      "test": {
+        "available_rows": 4429,
+        "selected": 1600,
+        "per_class": {
+          "sadness": 200,
+          "excitement": 200,
+          "disgust": 200,
+          "contentment": 200,
+          "amusement": 200,
+          "awe": 200,
+          "anger": 200,
+          "fear": 200
+        },
+        "excluded": {}
+      },
+      "source": {
+        "repository": "udeman/EmoSet-118K",
+        "revision": "cd2344cbf316bd77331ee63a79ce6999f0bf7572",
+        "files": [
+          {
+            "path": "data/train-00000-of-00018.parquet",
+            "bytes": 508611497,
+            "sha256": "090a4bcd42c1a2feba914c5662da0cf06bd2b6a3e1a57bbbb963106d7731cdb7"
+          },
+          {
+            "path": "data/train-00001-of-00018.parquet",
+            "bytes": 503546768,
+            "sha256": "090a2ad2f16ffee48ae449b4a2e477daf0e096a6ffdacd83d78a6f38aa1a8a37"
+          },
+          {
+            "path": "data/val-00000-of-00002.parquet",
+            "bytes": 281745071,
+            "sha256": "cdd16d7cc23a9c08adc46f94e465982bced2d4082f229cc5c4d279ab3eb2a95e"
+          },
+          {
+            "path": "data/test-00000-of-00004.parquet",
+            "bytes": 421773311,
+            "sha256": "fe84c3ffe78431afbdefff771db4bcdecd2fa04c82bd8b28c11a560a07b59f12"
+          }
+        ]
+      },
+      "sampling_seed": 2026
+    },
+    "summary": {
+      "raw_rows": 17880,
+      "raw_scope": "rows available in selected mirror shards, not the complete original dataset",
+      "usable_before_caps": null,
+      "mirror": "udeman/EmoSet-118K",
+      "pinned_revision": "cd2344cbf316bd77331ee63a79ce6999f0bf7572",
+      "source_url": "https://huggingface.co/datasets/udeman/EmoSet-118K/tree/cd2344cbf316bd77331ee63a79ce6999f0bf7572",
+      "archive": null,
+      "archive_sha256": null,
+      "shards": [
+        {
+          "path": "data/train-00000-of-00018.parquet",
+          "bytes": 508611497,
+          "sha256": "090a4bcd42c1a2feba914c5662da0cf06bd2b6a3e1a57bbbb963106d7731cdb7"
+        },
+        {
+          "path": "data/train-00001-of-00018.parquet",
+          "bytes": 503546768,
+          "sha256": "090a2ad2f16ffee48ae449b4a2e477daf0e096a6ffdacd83d78a6f38aa1a8a37"
+        },
+        {
+          "path": "data/val-00000-of-00002.parquet",
+          "bytes": 281745071,
+          "sha256": "cdd16d7cc23a9c08adc46f94e465982bced2d4082f229cc5c4d279ab3eb2a95e"
+        },
+        {
+          "path": "data/test-00000-of-00004.parquet",
+          "bytes": 421773311,
+          "sha256": "fe84c3ffe78431afbdefff771db4bcdecd2fa04c82bd8b28c11a560a07b59f12"
+        }
+      ],
+      "prepared_image_transform": "EXIF-transposed RGB; thumbnail at most320x320 LANCZOS; JPEG quality95",
+      "preparation_description_source": "project scripts/prepare_graph_data.py; not recorded in the older manifest schema",
+      "classifier_input_pipeline": "PIL EXIF transpose RGB; Resize192x192; random crop160/flip0.5 train; center160 val/test",
+      "split_rule": "Preserved mirror splits with per-class shard-subset caps; not the complete benchmark",
+      "exclusion_limits": "Exact decoded-pixel duplicate checking during capped subset preparation; near/re-encoded duplicates and uninspected images remain possible",
+      "actual_split_counts": {
+        "train": 4800,
+        "val": 800,
+        "test": 1600
+      },
+      "actual_class_counts": {
+        "train": [
+          600,
+          600,
+          600,
+          600,
+          600,
+          600,
+          600,
+          600
+        ],
+        "val": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "test": [
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200
+        ]
+      }
+    }
+  },
+  "fi": {
+    "manifest_path": "C:\\Users\\thota\\Documents\\Acad Projects\\SP\\To-Err-Like-Human\\data\\seed_audit\\fi\\manifest.json",
+    "manifest_sha256": "d8db599a37d2e924c0b734dd4a731e719de130447498a40f1031f1d67ff2036a",
+    "protocol_data_manifest_sha256": "d8db599a37d2e924c0b734dd4a731e719de130447498a40f1031f1d67ff2036a",
+    "manifest_hash_verified": true,
+    "manifest_verbatim": {
+      "dataset": "fi",
+      "mirror": "wudq/Small-Scale_VSA_Datasets",
+      "revision": "476a96fdfc8330626bf60ce686008bed5605e5c0",
+      "archive": "FI_dataset.tar",
+      "archive_sha256": "4c296245bdb31e6727b6aea806bada120a82b5651f966881956f2a62c45958da",
+      "archive_size": 2629120512,
+      "source_url": "https://huggingface.co/datasets/wudq/Small-Scale_VSA_Datasets/resolve/476a96fdfc8330626bf60ce686008bed5605e5c0/FI_dataset.tar",
+      "official_source": "https://ojs.aaai.org/index.php/AAAI/article/view/9987",
+      "license_note": "Mirror supplies no dataset license card; original photographs may be copyright. Academic research use only; do not redistribute raw photos. ArtPhoto original site explicitly limits scientific use.",
+      "split_seed": 20261117,
+      "split_rule": "60/20/20 stratified by class after exact deduplication; optional per-class caps; fixed custom split, not official paper split",
+      "pixel_hash_rule": "sha256(str(EXIF-transposed RGB size).encode()+RGBbytes) before resize",
+      "image_transform": "PIL bilinear resize192x192; PNG lossless storage",
+      "raw_counts": {
+        "amusement": 4923,
+        "anger": 1255,
+        "awe": 3133,
+        "contentment": 5356,
+        "disgust": 1657,
+        "excitement": 2914,
+        "fear": 1046,
+        "sadness": 2901
+      },
+      "retained_counts": {
+        "amusement": 4723,
+        "anger": 1176,
+        "awe": 2881,
+        "contentment": 5129,
+        "disgust": 1580,
+        "excitement": 2724,
+        "fear": 962,
+        "sadness": 2633
+      },
+      "rejected_counts": {
+        "ambiguous_crosslabel_pixel_group": 1356,
+        "within_dataset_exact_duplicate": 21
+      },
+      "identical_resized_input_diagnostic": 1376,
+      "excluded_sources": [
+        {
+          "path": "data\\emoset_graph\\train.csv",
+          "sha256": "ea7d5bf0fd111abc8334867036df52fc528ce8b295a7d4e8ce420c440c354921",
+          "n": 4800
+        },
+        {
+          "path": "data\\emoset_graph\\val.csv",
+          "sha256": "850416f5a83c43de8e2098fbf5f287845690c138d0bc972578a585ce0835ea3a",
+          "n": 800
+        },
+        {
+          "path": "data\\emoset_graph\\test.csv",
+          "sha256": "cca4960a2da10c673632a974f0cc6de8b8f76fda9a86a9129bb06235eddc6085",
+          "n": 1600
+        },
+        {
+          "path": "data\\kaggle_full_8epoch\\data\\emoset_full\\train.csv",
+          "sha256": "ccf254465e6f0613da0bfe8fccc737d81ad27090d9fba184d980f756a4ee09ba",
+          "n": 94475
+        },
+        {
+          "path": "data\\kaggle_full_8epoch\\data\\emoset_full\\val.csv",
+          "sha256": "1badf6f0b2962ecf090524358e472d962148a8fef91ca00f5443cdda4262b845",
+          "n": 5904
+        },
+        {
+          "path": "data\\kaggle_full_8epoch\\data\\emoset_full\\test.csv",
+          "sha256": "d6c5a5b2c802d22943679df21eed57ececbad108e589d754597d8fa2791f3a9e",
+          "n": 17715
+        }
+      ],
+      "exclusion_scope": "Only encoded hashes provided by full EmoSet manifests and original pixel hashes provided by pilot manifests are checked. Re-encoded/near duplicates and other unprovided source images remain possible.",
+      "splits": {
+        "train": {
+          "n": 4777,
+          "per_class": {
+            "amusement": 600,
+            "anger": 600,
+            "awe": 600,
+            "contentment": 600,
+            "disgust": 600,
+            "excitement": 600,
+            "fear": 577,
+            "sadness": 600
+          },
+          "csv_sha256": "54109dc4759c2419b3fd2adfe5a62fdb69dc16dc855198cde7523be98aaef118"
+        },
+        "val": {
+          "n": 800,
+          "per_class": {
+            "amusement": 100,
+            "anger": 100,
+            "awe": 100,
+            "contentment": 100,
+            "disgust": 100,
+            "excitement": 100,
+            "fear": 100,
+            "sadness": 100
+          },
+          "csv_sha256": "a9a6d375f7ab933d2d8d5bd36d44879ab6f911f496de8e094f482eb761a66e26"
+        },
+        "test": {
+          "n": 1593,
+          "per_class": {
+            "amusement": 200,
+            "anger": 200,
+            "awe": 200,
+            "contentment": 200,
+            "disgust": 200,
+            "excitement": 200,
+            "fear": 193,
+            "sadness": 200
+          },
+          "csv_sha256": "365c7d1b5c4d42315bdb6b8b8c1b99a0ba7a41f8fe1ddbc4de653c6e16a309ab"
+        }
+      },
+      "ambiguous_crosslabel_pixel_groups": 1,
+      "ambiguity_policy": "All members of every decoded-pixel group with conflicting class labels excluded before split assignment",
+      "ambiguity_cleanup": {
+        "original_manifest_sha256": "52ea5bd08738ca8deb6540a530112a06d83a23db89b9055091135d67202b948f",
+        "original_full_csv_sha256": "355b965c9c505abab53fdbbb7cd77e0bcaa10998d81aa96eb2cda91f4e77523f",
+        "audit_sha256": "90e28066de3a59d2fcc7d6f5da79aa09a2dabf2cb1786b7d2a25ba389d1c69f2",
+        "newly_removed_unique_rows": 1,
+        "raw_ambiguous_members_excluded": 1356,
+        "backup_directory": "pre_ambiguity_cleanup",
+        "split_rule_unchanged": "60/20/20 stratified by class after deduplication, then per-class caps",
+        "caps": {
+          "train": 600,
+          "val": 100,
+          "test": 200
+        },
+        "note": "The existing first-label duplicate policy was corrected at data preparation, before any FI model outcomes were observed. Original artifacts remain preserved."
+      }
+    },
+    "summary": {
+      "raw_rows": 23185,
+      "raw_scope": "raw archive image rows",
+      "usable_before_caps": 21808,
+      "mirror": "wudq/Small-Scale_VSA_Datasets",
+      "pinned_revision": "476a96fdfc8330626bf60ce686008bed5605e5c0",
+      "source_url": "https://huggingface.co/datasets/wudq/Small-Scale_VSA_Datasets/resolve/476a96fdfc8330626bf60ce686008bed5605e5c0/FI_dataset.tar",
+      "archive": "FI_dataset.tar",
+      "archive_sha256": "4c296245bdb31e6727b6aea806bada120a82b5651f966881956f2a62c45958da",
+      "shards": [],
+      "prepared_image_transform": "PIL bilinear resize192x192; PNG lossless storage",
+      "preparation_description_source": "preparation manifest",
+      "classifier_input_pipeline": "PIL EXIF transpose RGB; Resize192x192; random crop160/flip0.5 train; center160 val/test",
+      "split_rule": "60/20/20 stratified by class after exact deduplication; optional per-class caps; fixed custom split, not official paper split",
+      "exclusion_limits": "Only encoded hashes provided by full EmoSet manifests and original pixel hashes provided by pilot manifests are checked. Re-encoded/near duplicates and other unprovided source images remain possible.",
+      "actual_split_counts": {
+        "train": 4777,
+        "val": 800,
+        "test": 1593
+      },
+      "actual_class_counts": {
+        "train": [
+          600,
+          600,
+          600,
+          600,
+          600,
+          600,
+          577,
+          600
+        ],
+        "val": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "test": [
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          193,
+          200
+        ]
+      }
+    }
+  }
+}
