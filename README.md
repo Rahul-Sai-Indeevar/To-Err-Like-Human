@@ -1,135 +1,108 @@
-# ecc-ver
+# To Err Like Human · Haar Wavelet Study
 
-Independent re-implementation of **"To Err Like Human: Affective Bias-Inspired Measures for Visual Emotion Recognition Evaluation"** (NeurIPS 2024) — ECC / EMC metrics, the ListMLE-based training loss, and an EMC-adaptive threshold for FixMatch — plus a place to run your own improvements.
+This project studies how image frequencies affect visual emotion recognition. The baseline predicts one of eight emotions that a photograph can evoke. Exact-label accuracy counts correct predictions. **Emotion Confusion Confidence (ECC)** also gives partial credit when the prediction is emotionally close to the reference label. **Emotional Misclassification Confidence (EMC)** measures closeness among the mistakes.
 
-Official code (partial, used only for cross-checking): https://github.com/ZhaoChenxi-nku/ECC
+The signal-processing experiments start with a spatial FFT low-pass sweep, then test how a two-level Haar filter bank separates coarse structure from signed detail. The final comparison feeds those components to two independent branches and compares them against an equal-capacity model whose two branches both receive RGB.
 
-## Layout
+## Repository structure
 
+| Path | What lives here |
+|---|---|
+| [`src/ecc/`](src/ecc/) | Reusable Python package. [Emotion costs and ordering](src/ecc/emotion.py), [metrics](src/ecc/metrics.py), and [ranking loss](src/ecc/losses.py) define how the project trains and scores predictions. [Supervised](src/ecc/supervised.py), [semi-supervised](src/ecc/ssl.py), and [evaluation](src/ecc/evaluate.py) modules implement the baseline entry points. |
+| [`src/ecc/spatial_frequency.py`](src/ecc/spatial_frequency.py) | Two-dimensional FFT filtering on the pixel grid. The low-pass path multiplies each channel’s spectrum by a radial Butterworth response and transforms it back to pixels. |
+| [`src/ecc/wavelets.py`](src/ecc/wavelets.py) | Orthonormal Haar analysis and synthesis, multilevel decomposition, coarse and signed-detail reconstruction, and the matched recognition models. |
+| [`configs/`](configs/) | YAML configurations for data paths, optimization, model settings, and the primary wavelet comparison. Use [`wavelet_study.yaml`](configs/wavelet_study.yaml) to see the dataset split paths, methods, seeds, and training budget. |
+| [`scripts/`](scripts/) | Experiment entry points. [Haar diagnostics](scripts/run_wavelet_sp_checks.py) verify tone response, alias cancellation, and grid averaging. [Wavelet training](scripts/run_wavelet_study.py) fits the paired classifiers, and the [spatial-frequency runner](scripts/run_fft_lowpass.py) evaluates archived checkpoints on filtered inputs. |
+| [`tests/`](tests/) | Checks for metric and loss behavior, transform identities, and training and checkpoint workflows. |
+| [`docs/wavelet_study/`](docs/wavelet_study/) | The [training protocol](docs/wavelet_study/STUDY_PLAN.md), [signal-processing derivations](docs/wavelet_study/SIGNAL_PROCESSING.md), [filter measurements](docs/wavelet_study/wavelet_sp_experiments.md), and [recognition findings](results/wavelet/summary.csv). |
+| [`results/`](results/) | Saved FI, spatial FFT, and wavelet measurements with plots, seed tables, and input fingerprints. |
+| [`pyproject.toml`](pyproject.toml) | Package dependencies, command-line entry points, and test discovery settings. |
+| `data/`, `runs/`, `outputs/`, `work/` | Local datasets, checkpoints, generated outputs, and temporary files. These directories are Git-ignored. |
+
+## Results and plots
+
+### 1. FI baseline reproduction
+
+| Historical FI run | Accuracy | ECC | EMC |
+|---|---:|---:|---:|
+| Supervised cross-entropy | 62.47% | 73.42% | 48.39% |
+| Cross-entropy + ListMLE (α = 0.2) | 62.09% | 74.39% | 55.92% |
+| Fixed threshold, 800 labels | 38.94% | 56.14% | 46.01% |
+| EMC-adaptive threshold, 800 labels | 34.11% | 53.28% | 48.43% |
+
+These are descriptive single runs. The ranking loss produced closer mistakes on average. In the 800-label run, the fixed threshold scored higher on accuracy and ECC.
+
+### 2. Spatial FFT low-pass filtering
+
+The same three frozen cross-entropy models evaluated **17,715 full EmoSet test photos**. Mean ECC was about **80.2%** on clean inputs, **45.74%** at a cutoff of **0.05 cycles/pixel**, and **71.87%** at **0.20 cycles/pixel**. Lower cutoffs suppress more fine detail. [Full sweep and conditions](results/README.md) · [Results table](results/fft/summary.csv)
+
+![Spatial frequency response on frozen EmoSet models](results/fft/lowpass_ecc.png)
+
+### 3. Haar filter-bank diagnostics
+
+The Haar transform splits squared signal energy among its bands. Across 99 controlled tone cases the measured energy fractions matched theory to floating-point precision. The two reconstructed paths contributed opposite signs at the folded FFT bin and canceled when added. Averaging the 16 possible 4 × 4 grid alignments reduced measured shift error to **0%** for the tested one-pixel circular shift across **534** FI, EmoSet, and ArtPhoto crops. These measurements describe filtering, and use the [saved diagnostics](results/wavelet/wavelet_sp_results.json).
+
+![Measured Haar frequency response, alias cancellation, grid averaging, and noise retention](results/wavelet/wavelet_sp_checks.png)
+
+### 4. Matched-capacity Haar recognition
+
+The primary comparison pairs eight training seeds per dataset and gives both models the same parameter count. The table uses mean held-out ECC.
+
+| Dataset | RGB + RGB | Coarse + detail | Haar − RGB | Paired 95% interval |
+|---|---:|---:|---:|---:|
+| FI | 66.33% | 63.31% | −3.02 points | [−4.12, −1.92] |
+| EmoSet subset | 73.10% | 68.95% | −4.15 points | [−4.85, −3.45] |
+| ArtPhoto | 51.62% | 50.66% | −0.97 points | [−2.71, +0.78] |
+
+The fixed Haar split scored lower on FI and the EmoSet subset. ArtPhoto’s paired interval includes zero. The recognition experiment used the original fixed grid. The 16-grid average was evaluated in the filter diagnostics above. [Per-seed results](results/wavelet/seed_results.csv) · [Paired effects](results/wavelet/summary.csv)
+
+![Paired ECC differences for the Haar fusion and matched RGB models](results/wavelet/primary_effects.png)
+
+## Quick start
+
+Create a Python environment, activate it, then run these commands from this folder. Install a matching CUDA-enabled PyTorch and torchvision build in that environment for GPU experiments.
+
+```console
+python -m pip install -e ".[dev]"
+python -m pytest -q
+python scripts/run_wavelet_sp_checks.py --synthetic-only --output runs/haar_demo
 ```
-src/ecc/
-  emotion.py     Mikel wheel, cost matrix W (Eq. 1), ListMLE rank targets
-  metrics.py     ACC, ACC2, ECC (Eq. 3), EMC (Eq. 4)
-  losses.py      L_c = CE + alpha * ListMLE
-  decode.py      [extension] minimum-expected-cost decoding at test time
-  data.py        CSV dataset, transforms, labeled-subset sampling
-  splits.py      build train/val/test CSVs from class folders      (ecc-splits)
-  supervised.py  supervised training, Tables 2-4                   (ecc-train)
-  ssl.py         FixMatch + EMC-adaptive threshold, Table 1 (4.2.1) (ecc-ssl)
-  evaluate.py    evaluate a checkpoint                              (ecc-eval)
-configs/         fi_resnet50.yaml, emoset_resnet50.yaml, ssl_fi.yaml
-scripts/         run_table4.sh, run_ssl_sweep.sh
-tests/           metrics, losses, threshold, CPU end-to-end smoke tests
-docs/plots/      Generated plots
+
+The last command verifies the 99 tone cases, folded FFT-bin cancellation, and the grid-averaged FIR identity on CPU with synthetic inputs.
+
+## Reproduce the presentation experiments
+
+### 1. Reproduce the four historical FI comparisons
+
+With labeled images organized by class, create splits with `ecc-splits --root data/FI --out data/FI_splits` if you have no existing manifests. Preserve your recorded split when reproducing the historical table. The config paths can also point to the prepared image root and manifests in another checkout.
+
+```console
+ecc-train --config configs/fi_resnet50.yaml --set loss.alpha=0.0 output_dir=runs/fi_ce
+ecc-train --config configs/fi_resnet50.yaml --set loss.alpha=0.2 output_dir=runs/fi_rank
+ecc-ssl --config configs/ssl_fi.yaml --set ssl.rule=fixed output_dir=runs/fi_fixed
+ecc-ssl --config configs/ssl_fi.yaml --set ssl.rule=ratio output_dir=runs/fi_emc
 ```
 
-## Setup
+These were historical single runs. The paper's human-preference study and S²-VER results are cited in the slides.
 
-```bash
-python -m venv .venv && source .venv/bin/activate
-pip install -e ".[dev]"
-pytest -q            # should pass without any dataset or GPU
+### 2. Reproduce the FFT low-pass curve
+
+Prepare a directory with `classes.txt`, `test.csv`, and the 192 × 192 RGB source images. Pass the three archived CE `best.pt` files. The runner follows the original 160 × 160 center crop, applies the order-2 filter per RGB channel, clips reconstructed pixel values to [0, 255], and evaluates the same checkpoints on all seven input conditions. `--limit 32 --device cpu` is a quick input check using the first 32 manifest rows.
+
+```console
+python scripts/run_fft_lowpass.py --dataset data/emoset_full --checkpoints checkpoints/ce_seed0/best.pt checkpoints/ce_seed1/best.pt checkpoints/ce_seed2/best.pt --out runs/fft_lowpass
+python scripts/plot_fft_ecc.py --input runs/fft_lowpass/results.json
 ```
 
-## Data
+The original checkpoint and test manifest hashes are in [FFT fingerprints](results/fft/input_fingerprints.json).
 
-You must download the datasets yourself (not included):
+### 3. Reproduce the Haar diagnostics and paired training
 
-* **FI** (You et al., AAAI 2016) — folders per class: Amusement, Anger, Awe, Contentment, Disgust, Excitement, Fear, Sadness.
-* **EmoSet** — https://github.com/JingyuanYY/EmoSet (check its access instructions/licence).
+Copy [the wavelet config](configs/wavelet_study.yaml) to `local/wavelet.yaml` and set its three dataset paths. Absolute paths can reuse prepared datasets in the original checkout. Each dataset directory contains its own `classes.txt`, `train.csv`, `val.csv`, and `test.csv`. A split CSV has `path,label` columns, with image paths relative to its dataset directory.
 
-```bash
-ecc-splits --root data/FI --out data/FI_splits            # 80/5/15 stratified random split
-ecc-splits --root data/EmoSet/image --out data/EmoSet_splits   # or reproduce EmoSet's official split yourself
+```console
+python scripts/run_wavelet_sp_checks.py --config local/wavelet.yaml --output runs/haar_checks
+python scripts/run_wavelet_study.py --config local/wavelet.yaml --out runs/wavelet --device cuda
 ```
 
-Class folder names are lower-cased and must be the 8 Mikel emotions. If you have official train/val/test lists (EmoSet ships some), write them as `train.csv/val.csv/test.csv` with columns `path,label` plus `classes.txt` (sorted class names) instead — `ecc-splits` is only a convenience.
-
-## Run
-
-```bash
-# Step 1 - supervised, FI, ResNet50, pure CE then ListMLE (paper Table 4)
-python -m ecc.supervised --config configs/fi_resnet50.yaml --set loss.alpha=0.0 output_dir=runs/fi_r50_a0
-python -m ecc.supervised --config configs/fi_resnet50.yaml --set loss.alpha=0.2 output_dir=runs/fi_r50_a0.2
-python -m ecc.supervised --config configs/fi_resnet50.yaml --set loss.alpha=1.0 output_dir=runs/fi_r50_a1.0
-
-# Step 2 - supervised, EmoSet, ResNet50
-python -m ecc.supervised --config configs/emoset_resnet50.yaml --set loss.alpha=0.0 output_dir=runs/emoset_r50_a0
-python -m ecc.supervised --config configs/emoset_resnet50.yaml --set loss.alpha=0.2 output_dir=runs/emoset_r50_a0.2
-python -m ecc.supervised --config configs/emoset_resnet50.yaml --set loss.alpha=1.0 output_dir=runs/emoset_r50_a1.0
-
-# Step 3 - semi-supervised (paper 4.2.1): FixMatch baseline vs EMC threshold
-python -m ecc.ssl --config configs/ssl_fi.yaml --set ssl.rule=fixed
-python -m ecc.ssl --config configs/ssl_fi.yaml --set ssl.rule=ratio
-bash scripts/run_ssl_sweep.sh
-
-# Evaluate any checkpoint
-python -m ecc.evaluate --config configs/fi_resnet50.yaml --ckpt runs/fi_r50_a0.2/best.pt
-```
-
-Each run writes `config.json`, `history.jsonl`, `best.pt`, `results.json` (test metrics with argmax and with the MEC-decoding extension) under `output_dir`. Checkpoint selection uses the **val** split; the test split is touched once at the end.
-
-## Results
-
-### Single supervised runs (paper Tables 2-4)
-
-| Dataset | Loss | Alpha | ACC | ECC | EMC | ACC2 | Best epoch | Paper ACC / ECC / EMC |
-|---------|------|-------|-----|-----|-----|------|----------------------|
-| FI | CE | 0.0 | 62.47 | 73.42 | 48.39 | 84.70 | 67.3 / 77.0 / 51.5 |
-| FI | ListMLE | 0.2 | 62.09 | 74.39 | 55.92 | 87.69 | 67.3 / 77.5 / 54.9 |
-| FI | ListMLE | 1.0 | 60.05 | 72.90 | 54.95 | 87.52 | 65.7 / 76.2 / 57.3 |
-| EmoSet | CE | 0.0 | 75.01 | 83.61 | 59.97 | 87.69 | 76.3 / 84.0 / 58.5 |
-| EmoSet | ListMLE | 0.2 | 75.01 | 83.62 | 59.97 | 87.69 | 75.5 / 84.1 / 60.1 |
-| EmoSet | ListMLE | 1.0 | 73.87 | 82.92 | 60.69 | 93.67 | 74.5 / 83.3 / 61.3 |
-
-### Semi-Supervised (paper 4.2.1)
-
-| Dataset | Labels | Rule | ACC | ECC | EMC | ACC2 | Best Epoch |
-|---------|--------|------|-----|-----|-----|------|------------|
-| EmoSet | 800 | ratio (EMC-adaptive) | 45.77 | 61.63 | 48.35 | 77.66 | 49 |
-| EmoSet | 800 | fixed (FixMatch) | 27.66 | 47.99 | 46.09 | 65.02 | 47 |
-| EmoSet | 8000 | ratio | 44.87 | 60.70 | 47.26 | 75.89 | 44 |
-| EmoSet | 8000 | fixed | 39.54 | 56.87 | 47.26 | 75.89 | 49 |
-| FI | 80 | ratio | 29.08 | 48.94 | 45.24 | 69.00 | 29 |
-| FI | 800 | ratio | 34.11 | 53.28 | 48.43 | 71.01 | 42 |
-| FI | 800 | fixed | 38.94 | 56.14 | 46.01 | 72.68 | 42 |
-| FI | 8000 | ratio | 44.87 | 60.70 | 47.26 | 75.89 | 44 |
-| FI | 8000 | fixed | 39.54 | 56.87 | 47.26 | 75.90 | 42 |
-
-**Note:** FI SSL results use the same `n_labeled` classes but different label counts; each run is a separate random subset draw.
-
-### Training curves
-
-![ACC / ECC / EMC vs alpha](docs/plots/supervised_metrics.png)
-
-![Paper targets vs our results - ACC](docs/plots/paper_vs_ours_acc.png)
-
-![SSL results comparison](docs/plots/ssl_results.png)
-
-**Findings:** ECC (not ACC) is the most reliable signal for comparing combined-loss vs CE training on EmoSet. The combined loss raises EMC markedly while ACC stays roughly flat, confirming that EMC captures the reduced misclassification severity that ACC misses.
-
-## Things I could not verify (check these first against the paper PDF / official code)
-
-| Item | Where | What I assumed |
-|---|---|---|
-| Circular order of Mikel's wheel | `emotion.py: WHEEL_ORDER` | Derived so that the paper's Appendix-B ranking for *excitement* is reproduced (tested). Other rows are unchecked. |
-| EMC weight | `metrics.py: emc` | 1/(W-1) on misclassified cells, divided by (N - Nc) (verified against paper PDF Eq. 4). |
-| Threshold rule, Eq. 5 | `ssl.py: adaptive_threshold` | `tau' = tau * eps / EMC`, eps=0.5 FI / 0.4 EmoSet, clipped [0.7, 0.98] (verified against paper PDF Sec. 4.2.1). |
-| CE -> combined loss switch | `supervised.py` | Section 4.2.2: train with pure CE then switch to Lc. New `loss.switch_epoch` config (0 = combined loss from start, matching Tables 2-4). |
-| ListMLE aggregation | `losses.py` | Sum over list positions (standard ListMLE). `loss.listmle_reduction: mean` is available. |
-| Weight decay, total epochs | configs | Not given in the paper (only: SGD, lr 1e-3 -> 2e-4 after epoch 60, bs 64, warm-up 1 epoch). |
-| FI split | `splits.py` | FI has no official split; 80/5/15 random. |
-| EMC for thresholding | `ssl.py` | Confusion matrix accumulated over the epoch's unlabeled batches (weak pseudo-label vs strong prediction), not a separate full pass. |
-
-**Not implemented:** S²-VER integration (Table 1 lower block), the user study, and the t-SNE figure.
-For S²-VER use https://github.com/exped1230/S2-VER and port `adaptive_threshold` and `CombinedLoss` into it.
-
-## Ideas to improve on the paper
-
-1. `decode.mec_decode` — minimum-expected-cost prediction (already wired into `results.json` as `test_mec_decode`).
-2. Ramp `loss.alpha` during training instead of a constant.
-3. Cost-aware soft labels (targets proportional to 1/W) as an alternative to ListMLE.
-4. EMA-smooth the EMC signal used for thresholding; combine with per-class FlexMatch thresholds.
-5. Sweep the polarity constant `loss.polarity_C` and the wheel definition.
-
-Always report mean ± std over >= 3 seeds before claiming an improvement.
+Haar diagnostics perform no training. The real-crop run uses the fixed test rows selected per class by the recorded seed. The training entry point runs the **48 fits in the reported comparison** (two methods × eight seeds × three datasets), selecting the best clean validation ECC before evaluating test. It verifies completed checkpoint identities on retry. A partial fit restarts from its recorded initialization. `--stage train` followed by `--stage evaluate` separates fitting from held-out evaluation. [Dataset and checkpoint locations](docs/DATA.md) · [Theory and protocol](docs/wavelet_study/SIGNAL_PROCESSING.md)
