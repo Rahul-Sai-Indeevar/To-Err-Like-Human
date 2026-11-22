@@ -28,9 +28,9 @@ from .config import load_config, parse_args
 from .data import (EmotionCSV, TwoViewTransform, build_transforms,
                    class_balanced_indices)
 from .decode import mec_decode
-from .kaggle_utils import (persistent_ckpt_dir,
+from .checkpoint_storage import (persistent_ckpt_dir,
                            save_to_persistent)
-from .graph import build_loss
+from .losses import build_loss
 from .metrics import emc as emc_fn
 from .metrics import evaluate_predictions
 from .models import build_model
@@ -111,7 +111,7 @@ def run(cfg: dict) -> dict:
 
     model = build_model(cfg["model"]["name"], N, cfg["model"]["pretrained"]).to(device)
     ema = EMA(model, s["ema_decay"])
-    sup = build_loss(cfg["loss"], W, rank).to(device)
+    sup = build_loss(cfg["loss"], rank).to(device)
     opt = torch.optim.SGD(model.parameters(), lr=o["lr"], momentum=o["momentum"],
                           weight_decay=o["weight_decay"], nesterov=True)
     total = o["epochs"] * ipe

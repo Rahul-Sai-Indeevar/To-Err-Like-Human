@@ -1,7 +1,7 @@
 """CPU diagnostics for the repository Haar filter bank.
 
 Run via the repository's Python environment:
-  python scripts/run_wavelet_sp_checks.py --repo . --output outputs/wavelet_sp
+  python scripts/run_wavelet_sp_checks.py --output runs/haar_checks
 
 The image diagnostic uses existing prepared test manifests and local images.
 Only aggregate measurements are released. No classifiers are fitted/evaluated.
@@ -12,7 +12,6 @@ import argparse
 from collections import defaultdict
 import csv
 import hashlib
-import json
 from pathlib import Path
 import platform
 
@@ -22,6 +21,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image, ImageOps
 import torch
+import yaml
+
+from ecc.experiment_data import atomic_json
 from torchvision.transforms import Resize
 
 from ecc.wavelets import HaarBands, haar_analysis2d, haar_synthesis2d, wavelet_components
@@ -30,11 +32,7 @@ from ecc.wavelets import HaarBands, haar_analysis2d, haar_synthesis2d, wavelet_c
 WIDTH = 64
 BLOCK = 4
 SIGMA = 0.03
-DATASETS = {
-    "FI": "data/seed_audit/fi",
-    "EmoSet subset": "data/emoset_graph",
-    "ArtPhoto": "data/seed_audit/artphoto",
-}
+DATASET_LABELS = {"fi": "FI", "emoset": "EmoSet subset", "artphoto": "ArtPhoto"}
 BANDS = ("ll", "lh", "hl", "hh")
 OFFSETS = tuple(range(1 - BLOCK, BLOCK))
 TAPS = tuple((BLOCK - abs(k)) / BLOCK**2 for k in OFFSETS)
@@ -229,13 +227,13 @@ def edge_energy(x):
     return energy(x.diff(dim=-1)) + energy(x.diff(dim=-2))
 
 
-def run_real_images(repo, seed, per_class):
+def run_real_images(datasets, seed, per_class):
     summary = {}
     selection_rng = np.random.default_rng(seed)
     noise_rng = torch.Generator().manual_seed(seed + 1)
     resize = Resize((192, 192))
-    for name, relative in DATASETS.items():
-        root = (repo / relative).resolve()
+    for key, name in DATASET_LABELS.items():
+        root = Path(datasets[key]).resolve()
         rows, selected, counts, csv_digest = choose_test_rows(root, selection_rng, per_class)
         measurements = {method: defaultdict(list) for method in ("fixed", "phase_avg")}
         for first in range(0, len(selected), 12):
@@ -265,7 +263,7 @@ def run_real_images(repo, seed, per_class):
                 for key, value in measures.items():
                     measurements[method][key].extend(value.tolist())
         summary[name] = {
-            "split": str(Path(relative) / "test.csv").replace("\\", "/"),
+            "split": f"{key}/test.csv",
             "manifest_sha256": csv_digest,
             "manifest_size": len(rows),
             "images": len(selected),
@@ -326,6 +324,11 @@ def make_figure(result, output):
                    xlabel="Pixel column", ylabel="Signal amplitude")
     axes[1, 0].legend()
     real = result["datasets"]
+    if not real:
+        fig.delaxes(axes[1, 1])
+        fig.savefig(output / "wavelet_sp_checks.png", dpi=180)
+        plt.close(fig)
+        return
     categories = list(real)
     i = np.arange(len(categories))
     for method, shift, color, label in (
@@ -345,7 +348,8 @@ def make_figure(result, output):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--repo", type=Path, default=Path.cwd())
+    parser.add_argument("--config", type=Path, default=Path("configs/wavelet_study.yaml"))
+    parser.add_argument("--synthetic-only", action="store_true", help="Run identities without images")
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--seed", type=int, default=20261121)
     parser.add_argument("--per-class", type=int, default=24)
@@ -358,7 +362,10 @@ def main():
         alias = run_alias_check()
         cycle = run_cycle_checks(args.seed)
         check_identities(tone, alias, cycle)
-        data = run_real_images(args.repo, args.seed, args.per_class)
+        data = {}
+        if not args.synthetic_only:
+            datasets = yaml.safe_load(args.config.read_text(encoding="utf8"))["datasets"]
+            data = run_real_images(datasets, args.seed, args.per_class)
     result = {
         "protocol": {
             "seed": args.seed, "per_class_cap": args.per_class,
@@ -374,9 +381,7 @@ def main():
         "tone_sweep": tone, "alias": alias, "cycle_spinning": cycle, "datasets": data,
     }
     args.output.mkdir(parents=True, exist_ok=True)
-    (args.output / "results.json").write_text(
-        json.dumps(result, indent=2, allow_nan=False) + "\n", encoding="utf-8"
-    )
+    atomic_json(args.output / "results.json", result)
     make_figure(result, args.output)
     print(f"Saved theory and measurement evidence to {args.output.resolve()}", flush=True)
 

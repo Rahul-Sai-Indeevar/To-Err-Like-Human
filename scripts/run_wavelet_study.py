@@ -1,6 +1,6 @@
-"""Locked, paired multi-resolution experiment and completion-driven GPU pipeline.
+"""Train the paired Haar and RGB control models used on slide 19.
 
-This opt-in experiment leaves paper training defaults and earlier studies intact.
+Every model uses the locked paired-seed protocol.
 All models train before any new test predictions are generated. A killed partial
 model is retrained from its recorded initial state; completed models are verified
 and skipped. Checkpoints do not claim exact mid-epoch continuation.
@@ -8,8 +8,6 @@ and skipped. Checkpoints do not claim exact mid-epoch continuation.
 from __future__ import annotations
 
 import argparse
-import csv
-import hashlib
 import json
 import os
 from pathlib import Path
@@ -25,24 +23,18 @@ import torchvision
 from torchvision.models import resnet18, ResNet18_Weights
 import yaml
 
-import run_seed_evidence as shared
+from ecc import experiment_data as shared
+from ecc.experiment_data import file_sha
+from ecc.seed_statistics import paired_seed_summary
 from ecc.emotion import build_cost_matrix, polarity_vector
-from ecc.wavelets import METHODS, WaveletEmotionModel, wavelet_components, haar_decompose, reconstruct_bands
+from ecc.wavelets import WaveletEmotionModel
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_FILES = (
-    "scripts/run_wavelet_study.py", "scripts/run_seed_evidence.py",
-    "src/ecc/wavelets.py", "src/ecc/emotion.py", "src/ecc/metrics.py", "src/ecc/graph.py",
+    "scripts/run_wavelet_study.py", "src/ecc/experiment_data.py",
+    "src/ecc/wavelets.py", "src/ecc/emotion.py", "src/ecc/metrics.py", "src/ecc/seed_statistics.py",
 )
-CONDITIONS = ("clean", "shift_x1", "shift_x4", "awgn_003")
-
-
-def file_sha(path):
-    h = hashlib.sha256()
-    with Path(path).open("rb") as stream:
-        for block in iter(lambda: stream.read(8 * 1024**2), b""):
-            h.update(block)
-    return h.hexdigest()
+METHODS = ("wavelet_fusion", "rgb_dual")
 
 
 def read_json(path):
@@ -52,7 +44,7 @@ def read_json(path):
 def load_config(path):
     config = yaml.safe_load(Path(path).read_text(encoding="utf8"))
     if tuple(config["methods"]) != METHODS:
-        raise ValueError("The locked six-method study requires the documented method order")
+        raise ValueError("Expected methods: wavelet_fusion, rgb_dual")
     seeds = config["seeds"]
     if len(seeds) != len(set(seeds)) or not seeds or any(type(s) is not int for s in seeds):
         raise ValueError("Seeds must be unique integers")
@@ -83,34 +75,29 @@ def configure_runtime(device_name):
     return device
 
 
-def initialize_protocol(name, data_root, out, config, config_path, benchmark=False):
+def initialize_protocol(name, data_root, out, config, config_path, device):
     classes = (data_root / "classes.txt").read_text(encoding="utf8").splitlines()
-    splits = ("train", "val") if benchmark else shared.SPLITS
-    datasets, metadata = shared.load_dataset(data_root, classes, splits)
-    cache_hashes = {s: file_sha(data_root / f"{s}_seed_evidence_{m['cache_key'][:16]}.npy")
-                    for s, m in metadata.items()}
+    datasets, metadata = shared.load_dataset(data_root, classes, shared.SPLITS)
     plan_path = ROOT / "docs/wavelet_study/STUDY_PLAN.md"
     sources = {p: file_sha(ROOT / p) for p in SOURCE_FILES}
-    args = {"data_root": str(data_root.relative_to(ROOT)), "epochs": config["epochs"],
+    args = {"data_root": str(data_root.resolve()), "epochs": config["epochs"],
             "seeds": config["seeds"], "methods": config["methods"],
             "batch_size": config["batch_size"], "levels": config["levels"]}
     protocol = {
         "dataset": name, "args": args, "classes": classes, "datasets": metadata,
-        "cache_sha256": cache_hashes, "sources": sources,
+        "sources": sources,
         "data_manifest_sha256": file_sha(data_root / "manifest.json") if (data_root / "manifest.json").exists() else None,
         "config_sha256": file_sha(config_path), "study_plan_path": str(plan_path.relative_to(ROOT)),
-        "study_plan_sha256": file_sha(plan_path), "benchmark": benchmark,
+        "study_plan_sha256": file_sha(plan_path),
         "torch": torch.__version__, "torchvision": torchvision.__version__, "numpy": np.__version__,
-        "python": platform.python_version(), "gpu_name": torch.cuda.get_device_name() if torch.cuda.is_available() else None,
+        "python": platform.python_version(), "device": device.type,
+        "gpu_name": torch.cuda.get_device_name() if device.type == "cuda" else None,
         "loss": "eight-class cross entropy only, identical for all methods",
         "optimizer": {"name": "AdamW", "lr": .0001, "weight_decay": .0001, "clip_norm": 5.0},
         "selection": "highest clean validation ECC; earliest tied epoch; test only after all models train",
         "preprocessing": "matched Resize192, crop160 and flip; ImageNet normalize then J=2 Haar; no clipping or per-image rescaling",
         "initialization": "shared ImageNet1K ResNet18 state and seeded head per seed; dual independent tower storage; W/2 +/- delta classifier blocks, delta~N(0,.01^2), seed900000+seed",
-        "test_conditions": {"clean": "center crop", "shift_x1": "circular horizontal roll by one pixel AFTER crop",
-                            "shift_x4": "circular horizontal roll by four pixels AFTER crop",
-                            "awgn_003": "unclipped independent N(0,.03^2) raw RGB noise, shared CPU RNG612034 reset for each model/condition; fixed batch order"},
-        "fusion_interventions": ["remove_detail", "remove_low"],
+        "test_conditions": {"clean": "center crop"},
         "deterministic_algorithms": True,
     }
     protocol["protocol_hash"] = shared.digest(shared.canonical(protocol))
@@ -243,213 +230,98 @@ def fit_one(out, method, seed, state, plans, plan_hash, images, protocol):
     return result
 
 
-@torch.no_grad()
-def condition_predict(model, images, split, batch_size, condition):
-    model.eval()
-    probabilities, labels = [], []
-    generator = torch.Generator(device="cpu").manual_seed(612034)
-    std = torch.tensor([.229, .224, .225], device=images.device).view(1, 3, 1, 1)
-    for start in range(0, len(images.labels[split]), batch_size):
-        x, y = images.batch(split, np.arange(start, min(len(images.labels[split]), start + batch_size)))
-        if condition.startswith("shift_x"):
-            x = x.roll(int(condition[7:]), dims=-1)
-        elif condition == "awgn_003":
-            x = x + .03 * torch.randn(x.shape, generator=generator, dtype=torch.float32).to(x.device) / std
-        elif condition == "remove_detail":
-            x = wavelet_components(x, model.levels)[0]
-        elif condition == "remove_low":
-            x = wavelet_components(x, model.levels)[1]
-        elif condition != "clean":
-            raise ValueError(condition)
-        with torch.autocast(device_type=images.device.type, dtype=torch.float16, enabled=images.device.type == "cuda"):
-            logits = model(x)
-        probabilities.append(logits.float().softmax(1).cpu().numpy())
-        labels.append(y.cpu().numpy())
-    return np.concatenate(probabilities), np.concatenate(labels)
-
-
-def evaluate_and_replay(out, device, benchmark=False):
+def evaluate_and_replay(out, device):
+    """Replay validation before measuring the held-out clean test split."""
     protocol = read_json(out / "protocol.json")
     for relative, expected in protocol["sources"].items():
         if file_sha(ROOT / relative) != expected:
             raise ValueError(f"Source changed since training: {relative}")
-    datasets, metadata = shared.load_dataset(ROOT / protocol["args"]["data_root"], protocol["classes"], shared.SPLITS)
+    args = protocol["args"]
+    classes = protocol["classes"]
+    datasets, metadata = shared.load_dataset(Path(args["data_root"]), classes, shared.SPLITS)
     if metadata != protocol["datasets"]:
         raise ValueError("Dataset changed before evaluation")
     images = shared.Images(datasets, device, True)
-    W, polarity = build_cost_matrix(protocol["classes"]), polarity_vector(protocol["classes"])
-    replay, perturbations, results = [], [], []
-    for seed in protocol["args"]["seeds"]:
-        state = make_initial(seed, len(W))
-        for method in protocol["args"]["methods"]:
+    cost, polarity = build_cost_matrix(classes), polarity_vector(classes)
+    amp = device.type == "cuda"
+    results = []
+    for seed in args["seeds"]:
+        state = make_initial(seed, len(classes))
+        for method in args["methods"]:
             dest = out / f"{method}_seed{seed}"
-            result = read_json(dest / "result.json")
-            verify_completed(result, protocol, shared.state_digest(state),
-                             shared.augmentation_plan(len(datasets["train"][1]), protocol["args"]["epochs"], seed)[1], dest)
-            model = WaveletEmotionModel(method, state, levels=protocol["args"]["levels"], head_seed=900_000 + seed).to(device)
+            record = read_json(dest / "result.json")
+            model = WaveletEmotionModel(method, state, levels=args["levels"], head_seed=900_000 + seed).to(device)
             model.load_state_dict(torch.load(dest / "best.pt", map_location=device, weights_only=True))
-            # Replay independent loading of the selected checkpoint against the
-            # validation array saved during training before evaluating test.
-            vp, vy = condition_predict(model, images, "val", protocol["args"]["batch_size"], "clean")
-            with np.load(dest / "val_predictions.npz", allow_pickle=False) as z:
-                maxdiff = float(np.max(np.abs(vp - z["probabilities"])))
-                exact = np.array_equal(vp, z["probabilities"]) and np.array_equal(vy, z["labels"])
-            if not exact:
-                raise ValueError(f"Checkpoint validation replay is not bitwise exact: {dest}, {maxdiff}")
-            replay.append({"method": method, "seed": seed, "split": "val", "bitwise_exact": True,
-                           "max_probability_difference": maxdiff})
-            for condition in CONDITIONS + (("remove_detail", "remove_low") if method == "wavelet_fusion" else ()):
-                pred_file = dest / ("predictions.npz" if condition == "clean" else f"predictions_{condition}.npz")
-                p, y = condition_predict(model, images, "test", protocol["args"]["batch_size"], condition)
-                if pred_file.exists():
-                    with np.load(pred_file, allow_pickle=False) as z:
-                        if not np.array_equal(z["probabilities"], p) or not np.array_equal(z["labels"], y):
-                            raise ValueError(f"Previously saved prediction replay differs: {pred_file}")
-                else:
-                    shared.save_probabilities(pred_file, p, y)
-                values = shared.evaluate(p, y, W, polarity)
-                perturbations.append({"method": method, "seed": seed, "condition": condition, "metrics": values,
-                                      "file": str(pred_file.relative_to(out)), "sha256": file_sha(pred_file)})
-                if condition == "clean":
-                    result["test"] = values
-            result["status"] = "evaluated"
-            shared.atomic_json(dest / "result.json", result)
-            results.append(result)
-            shared.atomic_json(out / "checkpoint_replay.json", {"status": "passed", "scope": "all completed validation arrays reloaded from best.pt; test generated from same loaded checkpoint", "arrays": replay})
-            shared.atomic_json(out / "perturbations.json", perturbations)
-            shared.atomic_json(out / "results.json", results)
-            print("EVALUATED", protocol["dataset"], method, seed, flush=True)
-            del model
-            if device.type == "cuda":
-                torch.cuda.empty_cache()
-    del images, datasets
-    if device.type == "cuda":
-        torch.cuda.empty_cache()
+            val_p, val_y = shared.predict(model, images, "val", args["batch_size"], amp)
+            with np.load(dest / "val_predictions.npz", allow_pickle=False) as stored:
+                if not np.array_equal(stored["probabilities"], val_p) or not np.array_equal(stored["labels"], val_y):
+                    raise ValueError(f"Selected validation predictions did not replay exactly: {dest}")
+            test_p, test_y = shared.predict(model, images, "test", args["batch_size"], amp)
+            target = dest / "predictions.npz"
+            if target.exists():
+                with np.load(target, allow_pickle=False) as stored:
+                    if not np.array_equal(stored["probabilities"], test_p) or not np.array_equal(stored["labels"], test_y):
+                        raise ValueError(f"Previously saved test predictions differ: {target}")
+            else:
+                shared.save_probabilities(target, test_p, test_y)
+            record.update(status="evaluated", validation_replay_exact=True,
+                          test=shared.evaluate(test_p, test_y, cost, polarity))
+            shared.atomic_json(dest / "result.json", record)
+            results.append(record)
+    shared.atomic_json(out / "results.json", results)
+    return results
 
 
-@torch.no_grad()
-def transform_diagnostics(datasets, classes, device):
-    """Training inputs only; mathematical identity and grid-sensitivity audits."""
-    rng = np.random.default_rng(702914)
-    labels = datasets["train"][1]
-    selected = np.sort(np.concatenate([rng.choice(np.flatnonzero(labels == c), min(32, int((labels == c).sum())), replace=False)
-                                      for c in range(len(classes))]))
-    images = shared.Images({"train": datasets["train"]}, device, False)
-    class_rows, energies = [], []
-    maxima = {"reconstruction_max_absolute": 0., "band_sum_max_absolute": 0.,
-              "parseval_relative_error": 0., "low_detail_relative_inner_product": 0.,
-              "blockmean_max_absolute": 0., "shift4_commutator_max_absolute": 0.}
-    shift1 = []
-    for start in range(0, len(selected), 32):
-        x, y = images.batch("train", selected[start:start + 32])
-        x = x.double()
-        low, detail = wavelet_components(x, 2)
-        bands = reconstruct_bands(haar_decompose(x, 2))
-        total = x.square().flatten(1).sum(1)
-        band_energy = {k: v.square().flatten(1).sum(1) for k, v in bands.items()}
-        reconstructed = sum(bands.values())
-        block = nn.functional.avg_pool2d(x, 4).repeat_interleave(4, -2).repeat_interleave(4, -1)
-        low_shift1 = wavelet_components(x.roll(1, -1), 2)[0]
-        low_shift4 = wavelet_components(x.roll(4, -1), 2)[0]
-        maxima["reconstruction_max_absolute"] = max(maxima["reconstruction_max_absolute"], float((x - low - detail).abs().max()))
-        maxima["band_sum_max_absolute"] = max(maxima["band_sum_max_absolute"], float((x - reconstructed).abs().max()))
-        maxima["parseval_relative_error"] = max(maxima["parseval_relative_error"], float(((sum(band_energy.values()) - total).abs() / total.clamp_min(1e-30)).max()))
-        maxima["low_detail_relative_inner_product"] = max(maxima["low_detail_relative_inner_product"], float(((low * detail).flatten(1).sum(1).abs() / total.clamp_min(1e-30)).max()))
-        maxima["blockmean_max_absolute"] = max(maxima["blockmean_max_absolute"], float((low - block).abs().max()))
-        maxima["shift4_commutator_max_absolute"] = max(maxima["shift4_commutator_max_absolute"], float((low_shift4 - low.roll(4, -1)).abs().max()))
-        centered = x - x.mean((-2, -1), keepdim=True)
-        centered_total = centered.square().flatten(1).sum(1)
-        centered_low = low - low.mean((-2, -1), keepdim=True)
-        for i, index in enumerate(selected[start:start + 32]):
-            energies.append({"train_row": int(index), "class": classes[int(y[i])],
-                             "normalized_low_energy_fraction": float(low[i].square().sum() / total[i]),
-                             "spatially_centered_low_energy_fraction": float(centered_low[i].square().sum() / centered_total[i].clamp_min(1e-30)),
-                             **{f"{k}_energy_fraction": float(e[i] / total[i]) for k, e in band_energy.items()},
-                             **{f"centered_{k}_energy_fraction": float((centered_low[i].square().sum() if k == "LL2" else e[i]) / centered_total[i].clamp_min(1e-30))
-                                for k, e in band_energy.items()}})
-        shift1.extend(((low_shift1 - low.roll(1, -1)).square().flatten(1).sum(1) / total.clamp_min(1e-30)).sqrt().cpu().tolist())
-    noise = torch.from_numpy(np.random.default_rng(45127).normal(size=(32, 3, 160, 160))).to(device)
-    nl, nd = wavelet_components(noise, 2)
-    nenergy = float(noise.square().sum())
-    for c in classes:
-        rows = [r for r in energies if r["class"] == c]
-        class_rows.append({"class": c, "n": len(rows), **{key: float(np.mean([r[key] for r in rows]))
-            for key in rows[0] if key.endswith("energy_fraction")}})
-    del images
-    result = {"input_scope": "fixed training-only class-stratified sample; clean center crops; normalized tensor; float64 identity audit",
-            "sample_count": len(selected), "selected_train_rows": selected.tolist(), "maxima": maxima,
-            "shift1_relative_commutator_mean": float(np.mean(shift1)),
-            "noise": {"distribution": "iid N(0,1), float64 fixed numpy seed45127",
-                      "expected_low_fraction": 1 / 16, "measured_low_fraction": float(nl.square().sum()) / nenergy,
-                      "expected_detail_fraction": 15 / 16, "measured_detail_fraction": float(nd.square().sum()) / nenergy},
-            "class_summary": class_rows, "image_energy": energies}
-    # These are exact finite-dimensional identities, not performance targets.
-    if any(not np.isfinite(value) or value > 1e-10 for value in maxima.values()):
-        raise FloatingPointError(f"Haar identity audit failed: {maxima}")
-    if abs(result["noise"]["measured_low_fraction"] - 1 / 16) > .002:
-        raise FloatingPointError("White-noise projection audit failed")
-    if not np.isfinite(result["shift1_relative_commutator_mean"]):
-        raise FloatingPointError("Nonfinite shift diagnostic")
-    result["status"] = "passed"
-    return result
+def summarize(records):
+    scores = {(row["method"], row["seed"]): row["test"]["ecc"] for row in records}
+    seeds = sorted(seed for method, seed in scores if method == "rgb_dual")
+    if len(scores) != len(records) or set(scores) != {(method, seed) for method in METHODS for seed in seeds}:
+        raise ValueError("Expected unique, complete Haar and RGB seed pairs")
+    baseline = [scores["rgb_dual", seed] for seed in seeds]
+    candidate = [scores["wavelet_fusion", seed] for seed in seeds]
+    return {
+        "seeds": seeds,
+        "rgb_dual_mean_ecc": float(np.mean(baseline)),
+        "wavelet_fusion_mean_ecc": float(np.mean(candidate)),
+        **paired_seed_summary(baseline, candidate),
+    }
 
 
 def run(args):
     config = load_config(args.config)
     device = configure_runtime(args.device)
-    args.out.mkdir(parents=True, exist_ok=True)
-    selected_datasets = config["datasets"]
-    if args.benchmark:
-        selected_datasets = {"fi": selected_datasets["fi"]}
-        config = dict(config, epochs=1, seeds=[999], methods=["wavelet_fusion"])
-    with shared.gpu_lock(ROOT / "work/single_gpu.lock"):
-        protocol_paths = []
-        for name, relative in selected_datasets.items():
-            datasets, protocol = initialize_protocol(name, ROOT / relative, args.out / name, config, args.config, args.benchmark)
-            protocol_paths.append(args.out / name / "protocol.json")
-            if args.stage in ("all", "train"):
-                if not args.benchmark:
-                    diag = transform_diagnostics(datasets, protocol["classes"], device)
-                    shared.atomic_json(args.out / name / "transform_diagnostics.json", diag)
+    planned = {name: Path(root).resolve() for name, root in config["datasets"].items()}
+    with shared.gpu_lock(ROOT / "runs/.experiment.lock"):
+        if args.stage in ("all", "train"):
+            for name, root in planned.items():
+                out = args.out / name
+                datasets, protocol = initialize_protocol(name, root, out, config, args.config, device)
                 images = shared.Images(datasets, device, True)
-                all_results = []
                 for seed in config["seeds"]:
                     state = make_initial(seed, len(protocol["classes"]))
-                    plans, plan_hash = shared.augmentation_plan(len(datasets["train"][1]), config["epochs"], seed)
-                    for method in config["methods"]:
-                        all_results.append(fit_one(args.out / name, method, seed, state, plans, plan_hash, images, protocol))
-                        shared.atomic_json(args.out / name / "results.json", all_results)
+                    plans, digest = shared.augmentation_plan(len(datasets["train"][1]), config["epochs"], seed)
+                    for method in METHODS:
+                        fit_one(out, method, seed, state, plans, digest, images, protocol)
                 del images, datasets
-                if device.type == "cuda":
-                    torch.cuda.empty_cache()
-        if args.benchmark:
-            print("BENCHMARK_COMPLETE validation only", flush=True)
-            return
-        # Audit every source image against cached inputs before test evaluation.
-        if args.stage == "all":
-            import verify_seed_inputs
-            checks = [verify_seed_inputs.verify_protocol(path, ROOT, require_full_splits=True) for path in protocol_paths]
-            shared.atomic_json(args.out / "input_verification.json", {"status": "passed", "datasets": checks})
         if args.stage in ("all", "evaluate"):
-            for path in protocol_paths:
-                audit_training_complete(path.parent)
-            for path in protocol_paths:
-                evaluate_and_replay(path.parent, device)
-    if args.stage == "all":
-        from report_wavelet_study import build_report
-        build_report(args.out, bootstrap=1500)
-        shared.atomic_json(args.out / "automatic_completion.json", {"status": "complete", "models": len(selected_datasets) * len(config["seeds"]) * len(config["methods"]), "report": str(args.out / "REPORT.html")})
-    print("WAVELET_STUDY_COMPLETE", args.stage, flush=True)
+            for name in planned:
+                out = args.out / name
+                protocol = read_json(out / "protocol.json")
+                if protocol["config_sha256"] != file_sha(args.config) or protocol["device"] != device.type:
+                    raise ValueError(f"Evaluation config or device differs from training: {out}")
+                audit_training_complete(out)
+            summary = {name: summarize(evaluate_and_replay(args.out / name, device)) for name in planned}
+            shared.atomic_json(args.out / "summary.json", summary)
+    print(f"Wavelet {args.stage} completed. Artifacts: {args.out}")
 
 
 def main():
-    p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--config", type=Path, default=ROOT / "configs/wavelet_study.yaml")
-    p.add_argument("--out", type=Path, default=ROOT / "outputs/wavelet_study")
-    p.add_argument("--stage", choices=("all", "train", "evaluate"), default="all")
-    p.add_argument("--device", choices=("cuda", "cpu"), default="cuda")
-    p.add_argument("--benchmark", action="store_true", help="Separate one-epoch fusion timing run, validation only; never used for study inference")
-    run(p.parse_args())
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--config", type=Path, default=ROOT / "configs/wavelet_study.yaml")
+    parser.add_argument("--out", type=Path, default=ROOT / "runs/wavelet")
+    parser.add_argument("--stage", choices=("all", "train", "evaluate"), default="all")
+    parser.add_argument("--device", choices=("cuda", "cpu"), default="cuda")
+    run(parser.parse_args())
 
 
 if __name__ == "__main__":

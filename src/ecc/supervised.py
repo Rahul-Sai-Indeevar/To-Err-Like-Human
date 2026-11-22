@@ -17,9 +17,9 @@ from .common import (append_jsonl, emotion_tensors, get_device, load_classes,
 from .config import load_config, parse_args
 from .data import EmotionCSV, build_transforms
 from .decode import mec_decode
-from .kaggle_utils import (persistent_ckpt_dir,
+from .checkpoint_storage import (persistent_ckpt_dir,
                            save_to_persistent)
-from .graph import build_loss
+from .losses import build_loss
 from .metrics import confusion_matrix, evaluate_predictions
 from .models import build_model
 
@@ -43,17 +43,11 @@ def run(cfg: dict) -> dict:
     out = Path(cfg["output_dir"])
     out.mkdir(parents=True, exist_ok=True)
 
-    # Persistent checkpoint dir (writable directory) — survives session restarts.
-    # NOTE: Kaggle input mounts (/kaggle/input/) are read-only. Use a writable path
-    # like /kaggle/working/checkpoints/ or leave empty to disable persistence.
+    # Persistent checkpoint dir (mounted Kaggle Dataset) — survives session restarts.
     persistent = persistent_ckpt_dir(cfg)
     if persistent is not None:
-        try:
-            persistent.mkdir(parents=True, exist_ok=True)
-            print(f"Persistent checkpoint dir: {persistent}")
-        except OSError:
-            print(f"Persistent checkpoint dir not writable: {persistent} (ignoring)")
-            persistent = None
+        persistent.mkdir(parents=True, exist_ok=True)
+        print(f"Persistent checkpoint dir: {persistent}")
     ckpt_path, resume_provenance = prepare_run_config(cfg, out, persistent)
 
     classes = load_classes(d["splits_dir"])
@@ -67,7 +61,7 @@ def run(cfg: dict) -> dict:
                                  loader(mk("test", False), False))
 
     model = build_model(cfg["model"]["name"], len(classes), cfg["model"]["pretrained"]).to(device)
-    crit = build_loss(cfg["loss"], W, rank).to(device)
+    crit = build_loss(cfg["loss"], rank).to(device)
     opt = torch.optim.SGD(model.parameters(), lr=o["lr"], momentum=o["momentum"],
                           weight_decay=o["weight_decay"])
     use_amp = bool(cfg.get("amp", False)) and device.type == "cuda"

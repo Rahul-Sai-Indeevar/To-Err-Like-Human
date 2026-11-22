@@ -33,3 +33,12 @@ class CombinedLoss(nn.Module):
         if self.alpha > 0:
             loss = loss + self.alpha * listmle_loss(logits, self.rank[targets], self.reduction)
         return loss
+
+
+def build_loss(config, rank):
+    """Cross-entropy alone or with the paper's emotion-ordering term."""
+    kind = config.get("kind", "listmle")
+    if kind not in ("ce", "listmle"):
+        raise ValueError(f"Unknown loss {kind}")
+    alpha = 0.0 if kind == "ce" else config["alpha"]
+    return CombinedLoss(rank, alpha, config.get("listmle_reduction", "sum"))

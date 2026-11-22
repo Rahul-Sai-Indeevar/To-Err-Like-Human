@@ -3,31 +3,33 @@ requires = ["setuptools>=64"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "ecc-ver"
+name = "haar-emotion-sp"
 version = "0.1.0"
-description = "Re-implementation of ECC/EMC metrics for visual emotion recognition (NeurIPS 2024) + experiments"
-requires-python = ">=3.9"
+description = "Visual emotion recognition with ECC, spatial FFT and Haar filter banks"
+readme = "README.md"
+requires-python = ">=3.10"
 dependencies = [
-  "torch>=2.3",
-  "torchvision",
-  "numpy",
-  "pyyaml",
-  "pillow",
+    "matplotlib>=3.7",
+    "numpy>=1.24",
+    "Pillow>=9",
+    "PyYAML>=6",
+    "scipy>=1.10",
+    "torch>=2.4",
+    "torchvision>=0.19",
 ]
 
 [project.optional-dependencies]
-dev = ["pytest", "scipy>=1.10", "matplotlib>=3.7"]
-experiments = ["matplotlib>=3.7", "pyarrow>=14", "markdown>=3.5", "scipy>=1.10"]
+dev = ["pytest>=8"]
 
 [project.scripts]
 ecc-splits = "ecc.splits:main"
 ecc-train = "ecc.supervised:main"
 ecc-ssl = "ecc.ssl:main"
 ecc-eval = "ecc.evaluate:main"
-ecc-graph = "ecc.graph_experiment:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["src", "."]

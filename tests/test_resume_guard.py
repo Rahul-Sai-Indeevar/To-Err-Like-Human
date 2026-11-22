@@ -9,7 +9,7 @@ from torch.nn import functional as F
 from ecc.checkpoint import (prepare_run_config, save_checkpoint,
                             select_resume_checkpoint)
 from ecc.emotion import WHEEL_ORDER, build_cost_matrix, build_rank_matrix
-from ecc.graph import build_loss
+from ecc.losses import build_loss
 from ecc.supervised import scheduled_loss_alpha
 
 
@@ -115,15 +115,15 @@ def test_explicit_ce_remains_exact_ce_despite_nonzero_auxiliary_alpha():
     torch.manual_seed(12)
     W = build_cost_matrix(WHEEL_ORDER)
     loss_config = {"kind": "ce", "alpha": 1.0, "switch_epoch": 1}
-    criterion = build_loss(loss_config, W, build_rank_matrix(W))
+    criterion = build_loss(loss_config, build_rank_matrix(W))
     logits = torch.randn(5, 8, requires_grad=True)
     labels = torch.tensor([0, 1, 2, 4, 7])
     expected = F.cross_entropy(logits, labels)
     for epoch in (0, 1, 10):
         criterion.alpha = scheduled_loss_alpha(loss_config, epoch)
         assert torch.equal(criterion(logits, labels), expected)
-    assert scheduled_loss_alpha({"kind": "graph", "alpha": .3, "switch_epoch": 1}, 0) == 0
-    assert scheduled_loss_alpha({"kind": "graph", "alpha": .3, "switch_epoch": 1}, 1) == .3
+    assert scheduled_loss_alpha({"kind": "listmle", "alpha": .3, "switch_epoch": 1}, 0) == 0
+    assert scheduled_loss_alpha({"kind": "listmle", "alpha": .3, "switch_epoch": 1}, 1) == .3
 
 
 def test_save_checkpoint_embeds_detached_run_config(tmp_path):

@@ -1,0 +1,25 @@
+{
+  "images": 17715,
+  "cutoffs_cycles_per_pixel": [
+    0.025,
+    0.05,
+    0.1,
+    0.2,
+    0.35,
+    0.5
+  ],
+  "butterworth_order": 2,
+  "boundary": "periodic FFT; possible edge discontinuities",
+  "clipping": "clip to [0,255], no min-max rescaling; fraction and mean drift reported",
+  "torch": "2.14.1+cu130",
+  "device": "cuda",
+  "amp": true,
+  "batch_size": 64,
+  "training": "none; checkpoints frozen",
+  "checkpoint_sha256": {
+    "ce_seed0": "569c896e788bca8e613069ed1a0e1758d97a9f30e6c68e36ba59614728680d77",
+    "ce_seed1": "972f53a6600d5da536f15441eb039aab70cc72f8b21b6fcead6a6430fbd4a183",
+    "ce_seed2": "5ec13f1944b45cff1ba09fea1558499ce9e232235a27dcbf6eb2bc15758b0364"
+  },
+  "test_manifest_sha256": "d6c5a5b2c802d22943679df21eed57ececbad108e589d754597d8fa2791f3a9e"
+}

@@ -32,7 +32,7 @@ X[k,l]=\sum_{r=0}^{H-1}\sum_{c=0}^{W-1}x[r,c]\,
 e^{-j2\pi(kr/H+lc/W)}.
 $$
 
-The FFT computes this DFT efficiently. Our earlier spatial experiment applied radial low-pass masks in this domain and inverse-transformed the results. On full EmoSet, mean ECC of three frozen cross-entropy models went from 80.225% on clean images to 45.736% at 0.05 cycles/pixel and 71.868% at 0.20 cycles/pixel. Removing spatial frequencies affected predictions made by those fixed models. We then asked whether a model could learn useful features from separately available coarse and detail signals. [Spatial FFT experiment](../full_spatial_frequency/REPORT.md).
+The FFT computes this DFT efficiently. Our earlier spatial experiment applied radial low-pass masks in this domain and inverse-transformed the results. On full EmoSet, mean ECC of three frozen cross-entropy models went from 80.225% on clean images to 45.736% at 0.05 cycles/pixel and 71.868% at 0.20 cycles/pixel. Removing spatial frequencies affected predictions made by those fixed models. We then asked whether a model could learn useful features from separately available coarse and detail signals. [Spatial FFT experiment](../../results/fft/summary.csv).
 
 ## 2. DTFT of the Haar analysis filters
 
@@ -192,7 +192,7 @@ Phase averaging retains exact additive reconstruction as $P_{\mathrm{avg}}x+(I-P
 | The grid changes after a one-pixel circular shift and returns to alignment after four. | Mean one-pixel commutators on FI, the EmoSet subset and ArtPhoto were 0.19658, 0.20914 and 0.16967. Four-pixel residuals were zero. | Grid dependence is measurable before the classifier sees the image. |
 | The coarse experiment can show a smaller ECC drop under added noise. | At Gaussian $\sigma=0.03$, coarse-only FI lost 0.535 ECC points versus 1.790 for RGB. On the EmoSet subset it lost 0.578 versus 3.206. Absolute noisy ECC still favored RGB on both splits. | The coarse model degraded less from a lower clean baseline. Both the change and the final score matter. |
 
-[Numerical diagnostics and frozen-model protocol](DIAGNOSTICS.md).
+[Measured transform diagnostics](wavelet_sp_experiments.md).
 
 The training comparison kept cross-entropy and training budgets fixed. Six input arrangements and eight fresh paired seeds on three datasets gave 144 model fits. Both coarse + signed detail and the primary RGB + RGB control used 22,361,224 parameters, with matched starting weights where applicable, example orders and augmentations within each seed. Validation ECC selected checkpoints. The test ECC comparison was:
 
@@ -202,10 +202,10 @@ The training comparison kept cross-entropy and training budgets fixed. Six input
 | EmoSet subset | 68.953% | 73.104% | −4.151 | [−4.846, −3.455] |
 | ArtPhoto | 50.657% | 51.625% | −0.968 | [−2.713, +0.778] |
 
-Fusion lost all eight FI and EmoSet pairs. ArtPhoto's interval spans zero. The intervals estimate paired seed variation on each prepared split. Perfect reconstruction says that a known linear inverse can recover the original from both branches. The classifiers must separately learn from differently distributed inputs, so that identity makes no prediction about the direction of the ECC effect. [Completed wavelet findings](FINDINGS.md).
+Fusion lost all eight FI and EmoSet pairs. ArtPhoto's interval spans zero. The intervals estimate paired seed variation on each prepared split. Perfect reconstruction says that a known linear inverse can recover the original from both branches. The classifiers must separately learn from differently distributed inputs, so that identity makes no prediction about the direction of the ECC effect. [Completed wavelet findings](../../results/wavelet/summary.csv).
 
 ## Code and verification
 
 - The [filter bank and models](../../src/ecc/wavelets.py) implement analysis and synthesis in **haar_analysis2d** and **haar_synthesis2d**. **wavelet_components** supplies the two model inputs.
-- The [study configuration](../../configs/wavelet_study.yaml), [study runner](../../scripts/run_wavelet_study.py) and [transform tests](../../tests/test_wavelets.py) document the original experiment. The [project guide](../../README.md) maps the runs and verification records.
+- The [study configuration](../../configs/wavelet_study.yaml), [study runner](../../scripts/run_wavelet_study.py) and [transform tests](../../tests/test_wavelets.py) document the original experiment. The [experiment evidence index](../../README.md) maps the runs and verification records.
 - The [experiment appendix](wavelet_sp_experiments.md) documents the new train-free diagnostics, including tone response, alias cancellation and the phase-averaged FIR.

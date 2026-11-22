@@ -1,6 +1,6 @@
 # Experimental checks of the Haar filter bank
 
-These CPU experiments test predictions from the [signal-processing derivations](SIGNAL_PROCESSING.md) against the project's Haar implementation. They run on synthetic signals and existing prepared test crops. The tests measure filter outputs only. The original [recognition study](FINDINGS.md) trained separate classifiers on the fixed Haar grid.
+These CPU experiments test predictions from the [signal-processing derivations](SIGNAL_PROCESSING.md) against the project's Haar implementation. They run on synthetic signals and existing prepared test crops. The tests measure filter outputs only. The original [recognition study](../../results/wavelet/summary.csv) trained separate classifiers on the fixed Haar grid.
 
 ## 1. Tone sweep and directional selectivity
 
@@ -61,18 +61,18 @@ We computed this per crop and report the mean. Structure and noise measurements 
 
 Across 534 trials the pooled mean noise retentions were 6.2502% and 2.9532%, close to the respective theoretical fractions 6.2500% and 2.9541%. The phase-averaged filter reduces noise and also reduces genuine spatial changes. Fixed Haar can create gradients at the boundaries between its block means, so gradient-energy retention alone cannot measure edge fidelity. The assembled clean-signal relative error was lower with phase averaging on these crops, even though the gradient energy was also lower. These are properties of the filtering operators under the stated boundary rule and dataset sample.
 
-![Haar tone response, folded FFT bin, edge smoothing and noise measurements](wavelet_sp_checks.png)
+![Haar tone response, folded FFT bin, edge smoothing and noise measurements](../../results/wavelet/wavelet_sp_checks.png)
 
 ## 5. Recognition remains a separate experimental outcome
 
-The original two-level Haar bank preserves all samples when both branches are synthesized together. Its coarse-only signal attenuates white noise. Neither identity determines how well a classifier can use the two signals. In the matched recognition study, original Haar fusion lost to two RGB towers by 3.023 ECC points on FI and 4.151 on the EmoSet subset. ArtPhoto's uncertainty interval included zero. The two classifiers saw different representations at equal parameter counts. Phase-averaged preprocessing was introduced only for the diagnostics above, so there is no measured recognition score for that modification. [Matched recognition results](FINDINGS.md).
+The original two-level Haar bank preserves all samples when both branches are synthesized together. Its coarse-only signal attenuates white noise. Neither identity determines how well a classifier can use the two signals. In the matched recognition study, original Haar fusion lost to two RGB towers by 3.023 ECC points on FI and 4.151 on the EmoSet subset. ArtPhoto's uncertainty interval included zero. The two classifiers saw different representations at equal parameter counts. Phase-averaged preprocessing was introduced only for the diagnostics above, so there is no measured recognition score for that modification. [Matched recognition results](../../results/wavelet/summary.csv).
 
 ## Reproduce the checks
 
 From the project root with the existing experiment environment and prepared image manifests:
 
 ```powershell
-.\.venv\Scripts\python.exe scripts/run_wavelet_sp_checks.py --repo . --output outputs/wavelet_sp
+python scripts/run_wavelet_sp_checks.py --config local/wavelet.yaml --output runs/haar_checks
 ```
 
-The script asserts the synthetic identities before measuring photographs. The saved result includes per-frequency values, dataset manifests and hashes, selected row indices, and software versions. Images and weights remain in the local research checkout. [Probe script](../../scripts/run_wavelet_sp_checks.py) · [Measured values](wavelet_sp_results.json).
+The script asserts the synthetic identities before measuring photographs. The saved result includes per-frequency values, dataset manifests and hashes, selected row indices, and software versions. Images and weights remain in the local research checkout. [Probe script](../../scripts/run_wavelet_sp_checks.py) · [Measured values](../../results/wavelet/wavelet_sp_results.json).

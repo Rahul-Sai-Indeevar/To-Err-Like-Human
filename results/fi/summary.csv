@@ -1,0 +1,5 @@
+experiment,accuracy,ecc,emc
+CE,62.47,73.42,48.39
+CE + ListMLE alpha 0.2,62.09,74.39,55.92
+Fixed threshold 800 labels,38.94,56.14,46.01
+EMC threshold 800 labels,34.11,53.28,48.43

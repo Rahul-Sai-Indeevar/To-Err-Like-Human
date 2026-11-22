@@ -1,40 +1,23 @@
 import pytest
 import torch
-from ecc.spatial_frequency import butterworth_mask, transform_images
+
+from ecc.spatial_frequency import butterworth_mask, lowpass_rgb
 
 
-def test_butterworth_dc_complement_and_mean():
-    x = torch.rand(3, 3, 32, 32) * 255
-    low = transform_images(x, "lowpass", 0.1)
-    high = transform_images(x, "highpass_dc", 0.1)
-    mean = x.mean((-2, -1), keepdim=True)
-    assert torch.allclose(low + high, x + mean, atol=1e-4)
-    assert torch.allclose(low.mean((-2, -1)), mean[..., 0, 0], atol=2e-5)
-    assert torch.allclose(high.mean((-2, -1)), mean[..., 0, 0], atol=2e-5)
-    assert butterworth_mask((32, 32), 0.1)[0, 0] == 1
+def test_mask_and_pixels_recover_butterworth_gain_at_cutoff():
+    # One whole cycle in eight columns lies exactly at the chosen cutoff.
+    f = 1 / 8
+    pixels = 100 + 20 * torch.cos(2 * torch.pi * f * torch.arange(32))
+    images = pixels.expand(2, 3, 32, 32)
+    mask = butterworth_mask((32, 32), f)
+    assert mask[0, 0] == 1
+    assert mask[0, 4] == 0.5
+    assert mask[0, 8] == pytest.approx(1 / 17)
+    torch.testing.assert_close(lowpass_rgb(images, f), 100 + (images - 100) / 2)
 
 
-def test_phase_controls_preserve_unclipped_amplitude_and_parseval():
-    torch.manual_seed(8)
-    x = torch.rand(2, 3, 32, 32) * 255
-    reference = torch.fft.fft2(x, norm="ortho").abs()
-    for mode in ("phase_zero", "phase_random"):
-        out = transform_images(x, mode)
-        assert torch.allclose(
-            torch.fft.fft2(out, norm="ortho").abs(), reference, atol=5e-4, rtol=1e-4
-        )
-        assert torch.allclose(
-            out.square().sum((-2, -1)), x.square().sum((-2, -1)), rtol=1e-5
-        )
-    flat = transform_images(x, "amplitude_flat")
-    assert torch.allclose(
-        flat.square().sum((-2, -1)), x.square().sum((-2, -1)), rtol=1e-5
-    )
-
-
-def test_constant_signal_and_invalid_cutoff():
-    x = torch.ones(1, 3, 16, 16) * 123
-    for mode in ["clean", "lowpass", "highpass_dc"]:
-        assert torch.allclose(transform_images(x, mode, 0.1), x)
+def test_invalid_cutoff_and_constant_rgb():
+    images = torch.full((4, 3, 8, 10), 42, dtype=torch.uint8)
+    torch.testing.assert_close(lowpass_rgb(images, .10), images.float())
     with pytest.raises(ValueError):
-        butterworth_mask((16, 16), 0)
+        lowpass_rgb(images, 0)
